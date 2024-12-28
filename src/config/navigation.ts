@@ -1,30 +1,35 @@
 export const navigationConfig = {
   mainNav: [
     {
-      title: 'Home',
-      href: '/',
-    },
-    {
-      title: 'About',
-      href: '/about',
+      title: 'Process',
+      href: '/process',
     },
     {
       title: 'Services',
       href: '/services',
     },
     {
-      title: 'Contact',
-      href: '/contact',
+      title: 'Why Ziro?',
+      href: '/why-ziro',
+    },
+    {
+      title: 'Philosophy',
+      href: '/philosophy',
+    },
+    {
+      title: 'FAQs',
+      href: '/faqs',
     },
   ],
-  authNav: [
+  languages: [
     {
-      title: 'Login',
-      href: '/login',
+      title: 'English',
+      locale: 'en',
     },
     {
-      title: 'Register',
-      href: '/register',
+      title: 'Polish',
+      locale: 'pl',
     },
+
   ],
 } as const 
