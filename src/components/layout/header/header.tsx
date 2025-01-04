@@ -28,16 +28,20 @@ export function Header() {
           {/* Main Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navigationConfig.mainNav.map((item) => (
-              <Link
+              <Button
                 key={item.href}
-                href={item.href}
+                onClick={() => {
+                  const element = document.getElementById(item.href)
+                  element?.scrollIntoView({ behavior: 'smooth' })
+                }}
+                variant='navbar'
                 className={cn(
                   'text-[16px] font-medium transition-colors',
                   pathname === item.href ? 'text-gray-900' : 'text-gray-900'
                 )}
               >
                 {item.title}
-              </Link>
+              </Button>
             ))}
           </nav>
 

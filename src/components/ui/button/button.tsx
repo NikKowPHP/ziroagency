@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils/cn'
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'white'
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'white' | 'navbar'
   size?: 'sm' | 'md' | 'lg' | 'xl'
   isActive?: boolean
   isFullWidth?: boolean
@@ -55,6 +55,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             // White variant
             'bg-white text-black hover:bg-white/90 active:bg-white/80':
               variant === 'white',
+
+            // Navbar variant
+            'text-[16px] font-medium transition-colors text-gray-900':
+              variant === 'navbar',
           },
 
           // Sizes

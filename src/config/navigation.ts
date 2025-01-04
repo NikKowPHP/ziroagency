@@ -2,15 +2,11 @@ export const navigationConfig = {
   mainNav: [
     {
       title: 'Work',
-      href: '/work',
-    },
-    {
-      title: 'Services',
-      href: '/services',
+      href: 'work',
     },
     {
       title: 'Pricing',
-      href: '/pricing',
+      href: 'pricing',
     },
   ],
   languages: [
