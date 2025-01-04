@@ -5,21 +5,25 @@ import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button/button'
 import { navigationConfig } from '@/config/navigation'
 import { cn } from '@/lib/utils/cn'
-
+import Image from 'next/image'
 export function Header() {
   const pathname = usePathname()
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#F7F7F7]">
+    <header className="fixed top-10 mx-40 rounded-full left-0 right-0 z-50 bg-[#F7F7F7] bg-opacity-80 backdrop-blur-sm">
       <div className="container mx-auto px-6">
         <div className="flex h-[72px] items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="relative h-6 w-6">
-              <div className="absolute inset-0 rounded-full bg-[#0066FF]" />
-            </div>
-            <span className="text-[18px] font-medium">ZIRO</span>
+            <Image
+              src="/images/ziro.avif"
+              alt="ZIRO"
+              width={150}
+              height={51}
+              className="h-[36px] w-[95px]"
+            />
           </Link>
+
 
           {/* Main Navigation */}
           <nav className="hidden md:flex items-center gap-8">
