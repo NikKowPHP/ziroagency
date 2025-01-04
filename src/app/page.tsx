@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button/button'
 import { CaseStudies } from '@/components/sections/case-studies/case-studies'
 import { RunningTags } from '@/components/sections/running-tags/running-tags'
 import { Pricing } from '@/components/sections/pricing/pricing'
+import { Faq } from '@/components/sections/faq/faq'
 import { services } from '@/lib/data/services'
 
 export default function HomePage() {
@@ -51,6 +52,10 @@ export default function HomePage() {
 
         <Suspense fallback={<div className="min-h-[400px]" />}>
           <Pricing />
+        </Suspense>
+
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <Faq />
         </Suspense>
       </div>
     </div>
