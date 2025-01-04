@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { Button } from '@/components/ui/button/button'
+import { CaseStudies } from '@/components/sections/case-studies/case-studies'
 
 export default function HomePage() {
   return (
@@ -37,6 +38,10 @@ export default function HomePage() {
               </Button>
             </div>
           </section>
+        </Suspense>
+
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <CaseStudies />
         </Suspense>
       </div>
     </div>
