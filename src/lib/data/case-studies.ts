@@ -28,7 +28,19 @@ export const caseStudies: CaseStudy[] = [
     ],
     ctaText: 'View Case Study',
     ctaUrl: '/work/gsense'
-  }
+    },
+    {
+        id: 'supernormal',
+        title: 'SuperNormal',
+        description: 'SuperNormal is an innovative app concept designed specifically for "Rejuvenation Athletes," individuals dedicated to slowing biological aging and enhancing their overall well-being. This project aims to integrate various features that support users in their journey toward longevity through a user-friendly interface and community engagement.',
+        tags: ['Mobile Application', 'HealthTech'],
+        images: [
+          { url: '/images/case-studies/supernormal/supernormal.avif', alt: 'SuperNormal app interface' },
+        ],
+        ctaText: 'View Case Study',
+        ctaUrl: '/work/supernormal'
+    },
+   
 ]
 
 export async function getCaseStudies(): Promise<CaseStudy[]> {
