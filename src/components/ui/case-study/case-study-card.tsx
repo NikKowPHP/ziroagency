@@ -27,7 +27,7 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
             </Tag>
           ))}
         </div>
-        <div className="pt-10 pr-[15px]">
+        <div className="pt-10 pr-[15px] block xl:block lg:block md:hidden sm:hidden">
           <Button size="xl">{caseStudy.ctaText}</Button>
         </div>
       </div>
@@ -48,6 +48,10 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
             />
           </div>
         ))}
+      </div>
+
+      <div className="hidden sm:block md:block lg:hidden pt-10 pr-[15px]">
+        <Button size="xl">{caseStudy.ctaText}</Button>
       </div>
     </div>
   )
