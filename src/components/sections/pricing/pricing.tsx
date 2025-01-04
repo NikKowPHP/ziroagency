@@ -7,9 +7,9 @@ interface PricingCardProps {
 
 function PricingCard({ plan }: PricingCardProps) {
   return (
-    <div className="flex flex-col bg-white rounded-[32px] p-8 space-y-6">
+    <div className="flex flex-col items-center p-10 bg-white rounded-[32px] space-y-6">
       <h3 className="text-[32px] font-medium">{plan.title}</h3>
-      <p className="text-gray-600">{plan.description}</p>
+      <p className="text-gray-600 text-center">{plan.description}</p>
 
       <div className="flex items-baseline gap-1">
         {plan.pricePrefix && (
@@ -20,7 +20,7 @@ function PricingCard({ plan }: PricingCardProps) {
 
       <Button
         size="lg"
-        className="w-full rounded-full px-8 h-[56px] text-[16px] bg-[#0066FF] hover:bg-[#0066FF]/90"
+        className=" rounded-full px-28 h-[56px] text-[16px] bg-[#0066FF] hover:bg-[#0066FF]/90"
       >
         {plan.ctaText}
       </Button>
@@ -40,7 +40,7 @@ export async function Pricing() {
   const plans = await getPricingPlans()
 
   return (
-    <section className="relative overflow-hidden bg-[#0066FF] py-24">
+    <section className="relative overflow-hidden bg-[#0066FF] py-24 rounded-[32px]">
       <div className="container relative mx-auto px-6">
         <h2 className="text-center text-[56px] font-medium text-white mb-16">
           Pricing

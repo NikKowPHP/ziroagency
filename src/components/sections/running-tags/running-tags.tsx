@@ -43,7 +43,7 @@ export function RunningTags({ services, speed = 50 }: RunningTagsProps) {
   return (
     <div
       ref={scrollerRef}
-      className="max-w-[100vw] overflow-hidden bg-black py-8"
+      className="max-w-[100vw] overflow-hidden rounded-full bg-black py-8"
     >
       <div
         ref={scrollerInnerRef}

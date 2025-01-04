@@ -44,11 +44,14 @@ export default function HomePage() {
           </section>
         </Suspense>
 
-        <RunningTags services={services} />
 
         <Suspense fallback={<div className="min-h-[400px]" />}>
           <CaseStudies />
         </Suspense>
+
+        <div className="py-20">
+          <RunningTags services={services} />
+        </div>
 
         <Suspense fallback={<div className="min-h-[400px]" />}>
           <Pricing />
