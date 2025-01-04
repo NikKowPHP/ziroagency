@@ -52,7 +52,7 @@ export function RunningTags({ services, speed = 50 }: RunningTagsProps) {
         {services.map((service) => (
           <span
             key={service.id}
-            className="flex-shrink-0 text-[24px] font-medium text-white"
+            className="flex-shrink-0 py-6 text-[24px] font-normal text-sm text-white"
           >
             {service.name}
           </span>

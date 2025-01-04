@@ -45,7 +45,7 @@ export async function Pricing() {
         <h2 className="text-center text-[56px] font-medium text-white mb-16">
           Pricing
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto pb-10">
           {plans.map((plan) => (
             <PricingCard key={plan.id} plan={plan} />
           ))}

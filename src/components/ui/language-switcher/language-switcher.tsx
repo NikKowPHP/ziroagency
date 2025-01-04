@@ -34,7 +34,7 @@ export function LanguageSwitcher() {
             className={cn(
               'px-4 py-2 text-sm font-medium transition-all duration-200',
               // First button (English)
-              index === 0 && 'rounded-l-full',
+              index === 0 && 'rounded-full',
               // Last button (Polish)
               index === languages.length - 1 && 'rounded-r-full',
               currentLang === lang.code
