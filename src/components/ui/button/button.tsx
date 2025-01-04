@@ -19,6 +19,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size = 'md',
       isActive,
       isFullWidth,
+      onClick,
       ...props
     },
     ref
@@ -68,6 +69,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         ref={ref}
         {...props}
+        onClick={onClick}
       />
     )
   }

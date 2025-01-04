@@ -5,6 +5,7 @@ import { RunningTags } from '@/components/sections/running-tags/running-tags'
 import { Pricing } from '@/components/sections/pricing/pricing'
 import { Faq } from '@/components/sections/faq/faq'
 import { services } from '@/lib/data/services'
+import { HeroButtons } from '@/components/sections/hero/hero-buttons'
 
 export default function HomePage() {
   return (
@@ -26,24 +27,9 @@ export default function HomePage() {
             <p className="text-[24px] text-gray-900 leading-relaxed max-w-2xl">
               Partnering for Your Success Through Design
             </p>
-            <div className="flex gap-4 pt-8">
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-full px-10 h-[56px] text-[16px] border-[#0066FF] text-[#0066FF] hover:bg-[#0066FF]/5"
-              >
-                View pricing
-              </Button>
-              <Button
-                size="lg"
-                className="rounded-full px-10 h-[56px] text-[16px] bg-[#0066FF] hover:bg-[#0066FF]/90"
-              >
-                Book a call
-              </Button>
-            </div>
+            <HeroButtons />
           </section>
         </Suspense>
-
 
         <Suspense fallback={<div className="min-h-[400px]" />}>
           <CaseStudies />

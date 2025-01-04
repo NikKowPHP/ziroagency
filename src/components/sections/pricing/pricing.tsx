@@ -40,7 +40,7 @@ export async function Pricing() {
   const plans = await getPricingPlans()
 
   return (
-    <section className="relative overflow-hidden bg-[#0066FF] py-24 rounded-[32px]">
+    <section id="pricing" className="relative overflow-hidden bg-[#0066FF] py-24 rounded-[32px]">
       <div className="container relative mx-auto px-6">
         <h2 className="text-center text-[56px] font-medium text-white mb-16">
           Pricing
