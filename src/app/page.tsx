@@ -18,7 +18,7 @@ export default function HomePage() {
           }
         >
           <section className="flex flex-col items-center text-center pt-[160px] pb-[100px] space-y-8">
-            <h1 className="text-[80px] leading-[1.1] font-medium tracking-[-0.02em]">
+            <h1 className="text-[80px] leading-[1.1] font-medium tracking-[-0.02em] text-primary">
               Creating Brands
               <br />
               with care
@@ -30,13 +30,13 @@ export default function HomePage() {
               <Button
                 variant="outline"
                 size="lg"
-                className="rounded-full px-8 h-[56px] text-[16px] border-[#0066FF] text-[#0066FF] hover:bg-[#0066FF]/5"
+                className="rounded-full px-10 h-[56px] text-[16px] border-[#0066FF] text-[#0066FF] hover:bg-[#0066FF]/5"
               >
                 View pricing
               </Button>
               <Button
                 size="lg"
-                className="rounded-full px-8 h-[56px] text-[16px] bg-[#0066FF] hover:bg-[#0066FF]/90"
+                className="rounded-full px-10 h-[56px] text-[16px] bg-[#0066FF] hover:bg-[#0066FF]/90"
               >
                 Book a call
               </Button>
