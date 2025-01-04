@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { Button } from '@/components/ui/button/button'
 import { CaseStudies } from '@/components/sections/case-studies/case-studies'
 import { RunningTags } from '@/components/sections/running-tags/running-tags'
+import { Pricing } from '@/components/sections/pricing/pricing'
 import { services } from '@/lib/data/services'
 
 export default function HomePage() {
@@ -46,6 +47,10 @@ export default function HomePage() {
 
         <Suspense fallback={<div className="min-h-[400px]" />}>
           <CaseStudies />
+        </Suspense>
+
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <Pricing />
         </Suspense>
       </div>
     </div>
