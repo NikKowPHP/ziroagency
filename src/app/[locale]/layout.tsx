@@ -1,29 +1,32 @@
-import { NextIntlClientProvider } from 'next-intl'
-import { notFound } from 'next/navigation'
-import { Header } from '@/components/layout/header/header'
-import { Footer } from '@/components/layout/footer/footer'
-import { LanguageSwitcher } from '@/components/ui/language-switcher/language-switcher'
-import { Inter } from 'next/font/google'
-import '@/styles/globals.css'
-import { locales } from '@/i18n'
+import {NextIntlClientProvider} from 'next-intl';
+import {notFound} from 'next/navigation';
+import {Header} from '@/components/layout/header/header';
+import {Footer} from '@/components/layout/footer/footer';
+import {LanguageSwitcher} from '@/components/ui/language-switcher/language-switcher';
+import { Inter } from 'next/font/google';
+import '@/styles/globals.css';
+import {locales, type Locale} from '@/i18n';
+import {requestLocale} from '@/i18n/request-locale';
 
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
-})
+});
 
 export function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'pl' }]
+  return locales.map((locale) => ({locale}));
 }
 
-export function generateMetadata({
-  params: { locale }
+export async function generateMetadata({
+  params
 }: {
-  params: { locale: string }
+  params: {locale: Locale}
 }) {
+  const locale = await requestLocale();
+  
   if (!locales.includes(locale as any)) {
-    notFound()
+    notFound();
   }
 
   return {
@@ -32,16 +35,18 @@ export function generateMetadata({
       template: '%s | Ziro Health',
     },
     description: 'Healthcare platform for modern practices',
-  }
+  };
 }
 
 export default async function LocaleLayout({
   children,
-  params: { locale }
+  params
 }: {
-  children: React.ReactNode
-  params: { locale: string }
+  children: React.ReactNode;
+  params: {locale: Locale};
 }) {
+  const locale = await requestLocale();
+  
   let messages;
   try {
     messages = (await import(`@/messages/${locale}.json`)).default;
@@ -60,5 +65,6 @@ export default async function LocaleLayout({
         </NextIntlClientProvider>
       </body>
     </html>
-  )
-} 
+  );
+}
+
