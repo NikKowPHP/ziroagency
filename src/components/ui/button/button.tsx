@@ -65,7 +65,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           href={href}
           target={target}
           className={classes}
-          {...(props as any)}
+          {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
         >
           {props.children}
         </Link>
@@ -83,3 +83,4 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 )
 
 Button.displayName = 'Button'
+

@@ -1,32 +1,29 @@
-import {NextIntlClientProvider} from 'next-intl';
-import {notFound} from 'next/navigation';
-import {Header} from '@/components/layout/header/header';
-import {Footer} from '@/components/layout/footer/footer';
-import {LanguageSwitcher} from '@/components/ui/language-switcher/language-switcher';
-import { Inter } from 'next/font/google';
-import '@/styles/globals.css';
-import {locales, type Locale} from '@/i18n';
-import {requestLocale} from '@/i18n/request-locale';
+import { NextIntlClientProvider } from 'next-intl'
+import { notFound } from 'next/navigation'
+import { Inter } from 'next/font/google'
+import '@/styles/globals.css'
+import { locales, type Locale } from '@/i18n'
+import { ClientWrapper } from './client-wrapper'
 
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
-});
+})
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({locale}));
+  return locales.map((locale) => ({ locale }))
 }
 
 export async function generateMetadata({
-  params
+  params,
 }: {
-  params: {locale: Locale}
+  params: Promise<{ locale: string }>
 }) {
-  const locale = await requestLocale();
-  
-  if (!locales.includes(locale as any)) {
-    notFound();
+  const { locale } = await params
+
+  if (!locales.includes(locale as Locale)) {
+    notFound()
   }
 
   return {
@@ -35,36 +32,40 @@ export async function generateMetadata({
       template: '%s | Ziro Health',
     },
     description: 'Healthcare platform for modern practices',
-  };
+  }
 }
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
-  children: React.ReactNode;
-  params: {locale: Locale};
+  children: React.ReactNode
+  params: Promise<{ locale: string }>
 }) {
-  const locale = await requestLocale();
-  
-  let messages;
+  const { locale } = await params
+
+  if (!locales.includes(locale as Locale)) {
+    notFound()
+  }
+
+  let messages
   try {
-    messages = (await import(`@/messages/${locale}.json`)).default;
+    messages = (await import(`@/messages/${locale}.json`)).default
   } catch (error) {
-    notFound();
+    console.error(error)
+    notFound()
   }
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={inter.variable}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <LanguageSwitcher />
+          <ClientWrapper>
+            <main>{children}</main>
+          </ClientWrapper>
         </NextIntlClientProvider>
       </body>
     </html>
-  );
+  )
 }
 
