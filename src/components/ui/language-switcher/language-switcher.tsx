@@ -16,7 +16,26 @@ const languages: Language[] = [
 export function LanguageSwitcher() {
   const router = useRouter()
   const pathname = usePathname()
-  const currentLang = pathname.startsWith('/pl') ? 'pl' : 'en'
+  
+  // Get the path segments and remove empty strings
+  const segments = pathname.split('/').filter(Boolean)
+  
+  // First segment is always the locale if present
+  const currentLang = segments[0] === 'pl' ? 'pl' : 'en'
+
+  const handleLanguageSwitch = (targetLang: string) => {
+    if (currentLang === targetLang) return
+
+    // Remove the current locale from segments if it exists
+    const pathWithoutLocale = segments[0] === 'en' || segments[0] === 'pl'
+      ? segments.slice(1)
+      : segments
+
+    // Construct new path with target language
+    const newPath = `/${targetLang}${pathWithoutLocale.length > 0 ? '/' + pathWithoutLocale.join('/') : ''}`
+    
+    router.push(newPath)
+  }
 
   return (
     <div className="fixed bottom-8 right-8 z-50">
@@ -24,19 +43,13 @@ export function LanguageSwitcher() {
         {languages.map((lang, index) => (
           <button
             key={lang.code}
-            onClick={() => {
-              const newPath =
-                currentLang === 'en'
-                  ? `/pl${pathname}`
-                  : pathname.replace('/pl', '')
-              router.push(newPath)
-            }}
+            onClick={() => handleLanguageSwitch(lang.code)}
             className={cn(
               'px-4 py-2 text-sm font-medium transition-all duration-200',
               // First button (English)
               index === 0 && 'rounded-full',
               // Last button (Polish)
-              index === languages.length - 1 && 'rounded-r-full',
+              index === languages.length - 1 && 'rounded-full',
               currentLang === lang.code
                 ? 'bg-[#0066FF] text-white'
                 : 'text-gray-700 hover:text-gray-900'
