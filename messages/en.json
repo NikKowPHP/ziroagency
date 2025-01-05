@@ -2,5 +2,13 @@
   "hero": {
     "title": "Creating Brands with care",
     "subtitle": "Partnering for Your Success Through Design"
+  },
+  "footer": {
+    "address": "Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland"
+  },
+  "navigation": {
+    "bookCall": "Book a call",
+    "work": "Work",
+    "pricing": "Pricing"
   }
 } 

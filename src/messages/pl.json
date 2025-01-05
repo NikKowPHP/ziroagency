@@ -5,5 +5,11 @@
   },
   "footer": {
     "address": "Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland"
+  },
+  "navigation": {
+    "work": "Realizacje",
+    "pricing": "Cennik",
+    "bookCall": "Umów się na spotkanie"
   }
+
 } 

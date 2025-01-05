@@ -43,7 +43,7 @@ export function Header() {
                   pathname === item.href ? 'text-gray-900' : 'text-gray-900'
                 )}
               >
-                {item.title}
+                {t(item.title)}
               </Button>
             ))}
           </nav>
