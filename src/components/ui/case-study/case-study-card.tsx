@@ -43,6 +43,7 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
             <Image
               src={image.url}
               alt={image.alt}
+              loading="lazy"
               fill
               className="object-cover"
             />
