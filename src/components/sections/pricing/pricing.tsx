@@ -1,4 +1,3 @@
-'use client'
 
 import { Button } from '@/components/ui/button/button'
 import { getPricingPlans, type PricingPlan } from '@/lib/data/pricing'
