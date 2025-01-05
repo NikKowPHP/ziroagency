@@ -1,6 +1,9 @@
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export function Footer() {
+  const t = useTranslations('footer')
+  
   return (
     <footer className="bg-gray-50 py-12">
       <div className="container mx-auto px-6">
@@ -14,13 +17,11 @@ export function Footer() {
               className="h-30 w-30"
             />
             <div className="text-gray-500">
-              Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland
+              {t('address')}
             </div>
           </div>
-
         </div>
       </div>
-
     </footer>
   )
 }

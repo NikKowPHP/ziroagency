@@ -6,8 +6,11 @@ import { Button } from '@/components/ui/button/button'
 import { navigationConfig } from '@/config/navigation'
 import { cn } from '@/lib/utils/cn'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+
 export function Header() {
   const pathname = usePathname()
+  const t = useTranslations('navigation')
 
   return (
     <header className="fixed top-10 xl:mx-40 lg:mx-20 sm:mx-10  rounded-full left-0 right-0 z-50 bg-[#F7F7F7] bg-opacity-80 backdrop-blur-sm">
@@ -53,7 +56,7 @@ export function Header() {
               window.location.href = 'https://calendly.com/ziro-nikhil/30min'
             }}
           >
-            Book a call
+            {t('bookCall')}
           </Button>
         </div>
       </div>

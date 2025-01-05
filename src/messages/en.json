@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "title": "Ziro Health",
+    "description": "Healthcare platform for modern practices"
+  },
+  "navigation": {
+    "bookCall": "Book a Call",
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Creating Brands with care",
+    "subtitle": "Partnering for Your Success Through Design"
+  },
+  "footer": {
+    "address": "Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland"
+  }
+} 
