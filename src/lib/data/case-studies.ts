@@ -8,6 +8,7 @@ export interface CaseStudy {
     alt: string
   }[]
   ctaText: string
+  ctaTextName: string
   ctaUrl: string
 }
 
@@ -27,6 +28,7 @@ export const caseStudies: CaseStudy[] = [
     //   { url: '/images/case-studies/gsense/card.jpg', alt: 'Business card' }
     ],
     ctaText: 'View Case Study',
+    ctaTextName: 'viewCaseStudy',
     ctaUrl: '/work/gsense'
     },
     {
@@ -38,6 +40,7 @@ export const caseStudies: CaseStudy[] = [
           { url: '/images/case-studies/supernormal/supernormal.avif', alt: 'SuperNormal app interface' },
         ],
         ctaText: 'View Case Study',
+        ctaTextName: 'viewCaseStudy',
         ctaUrl: '/work/supernormal'
     },
    

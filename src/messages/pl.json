@@ -11,6 +11,9 @@
     "pricing": "Cennik",
     "bookCall": "Umów się na spotkanie",
     "viewPricing": "Zobacz cennik"
+  },
+  "caseStudy": {
+    "ctaText": "Zobacz realizację",
+    "viewCaseStudy": "Zobacz realizację"
   }
-
 } 

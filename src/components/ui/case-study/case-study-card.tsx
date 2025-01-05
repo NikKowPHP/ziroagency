@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button/button'
 import { Tag } from '@/components/ui/tag/tag'
 import { type CaseStudy } from '@/lib/data/case-studies'
 import { cn } from '@/lib/utils/cn'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 
 interface CaseStudyCardProps {
@@ -11,6 +12,7 @@ interface CaseStudyCardProps {
 }
 
 export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
+  const t = useTranslations('caseStudy')
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 py-32 rounded-[32px] border border-gray-200 p-10 shadow-sm">
       <div className="flex flex-col justify-center space-y-8">
@@ -28,7 +30,7 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
           ))}
         </div>
         <div className="pt-10 pr-[15px] block xl:block lg:block md:hidden sm:hidden">
-          <Button size="xl">{caseStudy.ctaText}</Button>
+          <Button size="xl">{t(caseStudy.ctaTextName)}</Button>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4 auto-rows-[200px]">
