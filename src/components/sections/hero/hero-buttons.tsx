@@ -1,8 +1,11 @@
 'use client'
 
 import { Button } from '@/components/ui/button/button'
+import { useTranslations } from 'next-intl'
 
 export function HeroButtons() {
+
+  const t = useTranslations('navigation')
   return (
     <div className="flex gap-4 pt-8">
       <Button
@@ -21,7 +24,7 @@ export function HeroButtons() {
           })
         }}
       >
-        View pricing
+        {t('viewPricing')}
       </Button>
       <Button
         size="lg"
@@ -30,7 +33,7 @@ export function HeroButtons() {
           window.location.href = 'https://calendly.com/ziro-nikhil/30min'
         }}
       >
-        Book a call
+        {t('bookCall')}
       </Button>
     </div>
   )

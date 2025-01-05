@@ -9,6 +9,7 @@
   "navigation": {
     "bookCall": "Book a call",
     "work": "Work",
-    "pricing": "Pricing"
+    "pricing": "Pricing",
+    "viewPricing": "View pricing"
   }
 } 

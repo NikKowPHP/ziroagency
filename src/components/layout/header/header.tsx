@@ -27,6 +27,7 @@ export function Header() {
             />
           </Link>
 
+{/* todo: fix layout for desktop */}
 
           {/* Main Navigation */}
           <nav className="hidden md:flex items-center gap-8">
