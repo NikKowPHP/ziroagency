@@ -13,7 +13,7 @@ export function Header() {
   const t = useTranslations('navigation')
 
   return (
-    <header className="fixed top-10 xl:mx-40 lg:mx-20 sm:mx-10  rounded-full left-0 right-0 z-50 bg-[#F7F7F7] bg-opacity-80 backdrop-blur-sm">
+    <header className="fixed top-10  container rounded-full left-0 right-0 z-50 bg-[#F7F7F7] bg-opacity-80 backdrop-blur-sm">
       <div className="container mx-auto px-6">
         <div className="flex h-[72px] items-center justify-between">
           {/* Logo */}
