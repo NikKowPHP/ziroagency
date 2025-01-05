@@ -15,5 +15,38 @@
   "caseStudy": {
     "ctaText": "Zobacz realizację",
     "viewCaseStudy": "Zobacz realizację"
+  },
+  "pricing": {
+    "title": "Cennik",
+    "onePagePlan": {
+      "title": "Strona One-Page",
+      "description": "Usprawnione, angażujące i efektywne projekty dla maksymalnego wpływu w jednym przewijaniu!",
+      "features": {
+        "delivery": "Średni czas realizacji 2-3 dni",
+        "userCentric": "Design zorientowany na użytkownika",
+        "responsive": "Responsywność i dostosowanie do urządzeń mobilnych",
+        "fastLoading": "Szybkie ładowanie",
+        "clearMessage": "Przejrzysty przekaz",
+        "costEffective": "Efektywne kosztowo rozwiązania",
+        "comprehensive": "Kompleksowe rozwiązania",
+        "maintenance": "Wsparcie techniczne"
+      }
+    },
+    "multiPagePlan": {
+      "title": "Strona Multi-Page",
+      "description": "Odkryj moc wielostronicowego designu dla płynnego, angażującego doświadczenia użytkownika!",
+      "features": {
+        "userCentric": "Design zorientowany na użytkownika",
+        "responsive": "Responsywność i dostosowanie do urządzeń mobilnych",
+        "fastLoading": "Szybkie ładowanie",
+        "performance": "Wydajność",
+        "costEffective": "Efektywne kosztowo rozwiązania",
+        "comprehensive": "Kompleksowe rozwiązania",
+        "maintenance": "Wsparcie techniczne",
+        "support": "Dedykowane wsparcie"
+      }
+    },
+    "from": "od",
+    "ctaText": "Umów się na spotkanie"
   }
 } 

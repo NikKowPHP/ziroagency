@@ -11,5 +11,38 @@
     "work": "Work",
     "pricing": "Pricing",
     "viewPricing": "View pricing"
+  },
+  "pricing": {
+    "title": "Pricing",
+    "onePagePlan": {
+      "title": "One-Page Solution",
+      "description": "Streamlined, Engaging, and Effective Designs for Maximum Impact in a Single Scroll!",
+      "features": {
+        "delivery": "Average 2-3 days delivery",
+        "userCentric": "User-Centric Design",
+        "responsive": "Responsive and Mobile-friendly",
+        "fastLoading": "Fast-loading Speeds",
+        "clearMessage": "Clear Messaging",
+        "costEffective": "Cost-Effective Solutions",
+        "comprehensive": "Comprehensive Solutions",
+        "maintenance": "Maintenance Support"
+      }
+    },
+    "multiPagePlan": {
+      "title": "Multi-Page Solution",
+      "description": "Unlock the power of multi-page design for a seamless, engaging user experience that drives results!",
+      "features": {
+        "userCentric": "User-Centric Design",
+        "responsive": "Responsive and Mobile-friendly",
+        "fastLoading": "Fast-loading Speeds",
+        "performance": "Performance Optimization",
+        "costEffective": "Cost-Effective Solutions",
+        "comprehensive": "Comprehensive Solutions",
+        "maintenance": "Maintenance Support",
+        "support": "Custom Support"
+      }
+    },
+    "from": "from",
+    "ctaText": "Book a call"
   }
 } 
