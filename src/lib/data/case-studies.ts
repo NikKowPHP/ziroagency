@@ -41,9 +41,24 @@ export const caseStudies: CaseStudy[] = [
         ],
         ctaText: 'View Case Study',
         ctaTextName: 'viewCaseStudy',
-        ctaUrl: '/work/supernormal'
+        // ctaUrl: '/work/supernormal'
+        ctaUrl: 'https://www.nikhil.health/p/supernormal-a-longevity-app-concept'
     },
-   
+    {
+        id: 'iqubx',
+        title: 'IQUBX',
+        description: 'A redesigned website for Iqubx, a New Delhi leader in green building products. The project focused on enhancing user experience and showcasing eco-friendly offerings like aluminum ceiling trapdoors, featuring a responsive design and a dedicated sustainability section.',
+        tags: ['Website', 'Visual Identity', 'Sustainability'],
+        images: [
+          { 
+            url: '/images/case-studies/iqubx/iqubx.avif', 
+            alt: 'IQUBX website redesign showcasing baffle ceiling systems' 
+          }
+        ],
+        ctaText: 'View Case Study',
+        ctaTextName: 'viewCaseStudy',
+        ctaUrl: 'https://iqubx.framer.website/'
+    }
 ]
 
 export async function getCaseStudies(): Promise<CaseStudy[]> {
