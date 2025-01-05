@@ -22,7 +22,9 @@ export default function HomePage() {
         >
           <section className="flex flex-col items-center text-center pt-[160px] pb-[100px] space-y-8">
             <h1 className="text-[80px] leading-[1.1] font-medium tracking-[-0.02em] text-primary">
-              {t('title')}
+              {t('title1')}
+              <br />
+              {t('title2')}
             </h1>
             <p className="text-[24px] text-gray-900 leading-relaxed max-w-2xl">
               {t('subtitle')}

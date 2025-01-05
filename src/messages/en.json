@@ -1,20 +1,53 @@
 {
-  "metadata": {
-    "title": "Ziro Health",
-    "description": "Healthcare platform for modern practices"
-  },
-  "navigation": {
-    "bookCall": "Book a Call",
-    "home": "Home",
-    "about": "About",
-    "services": "Services",
-    "contact": "Contact"
-  },
   "hero": {
-    "title": "Creating Brands with care",
+    "title1": "Creating Brands",
+    "title2": "with care",
     "subtitle": "Partnering for Your Success Through Design"
   },
   "footer": {
     "address": "Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland"
+  },
+  "navigation": {
+    "work": "Work",
+    "pricing": "Pricing",
+    "bookCall": "Book a Call",
+    "viewPricing": "View Pricing"
+  },
+  "caseStudy": {
+    "ctaText": "View Case Study",
+    "viewCaseStudy": "View Case Study"
+  },
+  "pricing": {
+    "title": "Pricing",
+    "onePagePlan": {
+      "title": "One-Page Solution",
+      "description": "Streamlined, engaging, and effective designs for maximum impact in a single scroll!",
+      "features": {
+        "delivery": "Average 2-3 days delivery",
+        "userCentric": "User-Centric Design",
+        "responsive": "Responsive and Mobile-friendly",
+        "fastLoading": "Fast-loading Speeds",
+        "clearMessage": "Clear Messaging",
+        "costEffective": "Cost-Effective Solutions",
+        "comprehensive": "Comprehensive Solutions",
+        "maintenance": "Maintenance Support"
+      }
+    },
+    "multiPagePlan": {
+      "title": "Multi-Page Solution",
+      "description": "Unlock the power of multi-page design for a seamless, engaging user experience!",
+      "features": {
+        "userCentric": "User-Centric Design",
+        "responsive": "Responsive and Mobile-friendly",
+        "fastLoading": "Fast-loading Speeds",
+        "performance": "Performance Optimization",
+        "costEffective": "Cost-Effective Solutions",
+        "comprehensive": "Comprehensive Solutions",
+        "maintenance": "Maintenance Support",
+        "support": "Dedicated Support"
+      }
+    },
+    "from": "from",
+    "ctaText": "Book a Call"
   }
 } 
