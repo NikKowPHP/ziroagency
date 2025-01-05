@@ -30,7 +30,7 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
           ))}
         </div>
         <div className="pt-10 pr-[15px] block xl:block lg:block md:hidden sm:hidden">
-          <Button size="xl">{t(caseStudy.ctaTextName)}</Button>
+          <Button size="xl" href={caseStudy.ctaUrl} >{t(caseStudy.ctaTextName)}</Button>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4 auto-rows-[200px]">
