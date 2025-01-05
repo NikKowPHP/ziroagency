@@ -49,6 +49,9 @@ export function Header() {
           <Button
             size="sm"
             className="rounded-full px-6 h-10 text-[15px] bg-white text-black hover:bg-white/90"
+            onClick={() => {
+              window.location.href = 'https://calendly.com/ziro-nikhil/30min'
+            }}
           >
             Book a call
           </Button>
