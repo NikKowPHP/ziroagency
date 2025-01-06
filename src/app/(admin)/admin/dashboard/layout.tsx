@@ -1,7 +1,5 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/supabase'
-import { ProtectedRoute } from '@/components/protected-route'
-import { AuthProvider } from '@/contexts/auth-context'
 
 export default async function AdminLayout({
   children,
@@ -11,11 +9,10 @@ export default async function AdminLayout({
   const session = await getSession()
     
   if (!session) {
-    redirect('/admin/login')
+    redirect('/login')
   }
 
   return (
-    <ProtectedRoute>
       <div className="min-h-screen bg-gray-100">
         <nav className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,6 +36,5 @@ export default async function AdminLayout({
           </div>
         </main>
       </div>
-    </ProtectedRoute>
   )
 } 

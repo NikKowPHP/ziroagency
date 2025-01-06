@@ -20,7 +20,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 const authService = new SupabaseAuthService()
 
 const isAdminRoute = (path: string) => {
-  const adminRoutes = ['/login', '/case-studies', '/dashboard']
+  const adminRoutes = ['/admin', '/admin/login', '/admin/dashboard', '/admin/case-studies']
   return adminRoutes.some(route => path.startsWith(route))
 }
 
@@ -52,9 +52,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const currentPath = window.location.pathname
 
         if (event === 'SIGNED_IN' && !isAdminRoute(currentPath)) {
-          router.replace('/dashboard')
+          router.replace('/admin/dashboard')
         } else if (event === 'SIGNED_OUT') {
-          router.replace('/login')
+          router.replace('/admin/login')
         }
       }
     )
@@ -70,7 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(user)
       setSession(session)
       if (user) {
-        router.push('/admin')
+        router.push('/admin/dashboard')
       }
     } catch (error) {
       const message = error instanceof AuthError 

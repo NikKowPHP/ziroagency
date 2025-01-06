@@ -1,5 +1,5 @@
 import { getCaseStudies } from '@/lib/data/case-studies'
-import { CaseStudyList } from '@/app/(admin)/case-studies/case-study-list'
+import { CaseStudyList } from '@/app/(admin)/admin/case-studies/case-study-list'
 import { Suspense } from 'react'
 
 export default async function CaseStudiesAdminPage() {
