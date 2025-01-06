@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
     revalidateTag(CACHE_TAGS.CASE_STUDIES);
     return NextResponse.json({ revalidated: true, now: Date.now() });
   } catch (error) {
+    console.error('Error revalidating', error);
     return NextResponse.json(
       { message: 'Error revalidating' }, 
       { status: 500 }

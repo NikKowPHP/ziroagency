@@ -5,7 +5,7 @@ import { Suspense } from 'react'
 // import { Faq } from '@/components/sections/faq/faq'
 import { services } from '@/lib/data/services'
 import { HeroButtons } from '@/components/sections/hero/hero-buttons'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import dynamic from 'next/dynamic'
 import { Metadata } from 'next'
 import { type Locale } from '@/i18n'
@@ -40,9 +40,7 @@ const Faq = dynamic(
 )
 
 interface HomePageProps {
-  params: {
-    locale: Locale
-  }
+  params: Promise<{ locale: Locale }>
 }
 
 export const metadata: Metadata = {
@@ -68,8 +66,9 @@ export const metadata: Metadata = {
   }
 }
 
-export default function HomePage({ params: { locale } }: HomePageProps) {
-  const t = useTranslations('hero')
+export default async function HomePage({ params }: HomePageProps) {
+  const { locale } = await params
+  const t = await getTranslations('hero')
 
   return (
     <div 

@@ -1,4 +1,4 @@
-import { CaseStudy, Image } from '@/domain/models/case-study.model';
+import { CaseStudy } from '@/domain/models/case-study.model';
 import { CaseStudyDTO } from '../dto/case-study.dto';
 
 export class CaseStudyMapper {
