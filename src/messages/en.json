@@ -86,5 +86,10 @@
         "answer": "Getting started is easy! Simply book a call with us, and we'll discuss your project requirements, timeline, and budget. We'll guide you through the entire process and help you choose the best solution for your needs."
       }
     }
+  },
+  "404": {
+    "title": "Page Not Found",
+    "description": "Sorry, we couldn't find the page you're looking for.",
+    "backHome": "Back to Home"
   }
 } 

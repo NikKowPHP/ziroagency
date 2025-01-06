@@ -86,5 +86,10 @@
         "answer": "Rozpoczęcie jest proste! Po prostu umów się na rozmowę z nami, a omówimy wymagania Twojego projektu, harmonogram i budżet. Przeprowadzimy Cię przez cały proces i pomożemy wybrać najlepsze rozwiązanie dla Twoich potrzeb."
       }
     }
+  },
+  "404": {
+    "title": "Nie znaleziono strony",
+    "description": "Przepraszamy, nie mogliśmy znaleźć strony, której szukasz.",
+    "backHome": "Powrót do strony głównej"
   }
 } 
