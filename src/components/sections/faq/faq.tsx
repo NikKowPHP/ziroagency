@@ -1,28 +1,33 @@
 'use client'
 
 import { useState } from 'react'
-import { faqItems, type FaqItem } from '@/lib/data/faq'
+import { faqItems } from '@/lib/data/faq'
 import { cn } from '@/lib/utils/cn'
+import { useTranslations } from 'next-intl'
 
 interface FaqAccordionProps {
-  item: FaqItem
+  itemId: string
   isOpen: boolean
   onToggle: () => void
 }
 
-function FaqAccordion({ item, isOpen, onToggle }: FaqAccordionProps) {
+function FaqAccordion({ itemId, isOpen, onToggle }: FaqAccordionProps) {
+  const t = useTranslations('faq.items')
+
   return (
     <div className="border-b border-gray-200 last:border-0">
       <button
         className="flex w-full items-center justify-between py-6 text-left"
         onClick={onToggle}
       >
-        <span className="text-xl font-medium">{item.question}</span>
+        <span className="text-base sm:text-lg lg:text-xl font-medium">
+          {t(`${itemId}.question`)}
+        </span>
         <span className="ml-6 flex-shrink-0">
           {isOpen ? (
-            <MinusIcon className="h-6 w-6" />
+            <MinusIcon className="h-5 w-5 sm:h-6 sm:w-6" />
           ) : (
-            <PlusIcon className="h-6 w-6" />
+            <PlusIcon className="h-5 w-5 sm:h-6 sm:w-6" />
           )}
         </span>
       </button>
@@ -33,7 +38,9 @@ function FaqAccordion({ item, isOpen, onToggle }: FaqAccordionProps) {
         )}
       >
         <div className="overflow-hidden">
-          <p className="text-gray-600">{item.answer}</p>
+          <p className="text-gray-600 text-sm sm:text-base">
+            {t(`${itemId}.answer`)}
+          </p>
         </div>
       </div>
     </div>
@@ -42,16 +49,19 @@ function FaqAccordion({ item, isOpen, onToggle }: FaqAccordionProps) {
 
 export function Faq() {
   const [openId, setOpenId] = useState<string | null>(null)
+  const t = useTranslations('faq')
 
   return (
-    <section className="py-24">
-      <div className="container mx-auto px-6">
-        <h2 className="text-center text-[56px] font-medium mb-16">FAQ</h2>
+    <section className="py-12 sm:py-16 lg:py-24">
+      <div className="container mx-auto px-4 sm:px-6">
+        <h2 className="text-center text-[36px] sm:text-[46px] lg:text-[56px] font-medium mb-8 sm:mb-12 lg:mb-16">
+          {t('title')}
+        </h2>
         <div className="mx-auto max-w-3xl">
           {faqItems.map((item) => (
             <FaqAccordion
               key={item.id}
-              item={item}
+              itemId={item.id}
               isOpen={openId === item.id}
               onToggle={() => setOpenId(openId === item.id ? null : item.id)}
             />

@@ -49,5 +49,42 @@
     },
     "from": "od",
     "ctaText": "Umów się na spotkanie"
+  },
+  "faq": {
+    "title": "FAQ",
+    "items": {
+      "one-page": {
+        "question": "Czym jest strona one-page?",
+        "answer": "Strona one-page to pojedyncza strona internetowa zawierająca wszystkie niezbędne informacje o Twojej firmie lub projekcie. Jest idealna do prostych prezentacji, stron docelowych lub gdy chcesz przeprowadzić odwiedzających przez określony przepływ narracji. Cała treść jest zorganizowana w sekcje, które użytkownicy mogą przewijać lub nawigować za pomocą linków menu."
+      },
+      "multi-page-benefits": {
+        "question": "Jakie są zalety strony multi-page?",
+        "answer": "Strony multi-page oferują bardziej szczegółową organizację treści, lepsze możliwości SEO i są idealne dla złożonych firm. Pozwalają na głębsze hierarchie treści, dedykowane sekcje dla różnych usług lub produktów i mogą rozwijać się wraz z Twoją firmą. Są szczególnie skuteczne dla stron bogatych w treść i platform e-commerce."
+      },
+      "timeline": {
+        "question": "Jak długo trwa zaprojektowanie i stworzenie strony?",
+        "answer": "Czas realizacji zależy od zakresu projektu. Strona one-page zazwyczaj zajmuje 2-3 dni, podczas gdy strony multi-page mogą zająć 1-4 tygodnie. Czynniki wpływające na harmonogram to złożoność projektu, liczba stron, niestandardowe funkcje i przygotowanie treści."
+      },
+      "mobile-friendly": {
+        "question": "Czy moja strona będzie dostosowana do urządzeń mobilnych?",
+        "answer": "Tak, absolutnie! Wszystkie nasze strony są budowane z podejściem mobile-first i są w pełni responsywne. Automatycznie dostosowują się, aby wyglądać i działać perfekcyjnie na wszystkich urządzeniach - smartfonach, tabletach, laptopach i komputerach stacjonarnych."
+      },
+      "support": {
+        "question": "Czy oferujecie wsparcie po uruchomieniu strony?",
+        "answer": "Tak, zapewniamy bieżącą konserwację i wsparcie, aby zapewnić optymalne działanie Twojej strony. Obejmuje to regularne aktualizacje, monitorowanie bezpieczeństwa i wsparcie techniczne w razie potrzeby."
+      },
+      "additional-features": {
+        "question": "Co jeśli później będę potrzebować dodatkowych funkcji?",
+        "answer": "Nasze strony są budowane z myślą o skalowalności. Możesz łatwo dodawać nowe funkcje lub funkcjonalności w miarę rozwoju Twojej firmy. Pomożemy Ci zaplanować i wdrożyć te dodatki, zachowując spójność i wydajność Twojej strony."
+      },
+      "choose-type": {
+        "question": "Jak wybrać między stroną one-page a multi-page?",
+        "answer": "Wybór zależy od Twoich konkretnych potrzeb. Strony one-page są świetne do prostych prezentacji i skoncentrowanych przekazów, podczas gdy strony multi-page są lepsze dla złożonych treści i większych firm. Pomożemy Ci ocenić Twoje potrzeby i zarekomendować najlepsze rozwiązanie."
+      },
+      "get-started": {
+        "question": "Jak rozpocząć współpracę?",
+        "answer": "Rozpoczęcie jest proste! Po prostu umów się na rozmowę z nami, a omówimy wymagania Twojego projektu, harmonogram i budżet. Przeprowadzimy Cię przez cały proces i pomożemy wybrać najlepsze rozwiązanie dla Twoich potrzeb."
+      }
+    }
   }
 } 
