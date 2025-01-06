@@ -10,8 +10,18 @@ export function PricingCard({ plan }: PricingCardProps) {
   const t = useTranslations('pricing')
 
   return (
-    <div className="flex flex-col items-center p-6 sm:p-8 md:p-10 bg-white rounded-[24px] sm:rounded-[32px] space-y-4 sm:space-y-6">
-      <h3 className="text-[24px] sm:text-[28px] md:text-[32px] font-medium text-center">
+    <div 
+      className="flex flex-col items-center p-6 sm:p-8 md:p-10 bg-white rounded-[24px] 
+    sm:rounded-[32px] space-y-4 sm:space-y-6"
+      itemScope 
+      itemType="https://schema.org/Offer"
+    >
+      <meta itemProp="priceCurrency" content="PLN" />
+      <meta itemProp="price" content={plan.price.toString()} />
+      <h3 
+        className="text-[24px] sm:text-[28px] md:text-[32px] font-medium text-center"
+        itemProp="name"
+      >
         {t(plan.title)}
       </h3>
       

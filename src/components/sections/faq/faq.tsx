@@ -15,7 +15,11 @@ function FaqAccordion({ itemId, isOpen, onToggle }: FaqAccordionProps) {
   const t = useTranslations('faq.items')
 
   return (
-    <div className="border-b border-gray-200 last:border-0">
+    <div
+      className="border-b border-gray-200 last:border-0"
+      itemScope
+      itemType="https://schema.org/Question"
+    >
       <button
         className="flex w-full items-center justify-between py-6 text-left"
         onClick={onToggle}
@@ -52,7 +56,11 @@ export function Faq() {
   const t = useTranslations('faq')
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24">
+    <section
+      className="py-12 sm:py-16 lg:py-24"
+      itemScope
+      itemType="https://schema.org/FAQPage"
+    >
       <div className="container mx-auto px-4 sm:px-6">
         <h2 className="text-center text-[36px] sm:text-[46px] lg:text-[56px] font-medium mb-8 sm:mb-12 lg:mb-16">
           {t('title')}

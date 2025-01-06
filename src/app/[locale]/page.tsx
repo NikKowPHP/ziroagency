@@ -39,14 +39,25 @@ const Faq = dynamic(
 )
 
 export const metadata: Metadata = {
-  title: 'Professional Web Design & Development Services | ZIRO',
-  description: 'Transform your digital presence with our expert web design and development services. Custom websites, responsive design, and modern web solutions.',
+  title: 'Professional Web Design & Development Services | ZIRO Agency',
+  description: 'Expert web design and development services for modern businesses. Custom websites, responsive design, and cutting-edge web solutions.',
+  keywords: ['web design', 'web development', 'custom websites', 'responsive design', 'web agency'],
   alternates: {
     canonical: 'https://ziro.agency',
+    languages: {
+      'en-US': '/en',
+      'pl-PL': '/pl',
+    },
   },
   openGraph: {
     title: 'Expert Web Design & Development | ZIRO',
-    description: 'Custom web solutions for modern businesses',
+    description: 'Transform your online presence with our professional web solutions',
+    images: [{
+      url: '/images/og-image.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'ZIRO Web Design Services'
+    }]
   }
 }
 
@@ -54,7 +65,13 @@ export default function HomePage() {
   const t = useTranslations('hero')
 
   return (
-    <div className="relative overflow-hidden min-h-screen bg-white">
+    <div 
+      className="relative overflow-hidden min-h-screen bg-white"
+      itemScope 
+      itemType="https://schema.org/WebSite"
+    >
+      <meta itemProp="name" content="ZIRO Agency" />
+      <meta itemProp="description" content="Professional Web Design & Development Services" />
       <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
         <Suspense
           fallback={

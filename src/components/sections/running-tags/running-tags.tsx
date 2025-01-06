@@ -44,17 +44,23 @@ export function RunningTags({ services, speed = 50 }: RunningTagsProps) {
     <div
       ref={scrollerRef}
       className="max-w-[100vw] overflow-hidden rounded-full bg-black py-8"
+      itemScope 
+      itemType="https://schema.org/ItemList" 
     >
       <div
         ref={scrollerInnerRef}
         className="flex min-w-full shrink-0 gap-8 py-4"
       >
-        {services.map((service) => (
+        {services.map((service, index) => (
           <span
             key={service.id}
             className="flex-shrink-0 py-6 text-[24px] font-normal text-sm text-white"
+            itemProp="itemListElement"
+            itemScope 
+            itemType="https://schema.org/Service"
           >
-            {service.name}
+             <meta itemProp="position" content={String(index + 1)} />
+             <span itemProp="name">{service.name}</span>
           </span>
         ))}
       </div>

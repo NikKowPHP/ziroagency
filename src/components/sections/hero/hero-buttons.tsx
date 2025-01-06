@@ -7,14 +7,18 @@ export function HeroButtons() {
   const t = useTranslations('navigation')
   
   return (
-    <div className="flex flex-col sm:flex-row gap-4 pt-6 sm:pt-8 w-full sm:w-auto px-4 sm:px-0">
+    <div 
+      className="flex flex-col sm:flex-row gap-4 pt-6 sm:pt-8 w-full sm:w-auto px-4 sm:px-0"
+      role="group"
+      aria-label="Hero actions"
+    >
       <Button
         variant="outline"
         size="lg"
         className="w-full sm:w-auto rounded-full px-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] border-[#0066FF] text-[#0066FF] hover:bg-[#0066FF]/5"
         onClick={() => {
           const element = document.getElementById('pricing')
-          const offset = -100 // Adjust this value to control the offset from top
+          const offset = -100
           const elementPosition = element?.getBoundingClientRect().top ?? 0
           const offsetPosition = elementPosition + window.pageYOffset + offset
           
@@ -23,6 +27,7 @@ export function HeroButtons() {
             behavior: 'smooth'
           })
         }}
+        aria-label="View our pricing plans"
       >
         {t('viewPricing')}
       </Button>

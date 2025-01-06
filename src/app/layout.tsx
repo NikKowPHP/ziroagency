@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description: 'Transform your digital presence with our expert web design and development services.',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/ziro.avif',
         width: 1200,
         height: 630,
         alt: 'ZIRO Web Design and Development'
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ZIRO - Web Design & Development Agency',
     description: 'Professional web design and development services',
-    images: ['/images/twitter-image.jpg']
+    images: ['/images/ziro.avif']
   },
   robots: {
     index: true,
@@ -42,7 +42,24 @@ export const metadata: Metadata = {
     },
   },
   verification: {
+    // todo: add google verification code
     google: 'your-google-verification-code',
+  }
+}
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebDesignCompany",
+  "name": "ZIRO Agency",
+  "url": "https://ziro.agency",
+  "logo": "https://ziro.agency/images/ziro.avif",
+  "sameAs": [
+    "https://twitter.com/ziroagency",
+    "https://linkedin.com/company/ziroagency"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "Poland"
   }
 }
 
@@ -54,7 +71,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="canonical" href="https://yourdomain.com" />
+        <link rel="canonical" href="https://ziro.agency" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body>{children}</body>
     </html>
