@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Analytics } from "@vercel/analytics/react"
-import { AuthProvider } from '@/contexts/auth-context'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ziro.agency'),
@@ -80,9 +79,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <AuthProvider>
           {children}
-        </AuthProvider>
         <Analytics mode="production" debug={false} />
       </body>
     </html>

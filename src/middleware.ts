@@ -14,9 +14,9 @@ const PUBLIC_FILE = /\.(.*)$/;
 
 // Admin routes that should not have locale prefixes
 const adminRoutes = [
-  '/admin',
-  '/admin/login',
-  '/admin/case-studies'
+  '/login',
+  '/case-studies',
+  '/dashboard'
 ];
 
 // Valid localized routes

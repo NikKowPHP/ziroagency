@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { Session, User, AuthError } from '@supabase/supabase-js'
 import { SupabaseAuthService } from '@/infrastructure/services/supabase-auth.service'
 import { supabase } from '@/lib/supabase'
+import { useRouter } from 'next/navigation'
 
 interface AuthContextType {
   user: User | null
@@ -18,11 +19,17 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 const authService = new SupabaseAuthService()
 
+const isAdminRoute = (path: string) => {
+  const adminRoutes = ['/login', '/case-studies', '/dashboard']
+  return adminRoutes.some(route => path.startsWith(route))
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     authService.getSession().then((session) => {
@@ -41,16 +48,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session?.user ?? null)
         setLoading(false)
 
-        if (event === 'SIGNED_IN') {
-          window.location.reload()
+        // Get current path
+        const currentPath = window.location.pathname
+
+        if (event === 'SIGNED_IN' && !isAdminRoute(currentPath)) {
+          router.replace('/dashboard')
         } else if (event === 'SIGNED_OUT') {
-          window.location.href = '/admin/login'
+          router.replace('/login')
         }
       }
     )
 
     return () => subscription.unsubscribe()
-  }, [])
+  }, [router])
 
   const login = async (email: string, password: string) => {
     setError(null)
@@ -59,6 +69,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { user, session } = await authService.login(email, password)
       setUser(user)
       setSession(session)
+      if (user) {
+        router.push('/admin')
+      }
     } catch (error) {
       const message = error instanceof AuthError 
         ? error.message 
