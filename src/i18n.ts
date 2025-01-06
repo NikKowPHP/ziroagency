@@ -11,6 +11,8 @@ export const pathnames = {
   '/about': '/about',
   '/services': '/services',
   '/contact': '/contact',
+  '/404': '/404',
+  '/work': '/work'
 } as const;
 
 // Use createLocalizedPathnamesNavigation instead of createSharedPathnamesNavigation

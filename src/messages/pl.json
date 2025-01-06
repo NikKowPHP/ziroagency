@@ -89,7 +89,8 @@
   },
   "404": {
     "title": "Nie znaleziono strony",
-    "description": "Przepraszamy, nie mogliśmy znaleźć strony, której szukasz.",
-    "backHome": "Powrót do strony głównej"
+    "description": "Strona, której szukasz nie istnieje lub została przeniesiona.",
+    "requestedPath": "Żądana ścieżka",
+    "backHome": "Wróć do strony głównej"
   }
 } 
