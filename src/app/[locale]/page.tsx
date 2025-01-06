@@ -1,12 +1,41 @@
 import { Suspense } from 'react'
-import { CaseStudies } from '@/components/sections/case-studies/case-studies'
-import { RunningTags } from '@/components/sections/running-tags/running-tags'
-import { Pricing } from '@/components/sections/pricing/pricing'
-import { Faq } from '@/components/sections/faq/faq'
+// import { CaseStudies } from '@/components/sections/case-studies/case-studies'
+// import { RunningTags } from '@/components/sections/running-tags/running-tags'
+// import { Pricing } from '@/components/sections/pricing/pricing'
+// import { Faq } from '@/components/sections/faq/faq'
 import { services } from '@/lib/data/services'
 import { HeroButtons } from '@/components/sections/hero/hero-buttons'
 import { useTranslations } from 'next-intl'
+import dynamic from 'next/dynamic'
 
+// Dynamic imports with loading boundaries
+const CaseStudies = dynamic(
+  () => import('@/components/sections/case-studies/case-studies').then(mod => mod.CaseStudies),
+  {
+    loading: () => <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />,
+    ssr: true
+  }
+)
+const RunningTags = dynamic(
+  () => import('@/components/sections/running-tags/running-tags').then(mod => mod.RunningTags),
+  { ssr: true }
+)
+
+const Pricing = dynamic(
+  () => import('@/components/sections/pricing/pricing').then(mod => mod.Pricing),
+  {
+    loading: () => <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />,
+    ssr: true
+  }
+)
+
+const Faq = dynamic(
+  () => import('@/components/sections/faq/faq').then(mod => mod.Faq),
+  {
+    loading: () => <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />,
+    ssr: true
+  }
+)
 export default function HomePage() {
   const t = useTranslations('hero')
 
@@ -64,4 +93,9 @@ export default function HomePage() {
       </div>
     </div>
   )
+}
+// Add metadata for better SEO and performance hints
+export const metadata = {
+  priority: true, // Marks this as a critical page
+  fetchPriority: 'high'
 }
