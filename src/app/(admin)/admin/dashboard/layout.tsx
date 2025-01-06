@@ -1,18 +1,12 @@
-import { redirect } from 'next/navigation'
-import { getSession } from '@/lib/supabase'
+
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const session = await getSession()
-    
-  if (!session) {
-    redirect('/login')
-  }
 
-  return (
+   return (
       <div className="min-h-screen bg-gray-100">
         <nav className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,9 +17,6 @@ export default async function AdminLayout({
               </div>
             </div>
             <div className="flex items-center">
-              <span className="text-sm text-gray-500 mr-4">
-                {session.user.email}
-              </span>
             </div>
           </div>
         </div>

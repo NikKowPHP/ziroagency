@@ -1,3 +1,8 @@
+'use client'
+
+
+
+
 export default function AdminDashboard() {
   return (
     <div className="bg-white shadow rounded-lg p-6">

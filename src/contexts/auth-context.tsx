@@ -6,6 +6,7 @@ import { SupabaseAuthService } from '@/infrastructure/services/supabase-auth.ser
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 
+
 interface AuthContextType {
   user: User | null
   session: Session | null
@@ -48,8 +49,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session?.user ?? null)
         setLoading(false)
 
-        // Get current path
+        // Get current path using window.location
         const currentPath = window.location.pathname
+        debugger
 
         if (event === 'SIGNED_IN' && !isAdminRoute(currentPath)) {
           router.replace('/admin/dashboard')

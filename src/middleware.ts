@@ -12,12 +12,7 @@ const intlMiddleware = createMiddleware({
 
 const PUBLIC_FILE = /\.(.*)$/;
 
-// Admin routes that should not have locale prefixes
-const adminRoutes = [
-  '/admin/login',
-  '/admin/case-studies',
-  '/admin/dashboard'
-];
+
 
 // Valid localized routes
 const validLocalizedRoutes = [
@@ -38,10 +33,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check if it's an admin route
-  if (adminRoutes.some(route => pathname.startsWith(route))) {
-    return NextResponse.next();
-  }
+    // Check if it's an admin route
+    if (pathname.startsWith('/admin')) {
+      return NextResponse.next();
+    }
+
 
   // Handle root path redirect
   if (pathname === '/') {
