@@ -1,21 +1,8 @@
 import { supabase } from '../supabase'
 import { Locale } from '@/i18n'
-
-export interface CaseStudy {
-  id: string
-  title: string
-  description: string
-  tags: string[]
-  images: {
-    url: string
-    alt: string
-  }[]
-  ctaText: string
-  ctaTextName: string
-  ctaUrl: string
-  created_at?: string
-  updated_at?: string
-}
+import { CaseStudy } from '@/domain/models/case-study.model'
+import { CaseStudyDTO } from '@/infrastructure/dto/case-study.dto'
+import { CaseStudyMapper } from '@/infrastructure/mappers/case-study.mapper'
 
 export async function getCaseStudies(locale: Locale): Promise<CaseStudy[]> {
   const { data, error } = await supabase
@@ -27,9 +14,8 @@ export async function getCaseStudies(locale: Locale): Promise<CaseStudy[]> {
     console.error('Error fetching case studies:', error)
     return []
   }
-  console.log(data)
 
-  return data || []
+  return (data as CaseStudyDTO[]).map(CaseStudyMapper.toDomain)
 }
 
 export async function getCaseStudyById(id: string, locale: Locale): Promise<CaseStudy | null> {
@@ -44,5 +30,5 @@ export async function getCaseStudyById(id: string, locale: Locale): Promise<Case
     return null
   }
 
-  return data
+  return data ? CaseStudyMapper.toDomain(data as CaseStudyDTO) : null
 } 

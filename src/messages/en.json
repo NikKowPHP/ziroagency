@@ -17,7 +17,8 @@
     "ctaText": {
       "viewCaseStudy": "View Case Study",
       "learnMore": "Learn More"
-    }
+    },
+    "viewCaseStudy": "View Case Study"
   },
   "pricing": {
     "title": "Pricing",

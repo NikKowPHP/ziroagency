@@ -3,10 +3,11 @@
 import { memo } from 'react'
 import { Button } from '@/components/ui/button/button'
 import { Tag } from '@/components/ui/tag/tag'
-import { type CaseStudy } from '@/lib/data/case-studies'
 import { cn } from '@/lib/utils/cn'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
+import { type Image as ImageType } from '@/domain/models/case-study.model'
+import { type CaseStudy } from '@/domain/models/case-study.model'
 
 interface CaseStudyCardProps {
   caseStudy: CaseStudy
@@ -91,7 +92,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
           </p>
           
           {/* Tags */}
-          <CaseStudyTags tags={caseStudy.tags} />
+          <CaseStudyTags tags={caseStudy.tags as string[]} />
           
           <meta itemProp="keywords" content={caseStudy.tags.join(', ')} />
           
@@ -108,7 +109,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
 
         {/* Images Grid */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4 auto-rows-[150px] sm:auto-rows-[180px] lg:auto-rows-[200px]">
-          {caseStudy.images.slice(0, 7).map((image, index) => (
+          {caseStudy.images.slice(0, 7).map((image: ImageType, index: number) => (
             <CaseStudyImage
               key={image.url}
               url={image.url}
