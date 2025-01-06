@@ -27,11 +27,22 @@ export async function generateMetadata({
   }
 
   return {
-    title: {
-      default: 'Ziro Health',
-      template: '%s | Ziro Health',
+    alternates: {
+      canonical: `https://ziro.agency/${locale}`,
+      languages: {
+        'en-US': '/en',
+        'pl-PL': '/pl',
+      },
     },
-    description: 'Healthcare platform for modern practices',
+    title: {
+      default: locale === 'en' ? 
+        'ZIRO Agency | Professional Web Design & Development' : 
+        'ZIRO Agency | Profesjonalne Projektowanie i Rozwój Stron',
+      template: '%s | ZIRO Agency',
+    },
+    description: locale === 'en' ? 
+      'Expert web design and development services for businesses. Custom solutions, responsive design, and modern web applications.' :
+      'Profesjonalne usługi projektowania i tworzenia stron internetowych dla firm. Rozwiązania na zamówienie, responsywny design i nowoczesne aplikacje.',
   }
 }
 

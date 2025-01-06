@@ -7,6 +7,7 @@ import { services } from '@/lib/data/services'
 import { HeroButtons } from '@/components/sections/hero/hero-buttons'
 import { useTranslations } from 'next-intl'
 import dynamic from 'next/dynamic'
+import { Metadata } from 'next'
 
 // Dynamic imports with loading boundaries
 const CaseStudies = dynamic(
@@ -36,6 +37,19 @@ const Faq = dynamic(
     ssr: true
   }
 )
+
+export const metadata: Metadata = {
+  title: 'Professional Web Design & Development Services | ZIRO',
+  description: 'Transform your digital presence with our expert web design and development services. Custom websites, responsive design, and modern web solutions.',
+  alternates: {
+    canonical: 'https://ziro.agency',
+  },
+  openGraph: {
+    title: 'Expert Web Design & Development | ZIRO',
+    description: 'Custom web solutions for modern businesses',
+  }
+}
+
 export default function HomePage() {
   const t = useTranslations('hero')
 
@@ -49,8 +63,13 @@ export default function HomePage() {
             </div>
           }
         >
-          <section className="flex flex-col items-center text-center pt-[180px] sm:pt-[180px] lg:pt-[160px] pb-[60px] sm:pb-[80px] lg:pb-[100px] space-y-6 sm:space-y-8">
-            <h1 className="text-[40px] sm:text-[56px] lg:text-[80px] leading-[1.1] font-medium tracking-[-0.02em] text-primary">
+          <section className="flex flex-col items-center text-center pt-[180px] sm:pt-[180px] lg:pt-[160px] pb-[60px] sm:pb-[80px] lg:pb-[100px] space-y-6 sm:space-y-8"
+            itemScope
+            itemType="https://schema.org/WebPageElement"
+          >
+            <h1 className="text-[40px] sm:text-[56px] lg:text-[80px] leading-[1.1] font-medium tracking-[-0.02em] text-primary"
+              itemProp="headline"
+            >
               {t('title1')}
               <br className="hidden sm:block" />
               <span className="sm:hidden"> </span>
@@ -93,9 +112,4 @@ export default function HomePage() {
       </div>
     </div>
   )
-}
-// Add metadata for better SEO and performance hints
-export const metadata = {
-  priority: true, // Marks this as a critical page
-  fetchPriority: 'high'
 }
