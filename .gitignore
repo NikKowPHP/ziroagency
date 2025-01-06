@@ -11,6 +11,8 @@
 !.yarn/versions
 
 analyze/
+supabase/.temp
+supabase/config.toml
 
 # testing
 /coverage

@@ -14,8 +14,10 @@
     "viewPricing": "View Pricing"
   },
   "caseStudy": {
-    "ctaText": "View Case Study",
-    "viewCaseStudy": "View Case Study"
+    "ctaText": {
+      "viewCaseStudy": "View Case Study",
+      "learnMore": "Learn More"
+    }
   },
   "pricing": {
     "title": "Pricing",

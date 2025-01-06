@@ -14,8 +14,10 @@
     "viewPricing": "Zobacz cennik"
   },
   "caseStudy": {
-    "ctaText": "Zobacz realizację",
-    "viewCaseStudy": "Zobacz realizację"
+    "ctaText": {
+      "viewCaseStudy": "Zobacz realizację",
+      "learnMore": "Dowiedz się więcej"
+    }
   },
   "pricing": {
     "title": "Cennik",
