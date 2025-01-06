@@ -8,6 +8,7 @@ import { HeroButtons } from '@/components/sections/hero/hero-buttons'
 import { useTranslations } from 'next-intl'
 import dynamic from 'next/dynamic'
 import { Metadata } from 'next'
+import { type Locale } from '@/i18n'
 
 // Dynamic imports with loading boundaries
 const CaseStudies = dynamic(
@@ -38,6 +39,12 @@ const Faq = dynamic(
   }
 )
 
+interface HomePageProps {
+  params: {
+    locale: Locale
+  }
+}
+
 export const metadata: Metadata = {
   title: 'Professional Web Design & Development Services | ZIRO Agency',
   description: 'Expert web design and development services for modern businesses. Custom websites, responsive design, and cutting-edge web solutions.',
@@ -61,7 +68,7 @@ export const metadata: Metadata = {
   }
 }
 
-export default function HomePage() {
+export default function HomePage({ params: { locale } }: HomePageProps) {
   const t = useTranslations('hero')
 
   return (
@@ -104,7 +111,7 @@ export default function HomePage() {
             <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
         >
-          <CaseStudies />
+          <CaseStudies locale={locale} />
         </Suspense>
 
         <div className="py-12 sm:py-16 lg:py-20">
