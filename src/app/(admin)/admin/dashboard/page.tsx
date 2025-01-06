@@ -1,5 +1,7 @@
 'use client'
 
+import Link from "next/link"
+
 
 
 
@@ -10,12 +12,12 @@ export default function AdminDashboard() {
       <nav>
         <ul className="space-y-2">
           <li>
-            <a 
+            <Link 
               href="/admin/case-studies" 
               className="text-blue-600 hover:underline"
             >
               Manage Case Studies
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>
