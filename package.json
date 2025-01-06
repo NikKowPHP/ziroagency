@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
+    "preview": "next build && next start",
     "test:watch": "jest --watch",
     "format": "prettier --write .",
     "analyze": "cross-env ANALYZE=true next build",
