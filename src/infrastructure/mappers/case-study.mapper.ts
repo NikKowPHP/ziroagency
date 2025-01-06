@@ -19,4 +19,20 @@ export class CaseStudyMapper {
       updatedAt: new Date(dto.updated_at),
     };
   }
+
+  static toPersistence(domain: Partial<CaseStudy>): Partial<CaseStudyDTO> {
+    return {
+      title: domain.title,
+      description: domain.description,
+      tags: domain.tags ? [...domain.tags] : undefined,
+      images: domain.images?.map(image => ({
+        url: image.url,
+        alt: image.alt,
+      })),
+      cta_text: domain.ctaText,
+      cta_text_name: domain.ctaTextName,
+      cta_url: domain.ctaUrl,
+      // Don't include id, created_at, or updated_at as they're managed by the database
+    };
+  }
 } 

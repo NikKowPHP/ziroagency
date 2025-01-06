@@ -51,7 +51,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         // Get current path using window.location
         const currentPath = window.location.pathname
-        debugger
 
         if (event === 'SIGNED_IN' && !isAdminRoute(currentPath)) {
           router.replace('/admin/dashboard')
