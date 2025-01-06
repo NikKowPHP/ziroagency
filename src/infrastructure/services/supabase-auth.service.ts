@@ -1,6 +1,5 @@
 import { AuthService } from '@/domain/services/auth.service'
 import { supabase } from '@/lib/supabase'
-import { User, Session } from '@supabase/supabase-js'
 
 export class SupabaseAuthService implements AuthService {
   async login(email: string, password: string) {
