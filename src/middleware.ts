@@ -12,11 +12,17 @@ const intlMiddleware = createMiddleware({
 
 const PUBLIC_FILE = /\.(.*)$/;
 
-// Define your valid routes
-const validRoutes = [
-  '', // root path
-  '404', // 404 page
-  // add all your valid routes here
+// Admin routes that should not have locale prefixes
+const adminRoutes = [
+  '/admin',
+  '/admin/login',
+  '/admin/case-studies'
+];
+
+// Valid localized routes
+const validLocalizedRoutes = [
+  '',  // root path
+  '404' // 404 page
 ];
 
 export async function middleware(request: NextRequest) {
@@ -32,25 +38,30 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check if the pathname starts with a locale
-  const pathnameHasLocale = locales.some(
-    locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  );
+  // Check if it's an admin route
+  if (adminRoutes.some(route => pathname.startsWith(route))) {
+    return NextResponse.next();
+  }
 
   // Handle root path redirect
   if (pathname === '/') {
     return NextResponse.redirect(new URL(`/${defaultLocale}`, request.url));
   }
 
+  // Check if the pathname starts with a locale
+  const pathnameHasLocale = locales.some(
+    locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  );
+
   if (pathnameHasLocale) {
     // Extract the path without locale
     const pathWithoutLocale = pathname
       .split('/')
-      .slice(2) // Remove locale part
+      .slice(2)
       .join('/');
 
     // Check if the route is valid
-    if (pathWithoutLocale && !validRoutes.includes(pathWithoutLocale)) {
+    if (pathWithoutLocale && !validLocalizedRoutes.includes(pathWithoutLocale)) {
       const locale = pathname.split('/')[1];
       return NextResponse.redirect(new URL(`/${locale}/404`, request.url));
     }
