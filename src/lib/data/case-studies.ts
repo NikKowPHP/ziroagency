@@ -29,7 +29,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     ctaText: 'View Case Study',
     ctaTextName: 'viewCaseStudy',
-    ctaUrl: '/work/gsense'
+    ctaUrl: '#'
     },
     {
         id: 'supernormal',
