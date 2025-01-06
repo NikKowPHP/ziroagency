@@ -5,13 +5,11 @@ import { NextConfig } from 'next';
 
 const withNextIntl = createNextIntlPlugin();
 
-// Enable bundle analyzer in development
 const withAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
   openAnalyzer: false,
 });
 
-/** @type {import('next').NextConfig} */
 const config: NextConfig = {
   // Image optimization
   images: {
@@ -25,31 +23,19 @@ const config: NextConfig = {
   // Enable compression
   compress: true,
 
-  // Optimize fonts
-  optimizeFonts: true,
-
-  // Enable SWC minification
-  swcMinify: true,
-
-  // Disable source maps in production
-  productionBrowserSourceMaps: false,
-
-  // Cache optimization
-  generateEtags: true,
-
   // Experimental features
   experimental: {
     // Enable optimizations
     optimizeCss: true,
     scrollRestoration: true,
     
-    // Configure turbo with proper options
+    // Configure turbo with proper rules (updated syntax)
     turbo: {
-      loaders: {
-        '.png': ['file-loader'],
-        '.svg': ['@svgr/webpack'],
-        '.jpg': ['file-loader'],
-        '.jpeg': ['file-loader'],
+      rules: {
+        '*.png': ['file-loader'],
+        '*.svg': ['@svgr/webpack'],
+        '*.jpg': ['file-loader'],
+        '*.jpeg': ['file-loader'],
       },
       resolveAlias: {
         '@': './src',
@@ -65,47 +51,40 @@ const config: NextConfig = {
     
     // Modern bundling
     webpackBuildWorker: true,
-    
   },
 
   // Webpack configuration
   webpack: (config, { dev, isServer }) => {
-    // Production optimizations
     if (!dev && !isServer) {
-      // Enable tree shaking
       config.optimization = {
         ...config.optimization,
         usedExports: true,
         sideEffects: true,
         minimize: true,
-      };
-
-      // Split chunks optimization
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        minSize: 20000,
-        maxSize: 244000,
-        minChunks: 1,
-        maxAsyncRequests: 30,
-        maxInitialRequests: 30,
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          // Vendor chunk
-          vendor: {
-            name: 'vendor',
-            chunks: 'all',
-            test: /[\\/]node_modules[\\/]/,
-            priority: 20,
-          },
-          // Common chunk
-          common: {
-            name: 'common',
-            minChunks: 2,
-            chunks: 'all',
-            priority: 10,
-            reuseExistingChunk: true,
-            enforce: true,
+        splitChunks: {
+          chunks: 'all',
+          minSize: 20000,
+          maxSize: 244000,
+          minChunks: 1,
+          maxAsyncRequests: 30,
+          maxInitialRequests: 30,
+          cacheGroups: {
+            default: false,
+            vendors: false,
+            vendor: {
+              name: 'vendor',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/]/,
+              priority: 20,
+            },
+            common: {
+              name: 'common',
+              minChunks: 2,
+              chunks: 'all',
+              priority: 10,
+              reuseExistingChunk: true,
+              enforce: true,
+            },
           },
         },
       };
@@ -140,7 +119,7 @@ const config: NextConfig = {
     ];
   },
 
-  // Redirects for optimization
+  // Redirects
   async redirects() {
     return [
       {
@@ -156,9 +135,15 @@ const config: NextConfig = {
 
   // React strict mode
   reactStrictMode: true,
-
-
 };
+
+// Install critters for CSS optimization
+try {
+  require('critters');
+} catch (e) {
+  console.warn('Installing critters...');
+  require('child_process').execSync('npm install critters');
+}
 
 // Apply plugins
 export default withNextIntl(withAnalyzer(config));
