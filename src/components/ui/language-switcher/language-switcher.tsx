@@ -45,7 +45,7 @@ export function LanguageSwitcher() {
             key={lang.code}
             onClick={() => handleLanguageSwitch(lang.code)}
             className={cn(
-              'px-4 py-2 text-sm font-medium transition-all duration-200',
+              'px-[20px] py-[10px] text-sm font-bold transition-all duration-200',
               // First button (English)
               index === 0 && 'rounded-full',
               // Last button (Polish)
