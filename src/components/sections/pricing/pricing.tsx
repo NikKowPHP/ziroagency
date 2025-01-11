@@ -12,7 +12,7 @@ export function PricingCard({ plan }: PricingCardProps) {
   return (
     <div 
       className="flex flex-col items-center p-6 sm:p-8 md:p-10 bg-white rounded-[24px] 
-    sm:rounded-[32px] space-y-4 sm:space-y-6"
+    sm:rounded-[32px] space-y-2 sm:space-y-6"
       itemScope 
       itemType="https://schema.org/Offer"
     >
@@ -67,14 +67,14 @@ function PricingContent({ plans }: { plans: PricingPlan[] }) {
   return (
     <section 
       id="pricing" 
-      className="relative overflow-hidden bg-primary py-12 sm:py-16 md:py-24 rounded-[24px] sm:rounded-[32px]"
+      className="relative overflow-hidden bg-primary py-[10px]  sm:py-32 sm:pb-[60px]  md:py-24 md:pb-[60px]  rounded-[24px] sm:rounded-[32px]"
     >
-      <div className="container relative mx-auto px-4 sm:px-6">
+      <div className="container relative mx-auto px-2 sm:px-6">
         <h2 className="text-center text-[36px] sm:text-[46px] md:text-[56px] font-medium text-white mb-8 sm:mb-12 md:mb-16">
           {t('title')}
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 max-w-5xl mx-auto pb-6 sm:pb-8 md:pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 max-w-full mx-auto sm:px-10">
           {plans.map((plan) => (
             <PricingCard key={plan.id} plan={plan} />
           ))}
