@@ -15,7 +15,7 @@ export function HeroButtons() {
       <Button
         variant="outline"
         size="lg"
-        className="w-full sm:w-auto rounded-full px-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] border-[#0066FF] text-[#0066FF] hover:bg-[#0066FF]/5"
+        className="w-full sm:w-auto rounded-full px-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] border-primary text-[#0066FF] hover:bg-[#0066FF]/5"
         onClick={() => {
           const element = document.getElementById('pricing')
           const offset = -100
@@ -33,7 +33,7 @@ export function HeroButtons() {
       </Button>
       <Button
         size="lg"
-        className="w-full sm:w-auto rounded-full px-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] bg-[#0066FF] hover:bg-[#0066FF]/90"
+        className="w-full sm:w-auto rounded-full px-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] bg-primary hover:bg-[#0066FF]/90"
         onClick={() => {
           window.location.href = 'https://calendly.com/ziro-nikhil/30min'
         }}

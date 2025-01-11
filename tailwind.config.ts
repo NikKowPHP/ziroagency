@@ -11,10 +11,13 @@ const config: Config = {
       colors: {
         primary: '#0066FF',
         secondary: '#F7F7F7',
+
         text: {
           primary: '#0171E3',
           secondary: '#0171E2',
           tertiary: '#999999',
+          black: '#000000'
+          
         }
       },
       fontFamily: {

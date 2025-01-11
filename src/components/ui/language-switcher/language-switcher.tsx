@@ -51,7 +51,7 @@ export function LanguageSwitcher() {
               // Last button (Polish)
               index === languages.length - 1 && 'rounded-full',
               currentLang === lang.code
-                ? 'bg-[#0066FF] text-white'
+                ? 'bg-primary text-white'
                 : 'text-gray-700 hover:text-gray-900'
             )}
           >

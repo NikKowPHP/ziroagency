@@ -19,7 +19,7 @@ export function PricingCard({ plan }: PricingCardProps) {
       <meta itemProp="priceCurrency" content="PLN" />
       <meta itemProp="price" content={plan.price.toString()} />
       <h3 
-        className="text-[24px] sm:text-[28px] md:text-[32px] font-medium text-center"
+        className="text-[24px] sm:text-[28px] md:text-[32px] font-medium text-center text-black"
         itemProp="name"
       >
         {t(plan.title)}
@@ -35,7 +35,7 @@ export function PricingCard({ plan }: PricingCardProps) {
             {t(plan.pricePrefix)}
           </span>
         )}
-        <span className="text-[36px] sm:text-[42px] md:text-[48px] font-medium">
+        <span className="text-[36px] sm:text-[42px] md:text-[48px] font-medium text-black">
           {plan.price}
         </span>
       </div>
@@ -67,7 +67,7 @@ function PricingContent({ plans }: { plans: PricingPlan[] }) {
   return (
     <section 
       id="pricing" 
-      className="relative overflow-hidden bg-[#0066FF] py-12 sm:py-16 md:py-24 rounded-[24px] sm:rounded-[32px]"
+      className="relative overflow-hidden bg-primary py-12 sm:py-16 md:py-24 rounded-[24px] sm:rounded-[32px]"
     >
       <div className="container relative mx-auto px-4 sm:px-6">
         <h2 className="text-center text-[36px] sm:text-[46px] md:text-[56px] font-medium text-white mb-8 sm:mb-12 md:mb-16">

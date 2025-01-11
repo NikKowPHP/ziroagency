@@ -17,7 +17,7 @@ export interface ButtonProps
 const buttonStyles = {
   base: 'inline-flex items-center justify-center font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   variants: {
-    primary: 'bg-[#0066FF] text-white hover:bg-[#0066FF]/90 active:bg-[#0066FF]/80',
+    primary: 'bg-primary text-white hover:bg-[#0066FF]/90 active:bg-[#0066FF]/80',
     secondary: 'bg-[#0066FF]/10 text-[#0066FF] hover:bg-[#0066FF]/20 active:bg-[#0066FF]/30',
     outline: 'border-2 border-[#0066FF] text-[#0066FF] hover:bg-[#0066FF]/5 active:bg-[#0066FF]/10',
     ghost: (isActive: boolean) =>

@@ -26,7 +26,7 @@ const CaseStudyImage = memo(function CaseStudyImage({
   return (
     <div
       className={cn(
-        'relative rounded-xl sm:rounded-2xl overflow-hidden',
+        'relative rounded-[24px] sm:rounded-[32px] overflow-hidden',
         isFirst ? 'col-span-2 row-span-2' : ''
       )}
     >
@@ -102,6 +102,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
           <div className="hidden lg:block mt-auto">
             <Button 
               size="xl" 
+              
               href={caseStudy.ctaUrl}
             >
               {t(caseStudy.ctaTextName)}
