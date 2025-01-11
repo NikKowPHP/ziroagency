@@ -26,7 +26,7 @@ const CaseStudyImage = memo(function CaseStudyImage({
   return (
     <div
       className={cn(
-        'relative rounded-primary sm:rounded-primary-lg  overflow-hidden',
+        'relative rounded-primary sm:rounded-[18px]  overflow-hidden',
         isFirst ? 'col-span-2 row-span-2' : ''
       )}
     >
@@ -73,7 +73,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
       itemScope
       itemType="https://schema.org/CreativeWork"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 p-0 md:p-4 sm:p-6 h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16  h-full p-10">
         <div className="flex flex-col space-y-6 sm:space-y-8 h-full">
           <div className="flex-1">
             {/* Title */}
@@ -124,7 +124,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
       </div>
 
       {/* Mobile CTA Button */}
-      <div className="lg:hidden lg:pt-10 sm:py-4 md:px-[20px] sm:px-[20px]">
+      <div className="lg:hidden lg:pt-10 sm:py-4 md:px-[20px] sm:px-[20px] sm:pb-10">
         <Button 
           size="xl" 
           href={caseStudy.ctaUrl}
