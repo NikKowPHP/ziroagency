@@ -33,6 +33,7 @@ export function CaseStudyForm({
   )
   const [tags, setTags] = useState<readonly string[]>(study?.tags || [])
   const [tagInput, setTagInput] = useState('')
+  const [title, setTitle] = useState(study?.title || '')
 
   const handleAddImage = () => {
     setImages([...images, { url: '', alt: '' }])
@@ -105,6 +106,10 @@ export function CaseStudyForm({
     })
   }
 
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value)
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       <div>
@@ -112,179 +117,182 @@ export function CaseStudyForm({
           htmlFor="title"
           className="block text-sm font-medium text-gray-700"
         >
-          Title ({locale})
+          Title ({locale}) *
         </label>
         <input
           type="text"
           name="title"
           id="title"
-          defaultValue={study?.title}
+          value={title}
+          onChange={handleTitleChange}
           required
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
         />
       </div>
 
-      <div>
-        <label
-          htmlFor="description"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Description
-        </label>
-        <textarea
-          name="description"
-          id="description"
-          rows={3}
-          defaultValue={study?.description}
-          required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-        />
-      </div>
+      <div className={`space-y-8 ${!title.trim() ? 'opacity-50 pointer-events-none' : ''}`}>
+        <div>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Description
+          </label>
+          <textarea
+            name="description"
+            id="description"
+            rows={3}
+            defaultValue={study?.description}
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+          />
+        </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Images
-        </label>
-        {images.map((image, index) => (
-          <div key={index} className="flex gap-4 mb-4">
-            <div className="flex-1">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const file = e.target.files?.[0]
-                  if (file) handleFileChange(index, file)
-                }}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-              />
-              {image.url && (
-                <div className="mt-2">
-                  <img
-                    src={image.url}
-                    alt={image.alt}
-                    className="h-20 w-20 object-cover rounded-md"
-                  />
-                </div>
-              )}
-            </div>
-            <div className="flex-1">
-              <input
-                type="text"
-                value={image.alt}
-                onChange={(e) =>
-                  handleImageChange(index, 'alt', e.target.value)
-                }
-                placeholder="Alt text"
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-              />
-            </div>
-            <button
-              type="button"
-              onClick={() => handleRemoveImage(index)}
-              className="text-red-600 hover:text-red-900"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-
-        <button
-          type="button"
-          onClick={handleAddImage}
-          className="text-sm text-primary hover:text-primary/90"
-        >
-          + Add Image
-        </button>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Tags
-        </label>
-        <div className="flex flex-wrap gap-2 mb-2">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary"
-            >
-              {tag}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Images
+          </label>
+          {images.map((image, index) => (
+            <div key={index} className="flex gap-4 mb-4">
+              <div className="flex-1">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) handleFileChange(index, file)
+                  }}
+                  className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+                />
+                {image.url && (
+                  <div className="mt-2">
+                    <img
+                      src={image.url}
+                      alt={image.alt}
+                      className="h-20 w-20 object-cover rounded-md"
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="flex-1">
+                <input
+                  type="text"
+                  value={image.alt}
+                  onChange={(e) =>
+                    handleImageChange(index, 'alt', e.target.value)
+                  }
+                  placeholder="Alt text"
+                  className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+                />
+              </div>
               <button
                 type="button"
-                onClick={() => handleRemoveTag(tag)}
-                className="ml-1 text-primary hover:text-primary/90"
+                onClick={() => handleRemoveImage(index)}
+                className="text-red-600 hover:text-red-900"
               >
-                ×
+                Remove
               </button>
-            </span>
+            </div>
           ))}
-        </div>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            onKeyPress={(e) =>
-              e.key === 'Enter' && (e.preventDefault(), handleAddTag())
-            }
-            placeholder="Add a tag"
-            className="flex-1 rounded-full border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-          />
+
           <button
             type="button"
-            onClick={handleAddTag}
-            className="px-6 py-2 text-sm font-medium text-primary bg-white border border-primary rounded-full hover:bg-primary/10 transition-colors"
+            onClick={handleAddImage}
+            className="text-sm text-primary hover:text-primary/90"
           >
-            Add Tag
+            + Add Image
           </button>
         </div>
-      </div>
 
-      <div>
-        <label
-          htmlFor="ctaText"
-          className="block text-sm font-medium text-gray-700"
-        >
-          CTA Text
-        </label>
-        <input
-          type="text"
-          name="ctaText"
-          id="ctaText"
-          defaultValue={study?.ctaText}
-          required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-        />
-      </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Tags
+          </label>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary"
+              >
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(tag)}
+                  className="ml-1 text-primary hover:text-primary/90"
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
+              onKeyPress={(e) =>
+                e.key === 'Enter' && (e.preventDefault(), handleAddTag())
+              }
+              placeholder="Add a tag"
+              className="flex-1 rounded-full border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+            />
+            <button
+              type="button"
+              onClick={handleAddTag}
+              className="px-6 py-2 text-sm font-medium text-primary bg-white border border-primary rounded-full hover:bg-primary/10 transition-colors"
+            >
+              Add Tag
+            </button>
+          </div>
+        </div>
 
-      {/* <div>
-        <label htmlFor="ctaTextName" className="block text-sm font-medium text-gray-700">
-          CTA Text Name
-        </label>
-        <input
-          type="text"
-          name="ctaTextName"
-          id="ctaTextName"
-          defaultValue={study?.ctaTextName}
-          required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-        />
-      </div> */}
+        <div>
+          <label
+            htmlFor="ctaText"
+            className="block text-sm font-medium text-gray-700"
+          >
+            CTA Text
+          </label>
+          <input
+            type="text"
+            name="ctaText"
+            id="ctaText"
+            defaultValue={study?.ctaText}
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+          />
+        </div>
 
-      <div>
-        <label
-          htmlFor="ctaUrl"
-          className="block text-sm font-medium text-gray-700"
-        >
-          CTA URL
-        </label>
-        <input
-          type="url"
-          name="ctaUrl"
-          id="ctaUrl"
-          defaultValue={study?.ctaUrl}
-          required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-        />
+        {/* <div>
+          <label htmlFor="ctaTextName" className="block text-sm font-medium text-gray-700">
+            CTA Text Name
+          </label>
+          <input
+            type="text"
+            name="ctaTextName"
+            id="ctaTextName"
+            defaultValue={study?.ctaTextName}
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+          />
+        </div> */}
+
+        <div>
+          <label
+            htmlFor="ctaUrl"
+            className="block text-sm font-medium text-gray-700"
+          >
+            CTA URL
+          </label>
+          <input
+            type="url"
+            name="ctaUrl"
+            id="ctaUrl"
+            defaultValue={study?.ctaUrl}
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+          />
+        </div>
       </div>
 
       <div className="flex justify-end space-x-4">
@@ -299,7 +307,7 @@ export function CaseStudyForm({
         <button
           type="submit"
           className="px-6 py-3 text-sm font-medium text-white bg-primary rounded-full hover:bg-primary/90 disabled:opacity-50 transition-colors"
-          disabled={loading}
+          disabled={loading || !title.trim()}
         >
           {loading ? 'Saving...' : study ? 'Update' : 'Create'}
         </button>
