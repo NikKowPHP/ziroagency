@@ -1,4 +1,5 @@
 import { AuthProvider } from '@/contexts/auth-context'
+import '@/styles/globals.css'
 
 export default function AdminLayout({
   children,
