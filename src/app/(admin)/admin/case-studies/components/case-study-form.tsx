@@ -3,6 +3,7 @@
 import { CaseStudy, Image } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
 import { useState } from 'react'
+import { uploadImage } from '@/lib/utils/file-upload'
 
 interface CaseStudyFormProps {
   study?: CaseStudy
@@ -13,13 +14,22 @@ interface CaseStudyFormProps {
 }
 
 interface ImageInput {
+  file?: File
   url: string
   alt: string
 }
 
-export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: CaseStudyFormProps) {
+export function CaseStudyForm({
+  study,
+  locale,
+  onSubmit,
+  onCancel,
+  loading,
+}: CaseStudyFormProps) {
   const [images, setImages] = useState<ImageInput[]>(
-    study?.images.map(img => ({ url: img.url, alt: img.alt })) || [{ url: '', alt: '' }]
+    study?.images.map((img) => ({ url: img.url, alt: img.alt })) || [
+      { url: '', alt: '' },
+    ]
   )
   const [tags, setTags] = useState<readonly string[]>(study?.tags || [])
   const [tagInput, setTagInput] = useState('')
@@ -32,10 +42,41 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
     setImages(images.filter((_, i) => i !== index))
   }
 
-  const handleImageChange = (index: number, field: keyof Image, value: string) => {
-    setImages(images.map((img, i) => 
-      i === index ? { ...img, [field]: value } : img
-    ))
+  const handleImageChange = (
+    index: number,
+    field: keyof Image,
+    value: string
+  ) => {
+    setImages(
+      images.map((img, i) => (i === index ? { ...img, [field]: value } : img))
+    )
+  }
+
+  const handleFileChange = async (index: number, file: File) => {
+    try {
+      const titleInput = document.getElementById('title') as HTMLInputElement
+      const title = titleInput?.value || 'untitled'
+      
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('title', title)
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.message || 'Upload failed')
+      }
+
+      const { url } = await response.json()
+      handleImageChange(index, 'url', url)
+    } catch (error) {
+      console.error('Error uploading file:', error)
+      // TODO: Add proper error handling UI feedback
+    }
   }
 
   const handleAddTag = () => {
@@ -46,20 +87,20 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
   }
 
   const handleRemoveTag = (tagToRemove: string) => {
-    setTags(tags.filter(tag => tag !== tagToRemove))
+    setTags(tags.filter((tag) => tag !== tagToRemove))
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-    
+
     await onSubmit({
       title: formData.get('title') as string,
       description: formData.get('description') as string,
       tags: tags,
-      images: images.filter(img => img.url && img.alt),
+      images: images.filter((img) => img.url && img.alt),
       ctaText: formData.get('ctaText') as string,
-      ctaTextName: formData.get('ctaTextName') as string,
+      ctaTextName: 'caseStudy.ctaText.viewCaseStudy',
       ctaUrl: formData.get('ctaUrl') as string,
     })
   }
@@ -67,7 +108,10 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="title"
+          className="block text-sm font-medium text-gray-700"
+        >
           Title ({locale})
         </label>
         <input
@@ -81,7 +125,10 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
       </div>
 
       <div>
-        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-gray-700"
+        >
           Description
         </label>
         <textarea
@@ -102,18 +149,31 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
           <div key={index} className="flex gap-4 mb-4">
             <div className="flex-1">
               <input
-                type="url"
-                value={image.url}
-                onChange={(e) => handleImageChange(index, 'url', e.target.value)}
-                placeholder="Image URL"
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) handleFileChange(index, file)
+                }}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
               />
+              {image.url && (
+                <div className="mt-2">
+                  <img
+                    src={image.url}
+                    alt={image.alt}
+                    className="h-20 w-20 object-cover rounded-md"
+                  />
+                </div>
+              )}
             </div>
             <div className="flex-1">
               <input
                 type="text"
                 value={image.alt}
-                onChange={(e) => handleImageChange(index, 'alt', e.target.value)}
+                onChange={(e) =>
+                  handleImageChange(index, 'alt', e.target.value)
+                }
                 placeholder="Alt text"
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
               />
@@ -127,6 +187,7 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
             </button>
           </div>
         ))}
+
         <button
           type="button"
           onClick={handleAddImage}
@@ -141,7 +202,7 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
           Tags
         </label>
         <div className="flex flex-wrap gap-2 mb-2">
-          {tags.map(tag => (
+          {tags.map((tag) => (
             <span
               key={tag}
               className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary"
@@ -162,7 +223,9 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
             type="text"
             value={tagInput}
             onChange={(e) => setTagInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+            onKeyPress={(e) =>
+              e.key === 'Enter' && (e.preventDefault(), handleAddTag())
+            }
             placeholder="Add a tag"
             className="flex-1 rounded-full border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
           />
@@ -177,7 +240,10 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
       </div>
 
       <div>
-        <label htmlFor="ctaText" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="ctaText"
+          className="block text-sm font-medium text-gray-700"
+        >
           CTA Text
         </label>
         <input
@@ -190,7 +256,7 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
         />
       </div>
 
-      <div>
+      {/* <div>
         <label htmlFor="ctaTextName" className="block text-sm font-medium text-gray-700">
           CTA Text Name
         </label>
@@ -202,10 +268,13 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
           required
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
         />
-      </div>
+      </div> */}
 
       <div>
-        <label htmlFor="ctaUrl" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="ctaUrl"
+          className="block text-sm font-medium text-gray-700"
+        >
           CTA URL
         </label>
         <input
