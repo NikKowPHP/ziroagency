@@ -16,12 +16,15 @@ function FaqAccordion({ itemId, isOpen, onToggle }: FaqAccordionProps) {
 
   return (
     <div
-      className="border-b border-gray-200 last:border-0"
+      className={cn(
+        'border-b border-gray-200 last:border-0  rounded-[50px] bg-gray-100 ',
+        // isOpen ? 'rounded-3xl' : ''
+      )}
       itemScope
       itemType="https://schema.org/Question"
     >
       <button
-        className="flex w-full items-center justify-between py-6 text-left"
+        className="flex w-full items-center justify-between py-6 text-left px-10"
         onClick={onToggle}
       >
         <span className="text-base sm:text-lg lg:text-xl font-medium">
@@ -38,7 +41,7 @@ function FaqAccordion({ itemId, isOpen, onToggle }: FaqAccordionProps) {
       <div
         className={cn(
           'grid overflow-hidden transition-all duration-300 ease-in-out',
-          isOpen ? 'grid-rows-[1fr] pb-6' : 'grid-rows-[0fr]'
+          isOpen ? 'grid-rows-[1fr] pb-6 px-10' : 'grid-rows-[0fr]'
         )}
       >
         <div className="overflow-hidden">
@@ -62,10 +65,10 @@ export function Faq() {
       itemType="https://schema.org/FAQPage"
     >
       <div className="container mx-auto px-4 sm:px-6">
-        <h2 className="text-center text-[36px] sm:text-[46px] lg:text-[56px] font-medium mb-8 sm:mb-12 lg:mb-16">
+        <h2 className="text-center text-black text-[36px] sm:text-[46px] lg:text-[56px] font-medium mb-8 sm:mb-12 lg:mb-16">
           {t('title')}
         </h2>
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto flex flex-col gap-[12px] text-black">
           {faqItems.map((item) => (
             <FaqAccordion
               key={item.id}

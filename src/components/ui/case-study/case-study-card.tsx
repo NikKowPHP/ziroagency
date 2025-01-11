@@ -26,7 +26,7 @@ const CaseStudyImage = memo(function CaseStudyImage({
   return (
     <div
       className={cn(
-        'relative rounded-[24px] sm:rounded-[32px] overflow-hidden',
+        'relative rounded-primary sm:rounded-primary-lg  overflow-hidden',
         isFirst ? 'col-span-2 row-span-2' : ''
       )}
     >
