@@ -41,6 +41,10 @@ const config: Config = {
         '32': '32px',
         '48': '48px',
         '64': '64px',
+      },
+      borderRadius: {
+        'primary': '24px',
+        'primary-lg': '32px',
       }
     },
   },
