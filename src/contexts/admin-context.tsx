@@ -31,14 +31,34 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ data, locale }),
       })
       
-      if (!response.ok) throw new Error('Failed to create case study')
+      console.log('Response status:', response.status)
+      console.log('Response status text:', response.statusText)
+      
+      let errorMessage = 'Failed to create case study'
+      try {
+        const errorData = await response.clone().json()
+        console.log('Response body:', errorData)
+        errorMessage = errorData.error || errorMessage
+      } catch (parseError) {
+        console.error('Failed to parse error response:', parseError)
+      }
+
+      if (!response.ok) {
+        throw new Error(`${errorMessage} (Status: ${response.status})`)
+      }
       
       const newCaseStudy = await response.json()
+      console.log('Successfully created case study:', newCaseStudy)
       setCaseStudies(prev => ({
         ...prev,
         [locale]: [...prev[locale], newCaseStudy]
       }))
     } catch (err) {
+      console.error('Create case study error details:', {
+        error: err,
+        requestData: { data, locale },
+        timestamp: new Date().toISOString()
+      })
       setError(err instanceof Error ? err.message : 'Failed to create case study')
       throw err
     } finally {
@@ -56,9 +76,22 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ data, locale }),
       })
       
-      if (!response.ok) throw new Error('Failed to update case study')
+      console.log('Update response status:', response.status)
+      let errorMessage = 'Failed to update case study'
+      try {
+        const errorData = await response.clone().json()
+        console.log('Update response body:', errorData)
+        errorMessage = errorData.error || errorMessage
+      } catch (parseError) {
+        console.error('Failed to parse update error response:', parseError)
+      }
+      
+      if (!response.ok) {
+        throw new Error(`${errorMessage} (Status: ${response.status})`)
+      }
       
       const updatedCaseStudy = await response.json()
+      console.log('Successfully updated case study:', updatedCaseStudy)
       setCaseStudies(prev => ({
         ...prev,
         [locale]: prev[locale].map(cs => 

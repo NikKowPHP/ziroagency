@@ -21,7 +21,15 @@ export class CaseStudyMapper {
   }
 
   static toPersistence(domain: Partial<CaseStudy>): Partial<CaseStudyDTO> {
+    const id = domain.id || (domain.title ? 
+      domain.title.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        + '-' + Date.now()
+      : undefined)
+
     return {
+      id,
       title: domain.title,
       description: domain.description,
       tags: domain.tags ? [...domain.tags] : undefined,
@@ -32,7 +40,6 @@ export class CaseStudyMapper {
       cta_text: domain.ctaText,
       cta_text_name: domain.ctaTextName,
       cta_url: domain.ctaUrl,
-      // Don't include id, created_at, or updated_at as they're managed by the database
-    };
+    }
   }
 } 
