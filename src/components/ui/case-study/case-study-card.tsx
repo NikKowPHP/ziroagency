@@ -65,8 +65,17 @@ const CaseStudyTags = memo(function CaseStudyTags({ tags }: { tags: string[] }) 
 export const CaseStudyCard = memo(function CaseStudyCard({ 
   caseStudy 
 }: CaseStudyCardProps) {
-  const t = useTranslations('caseStudy')
+  const t = useTranslations()
   
+  // Use a default translation key if the custom one fails
+  const ctaText = () => {
+    try {
+      return t(caseStudy.ctaTextName)
+    } catch (error) {
+      return t('caseStudy.ctaText.viewCaseStudy')
+    }
+  }
+
   return (
     <article 
       className="flex flex-col rounded-[24px] sm:rounded-[32px] border border-gray-200 p-6 sm:p-8 lg:p-10 shadow-sm h-full"
@@ -105,7 +114,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
               
               href={caseStudy.ctaUrl}
             >
-              {t(caseStudy.ctaTextName)}
+              {ctaText()}
             </Button>
           </div>
         </div>
@@ -130,7 +139,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
           href={caseStudy.ctaUrl}
           className="w-full"
         >
-          {t(caseStudy.ctaTextName)}
+          {ctaText()}
         </Button>
       </div>
     </article>

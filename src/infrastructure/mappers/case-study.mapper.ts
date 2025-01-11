@@ -13,7 +13,7 @@ export class CaseStudyMapper {
         alt: image.alt,
       })),
       ctaText: dto.cta_text,
-      ctaTextName: dto.cta_text_name,
+      ctaTextName: 'caseStudy.ctaText.viewCaseStudy',
       ctaUrl: dto.cta_url,
       createdAt: new Date(dto.created_at),
       updatedAt: new Date(dto.updated_at),
