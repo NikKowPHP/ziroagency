@@ -15,7 +15,7 @@ const CaseStudyList = memo(function CaseStudyList({
   caseStudies: CaseStudy[] 
 }) {
   return (
-    <div className="container relative mx-auto lg:px-6 flex flex-col gap-16">
+    <div className="container relative mx-auto  flex flex-col gap-16">
       {caseStudies.map((caseStudy) => (
         <CaseStudyCard key={caseStudy.id} caseStudy={caseStudy} />
       ))}

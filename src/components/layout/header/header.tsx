@@ -14,11 +14,11 @@ export function Header() {
 
   return (
     <header 
-      className="fixed top-10 container rounded-full left-0 right-0 z-50 bg-[#F7F7F7] bg-opacity-80 backdrop-blur-sm"
+      className="fixed top-10 mx-10 max-w-7xl px-[10px] xl:container rounded-full left-0 right-0 z-50 bg-[#F7F7F7] bg-opacity-80 backdrop-blur-sm "
       itemScope 
       itemType="https://schema.org/WPHeader"
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-[5px]">
         <div className="flex h-[72px] items-center justify-between">
           <Link 
             href="/" 
@@ -63,7 +63,7 @@ export function Header() {
 
           <Button
             size="sm"
-            className="rounded-full px-6 h-10 text-[15px] bg-white text-black hover:bg-white/90"
+            className="rounded-full px-6 py-6 h-10 text-[15px] bg-white text-black hover:bg-white/90"
             onClick={() => {
               window.location.href = 'https://calendly.com/ziro-nikhil/30min'
             }}
