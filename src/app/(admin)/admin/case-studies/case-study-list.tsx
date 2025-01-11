@@ -6,23 +6,12 @@ import { CaseStudy } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
 import { CaseStudyForm } from './components/case-study-form'
 
-interface CaseStudyListProps {
-  initialCaseStudies: Record<Locale, CaseStudy[]>
-}
-
-export function CaseStudyList({ initialCaseStudies }: CaseStudyListProps) {
+export function CaseStudyList() {
+  const { caseStudies, createCaseStudy, updateCaseStudy, deleteCaseStudy, error, loading } = useAdmin()
   const [activeLocale, setActiveLocale] = useState<Locale>('en')
   const [editingStudy, setEditingStudy] = useState<CaseStudy | null>(null)
   const [isCreating, setIsCreating] = useState(false)
   
-  const { 
-    createCaseStudy, 
-    updateCaseStudy, 
-    deleteCaseStudy, 
-    loading, 
-    error 
-  } = useAdmin()
-
   const handleCreate = async (data: Partial<CaseStudy>) => {
     try {
       await createCaseStudy(data, activeLocale)
@@ -128,7 +117,7 @@ export function CaseStudyList({ initialCaseStudies }: CaseStudyListProps) {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {initialCaseStudies[activeLocale].map((study) => (
+            {caseStudies[activeLocale].map((study) => (
               <tr key={study.id} className={loading ? 'opacity-50' : ''}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">

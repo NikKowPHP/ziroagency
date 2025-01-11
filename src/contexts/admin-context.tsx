@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import { CaseStudy } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
 
@@ -14,12 +14,26 @@ interface AdminContextType {
   clearError: () => void
 }
 
+interface AdminProviderProps {
+  children: React.ReactNode
+  initialCaseStudies?: Record<Locale, CaseStudy[]>
+}
+
 const AdminContext = createContext<AdminContextType | undefined>(undefined)
 
-export function AdminProvider({ children }: { children: React.ReactNode }) {
-  const [caseStudies, setCaseStudies] = useState<Record<Locale, CaseStudy[]>>({ en: [], pl: [] })
+export function AdminProvider({ children, initialCaseStudies }: AdminProviderProps) {
+  const [caseStudies, setCaseStudies] = useState<Record<Locale, CaseStudy[]>>(
+    initialCaseStudies || { en: [], pl: [] }
+  )
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // Initialize case studies when initialCaseStudies changes
+  useEffect(() => {
+    if (initialCaseStudies) {
+      setCaseStudies(initialCaseStudies)
+    }
+  }, [initialCaseStudies])
 
   const createCaseStudy = async (data: Partial<CaseStudy>, locale: Locale) => {
     setLoading(true)
@@ -49,6 +63,8 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       
       const newCaseStudy = await response.json()
       console.log('Successfully created case study:', newCaseStudy)
+      
+      // Update state with new case study
       setCaseStudies(prev => ({
         ...prev,
         [locale]: [...prev[locale], newCaseStudy]
@@ -92,6 +108,8 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       
       const updatedCaseStudy = await response.json()
       console.log('Successfully updated case study:', updatedCaseStudy)
+      
+      // Update state with modified case study
       setCaseStudies(prev => ({
         ...prev,
         [locale]: prev[locale].map(cs => 
@@ -116,8 +134,12 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ locale }),
       })
       
-      if (!response.ok) throw new Error('Failed to delete case study')
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to delete case study')
+      }
       
+      // Update state by removing deleted case study
       setCaseStudies(prev => ({
         ...prev,
         [locale]: prev[locale].filter(cs => cs.id !== id)
