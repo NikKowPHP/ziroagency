@@ -53,9 +53,9 @@ export function CaseStudyList({ initialCaseStudies }: CaseStudyListProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {error && (
-        <div className="p-4 bg-red-50 text-red-600 rounded-md">
+        <div className="p-4 bg-red-50 text-red-600 rounded-primary">
           {error}
         </div>
       )}
@@ -64,20 +64,20 @@ export function CaseStudyList({ initialCaseStudies }: CaseStudyListProps) {
         <div className="flex space-x-4">
           <button
             onClick={() => setActiveLocale('en')}
-            className={`px-4 py-2 rounded-md ${
+            className={`px-6 py-3 rounded-full transition-colors ${
               activeLocale === 'en' 
                 ? 'bg-primary text-white' 
-                : 'bg-gray-100 text-gray-700'
+                : 'bg-secondary text-gray-700 hover:bg-secondary/80'
             }`}
           >
             English
           </button>
           <button
             onClick={() => setActiveLocale('pl')}
-            className={`px-4 py-2 rounded-md ${
+            className={`px-6 py-3 rounded-full transition-colors ${
               activeLocale === 'pl' 
                 ? 'bg-primary text-white' 
-                : 'bg-gray-100 text-gray-700'
+                : 'bg-secondary text-gray-700 hover:bg-secondary/80'
             }`}
           >
             Polish
@@ -85,7 +85,7 @@ export function CaseStudyList({ initialCaseStudies }: CaseStudyListProps) {
         </div>
         <button
           onClick={() => setIsCreating(true)}
-          className="px-4 py-2 text-white bg-primary rounded-md hover:bg-primary/90"
+          className="px-6 py-3 text-white bg-primary rounded-full hover:bg-primary/90 transition-colors"
           disabled={loading}
         >
           Add Case Study
@@ -93,9 +93,9 @@ export function CaseStudyList({ initialCaseStudies }: CaseStudyListProps) {
       </div>
 
       {(isCreating || editingStudy) && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <h3 className="text-lg font-medium mb-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-primary p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <h3 className="text-[32px] font-medium tracking-[-0.02em] text-gray-900 mb-8">
               {editingStudy ? 'Edit Case Study' : 'New Case Study'}
             </h3>
             <CaseStudyForm
@@ -112,7 +112,7 @@ export function CaseStudyList({ initialCaseStudies }: CaseStudyListProps) {
         </div>
       )}
 
-      <div className="overflow-x-auto bg-white rounded-lg shadow">
+      <div className="overflow-hidden bg-white rounded-primary shadow">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>

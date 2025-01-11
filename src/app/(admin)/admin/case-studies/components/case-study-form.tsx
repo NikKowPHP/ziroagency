@@ -65,7 +65,7 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-8">
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-gray-700">
           Title ({locale})
@@ -164,12 +164,12 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
             onChange={(e) => setTagInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
             placeholder="Add a tag"
-            className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+            className="flex-1 rounded-full border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
           />
           <button
             type="button"
             onClick={handleAddTag}
-            className="px-4 py-2 text-sm font-medium text-primary bg-white border border-primary rounded-md hover:bg-primary/10"
+            className="px-6 py-2 text-sm font-medium text-primary bg-white border border-primary rounded-full hover:bg-primary/10 transition-colors"
           >
             Add Tag
           </button>
@@ -218,18 +218,18 @@ export function CaseStudyForm({ study, locale, onSubmit, onCancel, loading }: Ca
         />
       </div>
 
-      <div className="flex justify-end space-x-3">
+      <div className="flex justify-end space-x-4">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+          className="px-6 py-3 text-sm font-medium text-gray-700 bg-secondary rounded-full hover:bg-secondary/80 transition-colors"
           disabled={loading}
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary/90 disabled:opacity-50"
+          className="px-6 py-3 text-sm font-medium text-white bg-primary rounded-full hover:bg-primary/90 disabled:opacity-50 transition-colors"
           disabled={loading}
         >
           {loading ? 'Saving...' : study ? 'Update' : 'Create'}
