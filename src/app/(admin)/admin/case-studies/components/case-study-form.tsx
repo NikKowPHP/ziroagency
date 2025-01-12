@@ -1,9 +1,9 @@
 'use client'
 
-import { CaseStudy, Image } from '@/domain/models/case-study.model'
+import { CaseStudy, Image as CaseStudyImage } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
+import Image  from 'next/image'
 import { useState } from 'react'
-import { uploadImage } from '@/lib/utils/file-upload'
 
 interface CaseStudyFormProps {
   study?: CaseStudy
@@ -45,7 +45,7 @@ export function CaseStudyForm({
 
   const handleImageChange = (
     index: number,
-    field: keyof Image,
+    field: keyof CaseStudyImage,
     value: string
   ) => {
     setImages(
@@ -166,7 +166,7 @@ export function CaseStudyForm({
                 />
                 {image.url && (
                   <div className="mt-2">
-                    <img
+                    <Image
                       src={image.url}
                       alt={image.alt}
                       className="h-20 w-20 object-cover rounded-md"

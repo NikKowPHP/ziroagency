@@ -72,6 +72,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
     try {
       return t(caseStudy.ctaTextName)
     } catch (error) {
+      console.error(error)
       return t('caseStudy.ctaText.viewCaseStudy')
     }
   }
