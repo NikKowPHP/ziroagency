@@ -6,10 +6,10 @@ import { CaseStudyMapper } from '@/infrastructure/mappers/case-study.mapper'
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }>  }
 ) {
   try {
-    const { id } = params
+    const { id } = await params
     const { locale } = await request.json()
 
     console.log('Processing case study deletion:', { id, locale })
@@ -46,10 +46,10 @@ export async function DELETE(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params
+    const { id } = await params
     const { data, locale } = await request.json()
     
     console.log('Processing case study update:', {
