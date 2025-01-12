@@ -11,11 +11,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/images/ziro.avif',
-        type: 'image/avif',
-      },
-      {
-        url: '/favicon.ico',
+        url: '/images/favicon.ico',
         sizes: 'any',
       }
     ],

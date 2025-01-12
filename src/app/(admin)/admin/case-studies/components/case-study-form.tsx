@@ -1,8 +1,7 @@
 'use client'
 
-import { CaseStudy, Image as CaseStudyImage } from '@/domain/models/case-study.model'
+import { CaseStudy } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 interface CaseStudyFormProps {
