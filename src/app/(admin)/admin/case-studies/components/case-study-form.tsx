@@ -64,6 +64,7 @@ const ImagePreview = ({ url, alt, onError }: ImagePreviewProps) => {
 
   return (
     <div className="relative mt-2 h-20 w-20">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={url}
         alt={alt || 'Preview'}
@@ -236,7 +237,7 @@ export function CaseStudyForm({
                         For Google Drive images: 
                         <ol className="list-decimal ml-4 mt-1">
                           <li>Open the image in Google Drive</li>
-                          <li>Click "Share" and make it accessible to anyone with the link</li>
+                          <li>Click &ldquo;Share&rdquo; and make it accessible to anyone with the link</li>
                           <li>Try using a direct image hosting service instead</li>
                         </ol>
                       </p>
