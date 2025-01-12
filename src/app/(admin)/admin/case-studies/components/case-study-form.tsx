@@ -2,8 +2,8 @@
 
 import { CaseStudy, Image as CaseStudyImage } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
-import Image  from 'next/image'
-import { useState } from 'react'
+import Image from 'next/image'
+import { useState, useEffect } from 'react'
 
 interface CaseStudyFormProps {
   study?: CaseStudy
@@ -14,9 +14,65 @@ interface CaseStudyFormProps {
 }
 
 interface ImageInput {
-  file?: File
   url: string
   alt: string
+}
+
+const isGoogleDriveLink = (url: string): boolean => {
+  return url.includes('drive.google.com') || url.includes('googleusercontent.com')
+}
+
+const getGoogleDriveDirectLink = (url: string): string | null => {
+  try {
+    const fileId = url.match(/\/d\/(.+?)\/|id=(.+?)&/)?.[1] || url.match(/id=(.+?)&/)?.[1]
+    if (fileId) {
+      return `https://drive.google.com/uc?export=view&id=${fileId}`
+    }
+    return null
+  } catch {
+    return null
+  }
+}
+
+interface ImagePreviewProps {
+  url: string
+  alt: string
+  onError: () => void
+}
+
+const ImagePreview = ({ url, alt, onError }: ImagePreviewProps) => {
+  const [showImage, setShowImage] = useState(false)
+
+  useEffect(() => {
+    const img = document.createElement('img')
+    img.onload = () => setShowImage(true)
+    img.onerror = onError
+    img.src = url
+    
+    return () => {
+      img.onload = null
+      img.onerror = null
+    }
+  }, [url, onError])
+
+  if (!showImage) {
+    return (
+      <div className="relative mt-2 h-20 w-20 bg-gray-100 rounded-md flex items-center justify-center">
+        <span className="text-sm text-gray-500">Loading...</span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative mt-2 h-20 w-20">
+      <img
+        src={url}
+        alt={alt || 'Preview'}
+        className="object-cover rounded-md h-full w-full"
+        onError={onError}
+      />
+    </div>
+  )
 }
 
 export function CaseStudyForm({
@@ -34,6 +90,7 @@ export function CaseStudyForm({
   const [tags, setTags] = useState<readonly string[]>(study?.tags || [])
   const [tagInput, setTagInput] = useState('')
   const [title, setTitle] = useState(study?.title || '')
+  const [imageErrors, setImageErrors] = useState<Record<number, string | null>>({})
 
   const handleAddImage = () => {
     setImages([...images, { url: '', alt: '' }])
@@ -41,42 +98,38 @@ export function CaseStudyForm({
 
   const handleRemoveImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index))
+    setImageErrors(prev => ({ ...prev, [index]: null }))
   }
 
   const handleImageChange = (
     index: number,
-    field: keyof CaseStudyImage,
+    field: keyof ImageInput,
     value: string
   ) => {
-    setImages(
-      images.map((img, i) => (i === index ? { ...img, [field]: value } : img))
-    )
-  }
-
-  const handleFileChange = async (index: number, file: File) => {
-    try {
-      const titleInput = document.getElementById('title') as HTMLInputElement
-      const title = titleInput?.value || 'untitled'
+    if (field === 'url') {
+      setImageErrors(prev => ({ ...prev, [index]: null }))
       
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('title', title)
-
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.message || 'Upload failed')
+      if (isGoogleDriveLink(value)) {
+        const directLink = getGoogleDriveDirectLink(value)
+        if (!directLink) {
+          setImageErrors(prev => ({
+            ...prev,
+            [index]: 'Invalid Google Drive link format. Please use a direct image link.'
+          }))
+        }
+        // Always update the URL, even if invalid
+        setImages(images.map((img, i) => 
+          i === index ? { ...img, url: value } : img
+        ))
+      } else {
+        setImages(images.map((img, i) => 
+          i === index ? { ...img, url: value } : img
+        ))
       }
-
-      const { url } = await response.json()
-      handleImageChange(index, 'url', url)
-    } catch (error) {
-      console.error('Error uploading file:', error)
-      // TODO: Add proper error handling UI feedback
+    } else {
+      setImages(images.map((img, i) => 
+        i === index ? { ...img, [field]: value } : img
+      ))
     }
   }
 
@@ -108,6 +161,13 @@ export function CaseStudyForm({
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
+  }
+
+  const handleImageError = (index: number) => {
+    setImageErrors(prev => ({
+      ...prev,
+      [index]: 'Failed to load image. Please check the URL or try a different link format.'
+    }))
   }
 
   return (
@@ -156,21 +216,32 @@ export function CaseStudyForm({
             <div key={index} className="flex gap-4 mb-4">
               <div className="flex-1">
                 <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0]
-                    if (file) handleFileChange(index, file)
-                  }}
+                  type="url"
+                  value={image.url}
+                  onChange={(e) => handleImageChange(index, 'url', e.target.value)}
+                  placeholder="Image URL (direct link recommended)"
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                 />
-                {image.url && (
-                  <div className="mt-2">
-                    <Image
-                      src={image.url}
-                      alt={image.alt}
-                      className="h-20 w-20 object-cover rounded-md"
-                    />
+                {image.url && !imageErrors[index] && (
+                  <ImagePreview
+                    url={image.url}
+                    alt={image.alt}
+                    onError={() => handleImageError(index)}
+                  />
+                )}
+                {imageErrors[index] && (
+                  <div className="mt-2 text-sm text-red-600">
+                    <p>{imageErrors[index]}</p>
+                    {isGoogleDriveLink(image.url) && (
+                      <p className="mt-1">
+                        For Google Drive images: 
+                        <ol className="list-decimal ml-4 mt-1">
+                          <li>Open the image in Google Drive</li>
+                          <li>Click "Share" and make it accessible to anyone with the link</li>
+                          <li>Try using a direct image hosting service instead</li>
+                        </ol>
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
@@ -178,10 +249,9 @@ export function CaseStudyForm({
                 <input
                   type="text"
                   value={image.alt}
-                  onChange={(e) =>
-                    handleImageChange(index, 'alt', e.target.value)
-                  }
+                  onChange={(e) => handleImageChange(index, 'alt', e.target.value)}
                   placeholder="Alt text"
+                  required={!!image.url}
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                 />
               </div>

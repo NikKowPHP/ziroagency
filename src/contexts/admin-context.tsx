@@ -44,37 +44,18 @@ export function AdminProvider({ children, initialCaseStudies }: AdminProviderPro
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data, locale }),
       })
-      
-      console.log('Response status:', response.status)
-      console.log('Response status text:', response.statusText)
-      
-      let errorMessage = 'Failed to create case study'
-      try {
-        const errorData = await response.clone().json()
-        console.log('Response body:', errorData)
-        errorMessage = errorData.error || errorMessage
-      } catch (parseError) {
-        console.error('Failed to parse error response:', parseError)
-      }
 
       if (!response.ok) {
-        throw new Error(`${errorMessage} (Status: ${response.status})`)
+        const errorData = await response.json().catch(() => ({ error: 'Failed to create case study' }))
+        throw new Error(errorData.error || 'Failed to create case study')
       }
-      
+
       const newCaseStudy = await response.json()
-      console.log('Successfully created case study:', newCaseStudy)
-      
-      // Update state with new case study
       setCaseStudies(prev => ({
         ...prev,
         [locale]: [...prev[locale], newCaseStudy]
       }))
     } catch (err) {
-      console.error('Create case study error details:', {
-        error: err,
-        requestData: { data, locale },
-        timestamp: new Date().toISOString()
-      })
       setError(err instanceof Error ? err.message : 'Failed to create case study')
       throw err
     } finally {
@@ -91,30 +72,16 @@ export function AdminProvider({ children, initialCaseStudies }: AdminProviderPro
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data, locale }),
       })
-      
-      console.log('Update response status:', response.status)
-      let errorMessage = 'Failed to update case study'
-      try {
-        const errorData = await response.clone().json()
-        console.log('Update response body:', errorData)
-        errorMessage = errorData.error || errorMessage
-      } catch (parseError) {
-        console.error('Failed to parse update error response:', parseError)
-      }
-      
+
       if (!response.ok) {
-        throw new Error(`${errorMessage} (Status: ${response.status})`)
+        const errorData = await response.json().catch(() => ({ error: 'Failed to update case study' }))
+        throw new Error(errorData.error || 'Failed to update case study')
       }
-      
+
       const updatedCaseStudy = await response.json()
-      console.log('Successfully updated case study:', updatedCaseStudy)
-      
-      // Update state with modified case study
       setCaseStudies(prev => ({
         ...prev,
-        [locale]: prev[locale].map(cs => 
-          cs.id === id ? updatedCaseStudy : cs
-        )
+        [locale]: prev[locale].map(cs => cs.id === id ? updatedCaseStudy : cs)
       }))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update case study')
