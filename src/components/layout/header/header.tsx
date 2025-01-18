@@ -14,7 +14,7 @@ export function Header() {
 
   return (
     <header 
-      className="fixed top-10 mx-10 max-w-7xl px-[10px] xl:container rounded-full left-0 right-0 z-50 bg-[#F7F7F7] bg-opacity-80 backdrop-blur-sm "
+      className="fixed top-10 mx-[20px]  sm:mx-10 md:mx-auto max-w-7xl px-[10px] sm:mx-[45px] md:mx-[48px] lg:mx-[37px] xl:container rounded-full left-0 right-0 z-50 bg-[#F7F7F7] bg-opacity-80 backdrop-blur-sm "
       itemScope 
       itemType="https://schema.org/WPHeader"
     >
