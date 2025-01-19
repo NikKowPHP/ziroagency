@@ -99,7 +99,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
             
             {/* Description */}
             <p 
-              className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed mb-6 sm:mb-8 line-clamp-4 overflow-hidden"
+              className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed mb-8 sm:mb-[20px] line-clamp-4 overflow-hidden"
               itemProp="description"
             >
               {caseStudy.description}
