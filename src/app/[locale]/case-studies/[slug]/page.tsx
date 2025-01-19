@@ -45,7 +45,7 @@ function CaseStudyError() {
         <p className="text-gray-600 mb-8">
           We couldn&apos;t load the case study. Please try again later.
         </p>
-        <Link 
+        <Link
           href="/case-studies"
           className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition"
         >
@@ -76,24 +76,12 @@ async function CaseStudyContent({ slug, locale }: { slug: string, locale: Locale
 
     const [heroImage, ...otherImages] = caseStudy.images
 
-    // Format dates safely
-    const formatDate = (dateString: string) => {
-      try {
-        return new Date(dateString).toLocaleDateString(locale, {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })
-      } catch (error) {
-        console.error('Error formatting date:', error)
-        return 'Date unavailable'
-      }
-    }
+  
 
     return (
-      <article className="bg-white pt-28 px-[10px]">
+      <article className="bg-white pt-28 xl:px-[10px]">
         {/* Hero Section */}
-        <header className="container mx-auto pt-32 pb-16 ">
+        <header className="container mx-auto pt-32 pb-[50px] ">
           <div className="max-w-[90rem] mx-auto">
             {/* Hero Image */}
             <div className="relative w-full aspect-[16/9] mb-16">
@@ -106,52 +94,71 @@ async function CaseStudyContent({ slug, locale }: { slug: string, locale: Locale
               />
             </div>
 
-            <div className="grid lg:grid-cols-[2fr,1fr] gap-16">
+          </div>
+        </header>
+
+        {/* Project Info Section */}
+        <section className="container mx-auto px-4 md:px-6 lg:px-8">
+          <div className="max-w-[90rem] mx-auto">
+            {/* Project Title and Description */}
+            <div className=" gap-16 mb-24">
               <div>
-                <h1 className="text-4xl md:text-6xl font-medium mb-8">
+                <h1 className="text-4xl md:text-5xl lg:text-7xl font-medium mb-14">
                   {caseStudy.title}
                 </h1>
-                <p className="text-xl text-gray-700">
+              </div>
+              <div>
+                <p className="text-xl text-gray-700 leading-relaxed">
                   {caseStudy.description}
                 </p>
               </div>
+            </div>
 
-              <div className="space-y-8">
-                <div>
-                  <h2 className="font-medium text-lg mb-2">Tags:</h2>
-                  <div className="flex flex-wrap gap-2">
-                    {caseStudy.tags.map((tag) => (
-                      <span 
-                        key={tag}
-                        className="px-3 py-1 bg-gray-100 rounded-full text-sm"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+            {/* Project Details */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
+              <div>
+                <h2 className="text-lg font-medium mb-4">Year</h2>
+                <p className="text-gray-700">
+                  {new Date(caseStudy.createdAt as unknown as string).getFullYear()}
+                </p>
+              </div>
+              <div>
+                <h2 className="text-lg font-medium mb-4">Industry</h2>
+                <div className="flex flex-wrap gap-2">
+                  {caseStudy.tags.map((tag) => (
+                    <span key={tag} className="text-gray-700">
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-
-                <div>
-                  <h2 className="font-medium text-lg mb-4">Timeline:</h2>
-                  <div className="space-y-2 text-gray-600">
-                    <p>Created: {formatDate(caseStudy.createdAt as unknown as string)}</p>
-                    <p>Updated: {formatDate(caseStudy.updatedAt as unknown as string)}</p>
-                  </div>
+              </div>
+              <div>
+                <h2 className="text-lg font-medium mb-4">Project Direction</h2>
+                <div className="space-y-1">
+                  {caseStudy.tags.map((tag) => (
+                    <p key={tag} className="text-gray-700">
+                      {tag}
+                    </p>
+                  ))}
                 </div>
-
-                <Link 
-                  href={caseStudy.ctaUrl}
-                  className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {caseStudy.ctaText} 
-                  <span className="ml-2">→</span>
-                </Link>
               </div>
             </div>
+
+            <Link
+              href={caseStudy.ctaUrl}
+              className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {caseStudy.ctaText}
+              <span className="ml-2">→</span>
+            </Link>
+
+
           </div>
-        </header>
+        </section>
+
+
 
         {/* Gallery Section */}
         {otherImages.length > 0 && (
