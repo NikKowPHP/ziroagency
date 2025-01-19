@@ -27,7 +27,7 @@ export function Testimonials() {
           </div>
 
           {/* Right Column - Content */}
-          <div className="bg-gray-50 rounded-[32px] p-12 flex flex-col justify-between">
+          <div className="bg-gray-100 rounded-[32px] p-12 flex flex-col justify-between">
             <div className="space-y-8">
               <p className="text-gray-900 text-lg leading-relaxed">
                 &quot;{t(`${testimonialItems[currentIndex].id}.quote`)}&quot;
@@ -57,7 +57,7 @@ export function Testimonials() {
         </div>
 
         {/* Bottom Consultation Section */}
-        <div className="mt-6 bg-gray-50 rounded-[32px] p-6 sm:p-8 lg:p-12 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+        <div className="mt-6 bg-gray-100 rounded-[32px] p-6 sm:p-8 lg:p-12 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
           <p className="text-gray-900 text-base sm:text-lg font-medium text-center sm:text-left max-w-[500px]">
             {t('alwaysOpen')}
           </p>

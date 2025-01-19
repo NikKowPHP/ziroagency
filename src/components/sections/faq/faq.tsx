@@ -17,7 +17,7 @@ function FaqAccordion({ itemId, isOpen, onToggle }: FaqAccordionProps) {
   return (
     <div
       className={cn(
-        'border-b border-gray-200 last:border-0  rounded-[50px] bg-gray-100 ',
+        ' rounded-[50px] bg-gray-100 ',
         // isOpen ? 'rounded-3xl' : ''
       )}
       itemScope
