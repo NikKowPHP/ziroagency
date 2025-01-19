@@ -56,7 +56,7 @@ export function Testimonials() {
         </div>
 
         {/* Bottom Consultation Section */}
-        <div className="mt-6 bg-gray-50 rounded-[32px] p-8 flex justify-between items-center">
+        <div className="mt-6 bg-gray-50 rounded-[32px] p-8 lg:p-64 flex justify-center gap-10 items-center">
           <p className="text-gray-900 text-lg font-medium">
             {t('alwaysOpen')}
           </p>
