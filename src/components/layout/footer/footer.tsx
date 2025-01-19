@@ -79,27 +79,19 @@ export function Footer() {
           </div>
 
           {/* Right Column - Links */}
-          <div className="lg:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8 mt-12">
+          <div className="lg:col-span-6 flex flex-wrap gap-x-12 gap-y-8 mt-12">
             <div>
-              <h3 className="font-medium text-gray-900 mb-5">
+              <h3 className="font-medium text-gray-900 whitespace-nowrap">
                 {t('links.company')}
               </h3>
-              {/* <nav className="flex flex-col gap-5">
-                <Link href="/blog" className="text-gray-600 hover:text-gray-900 transition-colors">
-                  {t('links.blog')}
-                </Link>
-                <Link href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">
-                  {t('links.contact')}
-                </Link>
-              </nav> */}
             </div>
             <div>
-              <h3 className="font-medium text-gray-900 mb-4">
+              <h3 className="font-medium text-gray-900 whitespace-nowrap">
                 {t('links.terms')}
               </h3>
             </div>
             <div>
-              <h3 className="font-medium text-gray-900 mb-4">
+              <h3 className="font-medium text-gray-900 whitespace-nowrap">
                 {t('links.press')}
               </h3>
             </div>
