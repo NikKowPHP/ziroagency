@@ -57,11 +57,16 @@ export function Testimonials() {
         </div>
 
         {/* Bottom Consultation Section */}
-        <div className="mt-6 bg-gray-50 rounded-[32px] p-8 lg:p-64 flex justify-center gap-10 items-center">
-          <p className="text-gray-900 text-lg font-medium">
+        <div className="mt-6 bg-gray-50 rounded-[32px] p-6 sm:p-10 lg:p-12 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+          <p className="text-gray-900 text-base sm:text-lg font-medium text-center sm:text-left max-w-[500px]">
             {t('alwaysOpen')}
           </p>
-          <Button variant='white' size='lg' href='https://calendly.com/ziro-nikhil/30min'>
+          <Button 
+            variant='white' 
+            size='lg' 
+            href='https://calendly.com/ziro-nikhil/30min'
+            className="whitespace-nowrap w-full sm:w-auto"
+          >
             {t('bookCall')}
           </Button>
         </div>
