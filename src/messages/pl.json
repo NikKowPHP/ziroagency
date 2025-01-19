@@ -95,5 +95,10 @@
     "description": "Strona, której szukasz nie istnieje lub została przeniesiona.",
     "requestedPath": "Żądana ścieżka",
     "backHome": "Wróć do strony głównej"
+  },
+  "testimonials": {
+    "bookCall": "Umów się na spotkanie",
+    "alwaysOpen": "Jesteśmy zawsze otwarte na komunikację, umów się na 20 minutową konsultację z Nikhil"
+    
   }
 } 
