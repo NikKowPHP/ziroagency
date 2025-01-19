@@ -8,7 +8,7 @@ export function HeroButtons() {
   
   return (
     <div 
-      className="flex flex-col sm:flex-row gap-4 pt-6 sm:pt-8 w-full sm:w-auto px-4 sm:px-0"
+      className="flex flex-col sm:flex-row gap-[10px] pt-6 sm:pt-8 w-full sm:w-auto px-4 sm:px-0"
       role="group"
       aria-label="Hero actions"
     >
