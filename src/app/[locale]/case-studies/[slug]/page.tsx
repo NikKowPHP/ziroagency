@@ -4,6 +4,7 @@ import { type Locale } from '@/i18n'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense } from 'react'
+import { Button } from '@/components/ui/button/button'
 
 interface PageProps {
   params: Promise<{
@@ -18,7 +19,7 @@ function CaseStudyLoading() {
   return (
     <div className="bg-white pt-20 animate-pulse">
       <div className="container mx-auto pt-32 pb-16">
-        <div className="max-w-[90rem] mx-auto">
+        <div className="max-w-[90rem] mx-auto mb-[50px]">
           <div className="relative w-full aspect-[16/9] mb-16 bg-gray-200 rounded-lg" />
           <div className="grid lg:grid-cols-[2fr,1fr] gap-16">
             <div>
@@ -106,14 +107,14 @@ async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale
         <section className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="max-w-[90rem] mx-auto">
             {/* Project Title and Description */}
-            <div className=" gap-16 mb-24">
+            <div className="  mb-[50px]">
               <div>
-                <h1 className="text-4xl md:text-5xl lg:text-7xl font-medium mb-14">
+                <h1 className=" text-4xl md:text-5xl lg:text-[92px] font-medium mb-14">
                   {caseStudy.title}
                 </h1>
               </div>
               <div>
-                <p className="text-xl text-gray-700 leading-relaxed">
+                <p className="text-[24px] text-gray-700 leading-relaxed">
                   {caseStudy.description}
                 </p>
               </div>
@@ -149,15 +150,16 @@ async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale
               </div>
             </div>
 
-            <Link
+            <Button
               href={caseStudy.ctaUrl}
-              className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition"
+              variant="primary"
               target="_blank"
+              size="lg"
               rel="noopener noreferrer"
             >
               {caseStudy.ctaText}
               <span className="ml-2">→</span>
-            </Link>
+            </Button>
 
 
           </div>
