@@ -60,11 +60,11 @@ export function Faq() {
 
   return (
     <section
-      className="py-12 sm:py-16 mt-10 lg:py-24"
+      className="py-12 sm:py-16 mt-10 lg:py-24 lg:mb-10"
       itemScope
       itemType="https://schema.org/FAQPage"
     >
-      <div className="container mx-auto px-4 sm:px-6 ">
+      <div className="container mx-auto px-4 sm:px-0 ">
         <h2 className="text-center text-black text-[36px] sm:text-[46px] lg:text-[56px] font-medium mb-8 sm:mb-12 lg:mb-16">
           {t('title')}
         </h2>

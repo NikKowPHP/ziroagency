@@ -6,7 +6,7 @@ import { LanguageSwitcher } from '@/components/ui/language-switcher/language-swi
 
 export function ClientWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className='bg-white px-[20px]'>
+    <div className='bg-white px-[20px] pb-[40px]'>
       <Header />
       {children}
       <Footer />

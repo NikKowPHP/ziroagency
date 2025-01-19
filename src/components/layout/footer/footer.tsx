@@ -7,7 +7,7 @@ export function Footer() {
   
   return (
     <footer 
-      className="bg-gray-50 py-12 sm:py-16"
+      className="bg-gray-50 container rounded-primary-lg py-12 px-2 sm:py-18  sm:px-20"
       itemScope
       itemType="https://schema.org/Organization"
     >
@@ -51,11 +51,11 @@ export function Footer() {
             {/* Poland Flag and Text */}
             <div className="flex items-center gap-2">
               <Image
-                src="/images/flags/pl.svg"
+                src="/images/pl.svg"
                 alt="Polish Flag"
                 width={24}
                 height={16}
-                className="w-6 h-4"
+                className="w-6 h-[20px]"
               />
               <span className="text-sm text-gray-600">
                 {t('designedWith')}
@@ -63,11 +63,11 @@ export function Footer() {
             </div>
 
             {/* Description */}
-            <p className="text-gray-600 text-sm max-w-md">
+            <p className="text-gray-600 text-xs max-w-md">
               {t('description')}
             </p>
 
-            {/* Address */}
+            {/* Address
             <div 
               className="text-sm text-gray-500"
               itemProp="address"
@@ -75,16 +75,16 @@ export function Footer() {
               itemType="https://schema.org/PostalAddress"
             >
               {t('address')}
-            </div>
+            </div> */}
           </div>
 
           {/* Right Column - Links */}
-          <div className="lg:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8">
+          <div className="lg:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8 mt-12">
             <div>
-              <h3 className="font-medium text-gray-900 mb-4">
+              <h3 className="font-medium text-gray-900 mb-5">
                 {t('links.company')}
               </h3>
-              <nav className="flex flex-col space-y-3">
+              <nav className="flex flex-col gap-5">
                 <Link href="/blog" className="text-gray-600 hover:text-gray-900 transition-colors">
                   {t('links.blog')}
                 </Link>
