@@ -18,6 +18,9 @@ const config: Config = {
           tertiary: '#999999',
           black: '#000000'
           
+        },
+        borderColor: {
+          primary: '#0171E3'
         }
       },
       fontFamily: {

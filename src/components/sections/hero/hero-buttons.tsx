@@ -15,7 +15,7 @@ export function HeroButtons() {
       <Button
         variant="outline"
         size="lg"
-        className="w-full py-[30px] px-[25px] sm:w-auto rounded-full  sm:py-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] border-primary text-[#0066FF] hover:bg-[#0066FF]/5"
+        className="w-full py-[30px] px-[25px] sm:w-auto rounded-full  sm:py-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] border border-primary  text-[#0066FF] hover:bg-[#0066FF]/5"
         onClick={() => {
           const element = document.getElementById('pricing')
           const offset = -100
