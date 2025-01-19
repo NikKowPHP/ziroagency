@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { testimonialItems } from '@/lib/data/testimonials'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import { Button } from '@/components/ui/button/button'
 
 export function Testimonials() {
   const [currentIndex] = useState(0)
@@ -60,9 +61,9 @@ export function Testimonials() {
           <p className="text-gray-900 text-lg font-medium">
             {t('alwaysOpen')}
           </p>
-          <button className="bg-white text-black px-6 py-3 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors whitespace-nowrap">
+          <Button variant='white' size='lg' href='https://calendly.com/ziro-nikhil/30min'>
             {t('bookCall')}
-          </button>
+          </Button>
         </div>
       </div>
     </section>
