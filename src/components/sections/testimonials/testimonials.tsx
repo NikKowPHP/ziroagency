@@ -12,7 +12,7 @@ export function Testimonials() {
   return (
     <section className="py-12 sm:py-16 lg:py-24">
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16  bg-gray-100 rounded-primary  ">
           {/* Image Column */}
           <div className="relative aspect-[4/3] lg:aspect-auto lg:h-[600px] rounded-3xl overflow-hidden">
             <Image
@@ -25,19 +25,24 @@ export function Testimonials() {
           </div>
 
           {/* Content Column */}
-          <div className="flex flex-col space-y-6">
-            <blockquote className="text-[20px] sm:text-[24px] lg:text-[28px] leading-relaxed text-gray-900">
+          <div className="flex flex-col space-y-6 flex-start py-14 px-6">
+            <blockquote className="text-[14px] sm:text-[16px] lg:text-[18px] leading-relaxed text-gray-900">
               &quot;{testimonialItems[currentIndex].quote}&quot;
             </blockquote>
             
-            <div className="flex items-center space-x-4">
-              <div className="flex flex-col">
-                <span className="font-medium text-lg">
-                  {testimonialItems[currentIndex].author}
+            <div className="flex items-center ">
+              <div className="grid grid-cols-2">
+                <span className="w-[100px] h-[100px]">
+                  <Image src={testimonialItems[currentIndex].imagePerson} alt={testimonialItems[currentIndex].imageAlt} width={100} height={100} />
                 </span>
+                <div className="flex flex-col">
+                  <span className="font-medium text-lg">
+                    {testimonialItems[currentIndex].author}
+                  </span>
                 <span className="text-gray-600">
                   {testimonialItems[currentIndex].role}, {testimonialItems[currentIndex].company}
-                </span>
+                  </span>
+                </div>
               </div>
             </div>
 
