@@ -67,6 +67,7 @@ export function AdminProvider({ children, initialCaseStudies }: AdminProviderPro
     setLoading(true)
     setError(null)
     try {
+      console.log('update data', data)
       const response = await fetch(`/api/admin/case-studies/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -79,6 +80,7 @@ export function AdminProvider({ children, initialCaseStudies }: AdminProviderPro
       }
 
       const updatedCaseStudy = await response.json()
+      console.log('updatedCaseStudy', updatedCaseStudy)
       setCaseStudies(prev => ({
         ...prev,
         [locale]: prev[locale].map(cs => cs.id === id ? updatedCaseStudy : cs)

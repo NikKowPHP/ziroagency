@@ -112,8 +112,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
           <div className="hidden lg:block mt-auto">
             <Button 
               size="xl" 
-              
-              href={caseStudy.ctaUrl}
+              href={`/case-studies/${caseStudy.slug}`}
             >
               {ctaText()}
             </Button>
@@ -137,7 +136,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
       <div className="lg:hidden lg:pt-10 sm:py-4 md:px-[20px] sm:px-[20px] sm:pb-10">
         <Button 
           size="xl" 
-          href={caseStudy.ctaUrl}
+          href={`/case-studies/${caseStudy.slug}`}
           className="w-full"
         >
           {ctaText()}

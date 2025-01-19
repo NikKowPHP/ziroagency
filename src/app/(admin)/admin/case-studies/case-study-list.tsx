@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAdmin } from '@/contexts/admin-context'
 import { CaseStudy } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
@@ -40,6 +40,8 @@ export function CaseStudyList() {
       }
     }
   }
+
+  useEffect(() => { console.log(caseStudies) }, [caseStudies])
 
   return (
     <div className="space-y-8">
@@ -109,6 +111,12 @@ export function CaseStudyList() {
                 Title
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Slug
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                URL Preview
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Description
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -122,6 +130,16 @@ export function CaseStudyList() {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
                     {study.title}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">
+                    {study.slug}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">
+                    /case-studies/{study.slug}
                   </div>
                 </td>
                 <td className="px-6 py-4">

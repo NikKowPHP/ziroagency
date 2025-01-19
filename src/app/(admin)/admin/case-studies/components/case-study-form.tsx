@@ -90,7 +90,20 @@ export function CaseStudyForm({
   const [tags, setTags] = useState<readonly string[]>(study?.tags || [])
   const [tagInput, setTagInput] = useState('')
   const [title, setTitle] = useState(study?.title || '')
+  const [slug, setSlug] = useState(study?.slug || '')
   const [imageErrors, setImageErrors] = useState<Record<number, string | null>>({})
+
+
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTitle = e.target.value
+    setTitle(newTitle)
+   
+  }
+
+  const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSlug(e.target.value)
+  }
 
   const handleAddImage = () => {
     setImages([...images, { url: '', alt: '' }])
@@ -148,8 +161,11 @@ export function CaseStudyForm({
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
 
+    console.log(formData.get('slug'))
+
     await onSubmit({
       title: formData.get('title') as string,
+      slug: formData.get('slug') as string,
       description: formData.get('description') as string,
       tags: tags,
       images: images.filter((img) => img.url && img.alt),
@@ -157,10 +173,6 @@ export function CaseStudyForm({
       ctaTextName: 'caseStudy.ctaText.viewCaseStudy',
       ctaUrl: formData.get('ctaUrl') as string,
     })
-  }
-
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value)
   }
 
   const handleImageError = (index: number) => {
@@ -188,6 +200,34 @@ export function CaseStudyForm({
           required
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
         />
+      </div>
+
+      <div>
+        <label
+          htmlFor="slug"
+          className="block text-sm font-medium text-gray-700"
+        >
+          URL Slug *
+        </label>
+        <div className="mt-1 flex rounded-md shadow-sm">
+          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+            {`/${locale}/case-studies/`}
+          </span>
+          <input
+            type="text"
+            name="slug"
+            id="slug"
+            value={slug}
+            onChange={handleSlugChange}
+            required
+            pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            title="Only lowercase letters, numbers, and hyphens are allowed"
+            className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 focus:ring-primary focus:border-primary sm:text-sm"
+          />
+        </div>
+        <p className="mt-1 text-sm text-gray-500">
+          This will be the URL of your case study. Use only lowercase letters, numbers, and hyphens.
+        </p>
       </div>
 
       <div className={`space-y-8 ${!title.trim() ? 'opacity-50 pointer-events-none' : ''}`}>
