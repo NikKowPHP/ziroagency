@@ -10,14 +10,16 @@ interface CaseStudiesProps {
 }
 
 const CaseStudyList = memo(function CaseStudyList({ 
-  caseStudies 
+  caseStudies,
+  locale
 }: { 
   caseStudies: CaseStudy[] 
+  locale: Locale
 }) {
   return (
     <div className="md:container relative mx-auto  flex flex-col gap-16">
       {caseStudies.map((caseStudy) => (
-        <CaseStudyCard key={caseStudy.id} caseStudy={caseStudy} />
+        <CaseStudyCard key={caseStudy.id} caseStudy={caseStudy} locale={locale} />
       ))}
     </div>
   );
@@ -30,7 +32,7 @@ export async function CaseStudies({ locale }: CaseStudiesProps) {
   return (
     <section id="work" className="relative overflow-hidden bg-white">
       <Suspense fallback={<CaseStudiesLoader />}>
-        <CaseStudyList caseStudies={caseStudies} />
+        <CaseStudyList caseStudies={caseStudies} locale={locale} />
       </Suspense>
     </section>
   )

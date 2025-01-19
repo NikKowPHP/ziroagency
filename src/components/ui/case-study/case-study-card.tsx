@@ -8,9 +8,11 @@ import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { type Image as ImageType } from '@/domain/models/case-study.model'
 import { type CaseStudy } from '@/domain/models/case-study.model'
+import { Locale } from '@/i18n'
 
 interface CaseStudyCardProps {
   caseStudy: CaseStudy
+  locale: Locale
 }
 
 // Separate image component for better performance
@@ -63,7 +65,8 @@ const CaseStudyTags = memo(function CaseStudyTags({ tags }: { tags: string[] }) 
 
 // Main component with performance optimizations
 export const CaseStudyCard = memo(function CaseStudyCard({ 
-  caseStudy 
+  caseStudy,
+  locale
 }: CaseStudyCardProps) {
   const t = useTranslations()
   
@@ -112,7 +115,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
           <div className="hidden lg:block mt-auto">
             <Button 
               size="xl" 
-              href={`/case-studies/${caseStudy.slug}`}
+              href={`/${locale}/case-studies/${caseStudy.slug}`}
             >
               {ctaText()}
             </Button>
@@ -136,7 +139,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
       <div className="lg:hidden lg:pt-10 sm:py-4 md:px-[20px] sm:px-[20px] sm:pb-10">
         <Button 
           size="xl" 
-          href={`/case-studies/${caseStudy.slug}`}
+          href={`/${locale}/case-studies/${caseStudy.slug}`}
           className="w-full"
         >
           {ctaText()}
