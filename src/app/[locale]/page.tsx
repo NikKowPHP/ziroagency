@@ -79,9 +79,9 @@ export default async function HomePage({ params }: HomePageProps) {
   const t = await getTranslations('hero')
 
   return (
-    <div 
+    <div
       className="relative overflow-hidden min-h-screen bg-white"
-      itemScope 
+      itemScope
       itemType="https://schema.org/WebSite"
     >
       <meta itemProp="name" content="ZIRO Agency" />
@@ -113,7 +113,7 @@ export default async function HomePage({ params }: HomePageProps) {
           </section>
         </Suspense>
 
-        <Suspense 
+        <Suspense
           fallback={
             <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
@@ -125,7 +125,7 @@ export default async function HomePage({ params }: HomePageProps) {
           <RunningTags services={services} />
         </div>
 
-        <Suspense 
+        <Suspense
           fallback={
             <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
@@ -133,7 +133,15 @@ export default async function HomePage({ params }: HomePageProps) {
           <Pricing />
         </Suspense>
 
-        <Suspense 
+        <Suspense
+          fallback={
+            <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
+          }
+        >
+          <Testimonials />
+        </Suspense>
+
+        <Suspense
           fallback={
             <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
@@ -141,13 +149,7 @@ export default async function HomePage({ params }: HomePageProps) {
           <Faq />
         </Suspense>
 
-        <Suspense 
-          fallback={
-            <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
-          }
-        >
-          <Testimonials />
-        </Suspense>
+
       </div>
     </div>
   )
