@@ -30,19 +30,23 @@ export function Testimonials() {
               &quot;{testimonialItems[currentIndex].quote}&quot;
             </blockquote>
             
-            <div className="flex items-center ">
-              <div className="grid grid-cols-2">
-                <span className="w-[100px] h-[100px]">
-                  <Image src={testimonialItems[currentIndex].imagePerson} alt={testimonialItems[currentIndex].imageAlt} width={100} height={100} />
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-full overflow-hidden">
+                <Image 
+                  src={testimonialItems[currentIndex].imagePerson} 
+                  alt={testimonialItems[currentIndex].imageAlt} 
+                  width={40} 
+                  height={40}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-medium text-base text-gray-900">
+                  {testimonialItems[currentIndex].author}
                 </span>
-                <div className="flex flex-col">
-                  <span className="font-medium text-lg">
-                    {testimonialItems[currentIndex].author}
-                  </span>
-                <span className="text-gray-600">
+                <span className="text-sm text-gray-500">
                   {testimonialItems[currentIndex].role}, {testimonialItems[currentIndex].company}
-                  </span>
-                </div>
+                </span>
               </div>
             </div>
 
