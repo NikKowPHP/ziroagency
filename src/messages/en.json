@@ -96,7 +96,7 @@
     "requestedPath": "Requested path",
     "backHome": "Back to Homepage"
   },
-  "testimonials": {
+  "team": {
     "nikhil": {
       "role": "Founder",
       "company": "M.Des, B.Arch",
@@ -105,5 +105,8 @@
     },
     "alwaysOpen": "We're always open to communicate, book your 20 min consultation with Nikhil",
     "bookCall": "Book a call"
+  },
+  "testimonials": {
+    "title": "Helping people feel better, every day"
   }
 } 

@@ -14,7 +14,7 @@ const mockTestimonials: Record<Locale, TestimonialDTO[]> = {
       quote: 'I like the use of red light simply to recalibrate my circadian rhythm.',
       goal: 'Wanted to improve her energy levels',
       image: {
-        url: '/images/testimonials/jenny.jpg',
+        url: 'https://i.postimg.cc/Dmwyh6gM/1.jpg',
         alt: 'Jenny using red light therapy'
       },
       created_at: new Date().toISOString()
@@ -26,7 +26,7 @@ const mockTestimonials: Record<Locale, TestimonialDTO[]> = {
       quote: 'I keep my Luminousred Model 1 by my bed and use it night and morning. Overtime, I see my skin tone improving. I also use it for sun recovery.',
       goal: 'Looked for better sleep',
       image: {
-        url: '/images/testimonials/sam.jpg',
+        url: 'https://i.postimg.cc/Lg5HV45p/2.jpg',
         alt: 'Sam using red light therapy'
       },
       created_at: new Date().toISOString()
