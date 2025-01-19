@@ -97,7 +97,13 @@
     "backHome": "Back to Homepage"
   },
   "testimonials": {
-    "bookCall": "Book a call",
-    "alwaysOpen": "We're always open to communicate, book your 20 min consultation with Nikhil"
+    "nikhil": {
+      "role": "Founder",
+      "company": "M.Des, B.Arch",
+      "quote": "At Ziro, we're passionate about how design shapes brand value. We see design as the silent ambassador of a brand, creating connections that go beyond the ordinary. Our mission is to craft engaging experiences that resonate with people and build trust, ensuring every interaction leaves a meaningful impression.",
+      "imageAlt": "Nikhil Singh portrait with city background"
+    },
+    "alwaysOpen": "We're always open to communicate, book your 20 min consultation with Nikhil",
+    "bookCall": "Book a call"
   }
 } 

@@ -13,14 +13,12 @@ export const testimonialItems: TestimonialItem[] = [
   {
     id: 'nikhil',
     author: 'Nikhil Singh',
-    role: 'Founder',
-    company: 'M.Des, B.Arch',
-    quote: "At Ziro, we're passionate about how design shapes brand value. We see design as the silent ambassador of a brand, creating connections that go beyond the ordinary. Our mission is to craft engaging experiences that resonate with people and build trust, ensuring every interaction leaves a meaningful impression.",
+    role: 'testimonials.nikhil.role',
+    company: 'testimonials.nikhil.company',
+    quote: 'testimonials.nikhil.quote',
     image: 'https://i.postimg.cc/T1nrzdwP/BCJ9upw-V2-ARbexiidm-P5w0okz-LE.avif',
-    imageAlt: 'Nikhil Singh',
+    imageAlt: 'testimonials.nikhil.imageAlt',
     imagePerson: 'https://i.postimg.cc/XJkjmtWb/morda.avif'
-
-
   },
   // Add more testimonials as needed
 ]

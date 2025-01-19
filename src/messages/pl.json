@@ -97,8 +97,13 @@
     "backHome": "Wróć do strony głównej"
   },
   "testimonials": {
-    "bookCall": "Umów się na spotkanie",
-    "alwaysOpen": "Jesteśmy zawsze otwarte na komunikację, umów się na 20 minutową konsultację z Nikhil"
-    
+    "nikhil": {
+      "role": "Założyciel",
+      "company": "M.Des, B.Arch",
+      "quote": "W Ziro pasjonujemy się tym, jak design kształtuje wartość marki. Postrzegamy design jako cichego ambasadora marki, tworzącego połączenia wykraczające poza zwyczajność. Naszą misją jest tworzenie angażujących doświadczeń, które rezonują z ludźmi i budują zaufanie, zapewniając, że każda interakcja pozostawia znaczące wrażenie.",
+      "imageAlt": "Portret Nikhila Singha na tle miasta"
+    },
+    "alwaysOpen": "Jesteśmy zawsze otwarci na komunikację, umów swoją 20-minutową konsultację z Nikhilem",
+    "bookCall": "Umów rozmowę"
   }
 } 
