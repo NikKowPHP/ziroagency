@@ -25,35 +25,27 @@ export function Footer() {
             />
             
             {/* Social Links */}
-            <div className="flex gap-3">
-              <Link 
-                href="https://www.instagram.com/ziro.space/" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-200 p-2 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                <Image
-                  src="/images/social/instagram.svg"
-                  alt="Instagram"
-                  width={24}
-                  height={24}
-                  className="w-6 h-6"
-                />
-              </Link>
-              <Link 
-                href="https://www.linkedin.com/company/ziros" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-200 p-2 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                <Image
-                  src="/images/social/linkedin.svg"
-                  alt="LinkedIn"
-                  width={24}
-                  height={24}
-                  className="w-6 h-6"
-                />
-              </Link>
+            <div className="flex gap-2">
+              <div className="bg-gray-200 p-2 rounded-lg">
+                <Link 
+                  href="https://instagram.com/ziro.agency" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-80 text-gray-600 hover:text-gray-900 transition-opacity"
+                >
+                  <Image src="/images/instagram.svg" alt="Instagram" width={24} height={24} />
+                </Link>
+              </div>
+              <div className="bg-gray-200 text-gray-900 p-2 rounded-lg">
+                <Link 
+                  href="https://linkedin.com/company/ziros" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-80 transition-opacity"
+                >
+                 <Image src="/images/linkedin.svg" alt="LinkedIn" width={24} height={24} />
+                </Link>
+              </div>
             </div>
 
             {/* Poland Flag and Text */}
