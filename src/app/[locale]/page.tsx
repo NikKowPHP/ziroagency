@@ -39,8 +39,8 @@ const Faq = dynamic(
   }
 )
 
-const Testimonials = dynamic(
-  () => import('@/components/sections/testimonials/testimonials').then(mod => mod.Testimonials),
+const Team = dynamic(
+  () => import('@/components/sections/team/team').then(mod => mod.Team),
   {
     loading: () => <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />,
     ssr: true
@@ -138,7 +138,7 @@ export default async function HomePage({ params }: HomePageProps) {
             <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
         >
-          <Testimonials />
+          <Team />
         </Suspense>
 
         <Suspense

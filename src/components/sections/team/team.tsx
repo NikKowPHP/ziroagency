@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { testimonialItems } from '@/lib/data/testimonials'
+import { teamItems} from '@/lib/data/team'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button/button'
 
-export function Testimonials() {
+export function Team() {
   const [currentIndex] = useState(0)
   const t = useTranslations('testimonials')
 
@@ -17,8 +17,8 @@ export function Testimonials() {
           {/* Left Column - Image */}
           <div className="rounded-[32px] overflow-hidden">
             <Image
-              src={testimonialItems[currentIndex].image}
-              alt={t(`${testimonialItems[currentIndex].id}.imageAlt`)}
+              src={teamItems[currentIndex].image}
+              alt={t(`${teamItems[currentIndex].id}.imageAlt`)}
               width={600}
               height={600}
               className="object-cover w-full h-full"
@@ -30,14 +30,14 @@ export function Testimonials() {
           <div className="bg-gray-100 rounded-[32px] p-12 flex flex-col justify-between">
             <div className="space-y-8">
               <p className="text-gray-900 text-lg leading-relaxed">
-                &quot;{t(`${testimonialItems[currentIndex].id}.quote`)}&quot;
+                &quot;{t(`${teamItems[currentIndex].id}.quote`)}&quot;
               </p>
               
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-full overflow-hidden">
                   <Image 
-                    src={testimonialItems[currentIndex].imagePerson} 
-                    alt={t(`${testimonialItems[currentIndex].id}.imageAlt`)}
+                    src={teamItems[currentIndex].imagePerson} 
+                    alt={t(`${teamItems[currentIndex].id}.imageAlt`)}
                     width={40} 
                     height={40}
                     className="object-cover w-full h-full"
@@ -45,10 +45,10 @@ export function Testimonials() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-medium text-base text-gray-900">
-                    {testimonialItems[currentIndex].author}
+                    {teamItems[currentIndex].author}
                   </span>
                   <span className="text-sm text-gray-500">
-                    {t(`${testimonialItems[currentIndex].id}.role`)}, {t(`${testimonialItems[currentIndex].id}.company`)}
+                    {t(`${teamItems[currentIndex].id}.role`)}, {t(`${teamItems[currentIndex].id}.company`)}
                   </span>
                 </div>
               </div>

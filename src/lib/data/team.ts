@@ -1,4 +1,4 @@
-export interface TestimonialItem {
+export interface TeamItem {
   id: string
   author: string
   role: string
@@ -9,21 +9,21 @@ export interface TestimonialItem {
   imagePerson: string
 }
 
-export const testimonialItems: TestimonialItem[] = [
+export const teamItems: TeamItem[] = [
   {
     id: 'nikhil',
     author: 'Nikhil Singh',
-    role: 'testimonials.nikhil.role',
-    company: 'testimonials.nikhil.company',
-    quote: 'testimonials.nikhil.quote',
+    role: 'team.nikhil.role',
+    company: 'team.nikhil.company',
+    quote: 'team.nikhil.quote',
     image: 'https://i.postimg.cc/T1nrzdwP/BCJ9upw-V2-ARbexiidm-P5w0okz-LE.avif',
-    imageAlt: 'testimonials.nikhil.imageAlt',
+    imageAlt: 'team.nikhil.imageAlt',
     imagePerson: 'https://i.postimg.cc/XJkjmtWb/morda.avif'
   },
-  // Add more testimonials as needed
+  // Add more team members as needed
 ]
 
-export async function getTestimonialItems(): Promise<TestimonialItem[]> {
+export async function getTeamItems(): Promise<TeamItem[]> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
-  return testimonialItems
+  return teamItems
 } 
