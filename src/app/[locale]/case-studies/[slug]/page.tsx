@@ -5,11 +5,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
-interface CaseStudyPageProps {
-  params: {
-    slug: string
-    locale: Locale
-  }
+interface PageProps {
+  params: Promise<{
+    slug: string;
+    locale: Locale;
+  }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 // Loading component
@@ -56,8 +57,12 @@ function CaseStudyError() {
   )
 }
 
-// Main component
-export default async function CaseStudyPage({ params: { slug, locale } }: CaseStudyPageProps) {
+// Main component with updated type
+export default async function Page({ params, searchParams }: PageProps) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  console.log('searchParams', resolvedSearchParams);
+  const { slug, locale } = resolvedParams;
   return (
     <Suspense fallback={<CaseStudyLoading />}>
       <CaseStudyContent slug={slug} locale={locale} />
@@ -66,7 +71,7 @@ export default async function CaseStudyPage({ params: { slug, locale } }: CaseSt
 }
 
 // Content component
-async function CaseStudyContent({ slug, locale }: { slug: string, locale: Locale }) {
+async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale }) {
   try {
     const caseStudy = await getCaseStudyBySlug(slug, locale)
 

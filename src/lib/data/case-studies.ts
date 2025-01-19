@@ -28,9 +28,9 @@ export const getCaseStudies = unstable_cache(
   }
 )
 
-export const getCaseStudyBySlug = (slug: string, locale: Locale) => 
-  unstable_cache(
-    async (): Promise<CaseStudy | null> => {
+export const getCaseStudyBySlug = async (slug: string, locale: Locale): Promise<CaseStudy | null> => {
+  return unstable_cache(
+    async () => {
       const { data, error } = await supabase
         .from(`case_studies_${locale}`)
         .select('*')
@@ -49,4 +49,5 @@ export const getCaseStudyBySlug = (slug: string, locale: Locale) =>
       revalidate: CACHE_TIMES.DAY,
       tags: [CACHE_TAGS.CASE_STUDIES]
     }
-  )() 
+  )()
+} 
