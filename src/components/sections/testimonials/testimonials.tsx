@@ -11,7 +11,7 @@ export function Testimonials() {
   const t = useTranslations('testimonials')
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24">
+    <section className="py-12 sm:py-16 lg:py-24 mt-10">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Column - Image */}
@@ -57,7 +57,7 @@ export function Testimonials() {
         </div>
 
         {/* Bottom Consultation Section */}
-        <div className="mt-6 bg-gray-100 rounded-[32px] p-6 sm:p-8 lg:p-12 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+        <div className="mt-6 bg-gray-100 rounded-[32px] p-6 sm:p-8 lg:p-12 flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
           <p className="text-gray-900 text-base sm:text-lg font-medium text-center sm:text-left max-w-[500px]">
             {t('alwaysOpen')}
           </p>

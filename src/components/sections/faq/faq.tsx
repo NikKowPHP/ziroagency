@@ -64,8 +64,8 @@ export function Faq() {
       itemScope
       itemType="https://schema.org/FAQPage"
     >
-      <div className="container mx-auto px-4 sm:px-6">
-        <h2 className="text-center text-black text-[36px] sm:text-[46px] lg:text-[56px] font-medium mb-8 sm:mb-12 lg:mb-16">
+      <div className="container mx-auto px-4 sm:px-6 ">
+        <h2 className="text-center text-black text-[36px] sm:text-[46px] lg:text-[56px] font-medium mb-8 sm:mb-12 lg:mb-18">
           {t('title')}
         </h2>
         <div className="mx-auto flex flex-col gap-[12px] text-black">
