@@ -17,6 +17,7 @@ export const getCaseStudies = unstable_cache(
       console.error('Error fetching case studies:', error)
       return []
     }
+    console.log('getCaseStudies', data)
 
     return (data as CaseStudyDTO[]).map(CaseStudyMapper.toDomain)
   },
@@ -27,13 +28,13 @@ export const getCaseStudies = unstable_cache(
   }
 )
 
-export const getCaseStudyById = (id: string, locale: Locale) => 
+export const getCaseStudyBySlug = (slug: string, locale: Locale) => 
   unstable_cache(
     async (): Promise<CaseStudy | null> => {
       const { data, error } = await supabase
         .from(`case_studies_${locale}`)
         .select('*')
-        .eq('id', id)
+        .eq('slug', slug)
         .single()
 
       if (error) {
@@ -43,7 +44,7 @@ export const getCaseStudyById = (id: string, locale: Locale) =>
 
       return data ? CaseStudyMapper.toDomain(data as CaseStudyDTO) : null
     },
-    [`case-study-${id}-${locale}`],
+    [`case-study-${slug}-${locale}`],
     {
       revalidate: CACHE_TIMES.DAY,
       tags: [CACHE_TAGS.CASE_STUDIES]

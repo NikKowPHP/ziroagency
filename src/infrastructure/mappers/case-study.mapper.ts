@@ -7,6 +7,7 @@ export class CaseStudyMapper {
       id: dto.id,
       title: dto.title,
       description: dto.description,
+      slug: dto.slug,
       tags: [...dto.tags],
       images: dto.images.map(image => ({
         url: image.url,
@@ -30,6 +31,7 @@ export class CaseStudyMapper {
 
     return {
       id,
+      slug: domain.slug,
       title: domain.title,
       description: domain.description,
       tags: domain.tags ? [...domain.tags] : undefined,

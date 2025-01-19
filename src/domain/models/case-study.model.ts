@@ -5,6 +5,7 @@ export interface Image {
 
 export interface CaseStudy {
   readonly id: string;
+  readonly slug: string;
   readonly title: string;
   readonly description: string;
   readonly tags: readonly string[];
