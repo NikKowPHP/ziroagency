@@ -84,14 +84,14 @@ export function Footer() {
               <h3 className="font-medium text-gray-900 mb-5">
                 {t('links.company')}
               </h3>
-              <nav className="flex flex-col gap-5">
+              {/* <nav className="flex flex-col gap-5">
                 <Link href="/blog" className="text-gray-600 hover:text-gray-900 transition-colors">
                   {t('links.blog')}
                 </Link>
                 <Link href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">
                   {t('links.contact')}
                 </Link>
-              </nav>
+              </nav> */}
             </div>
             <div>
               <h3 className="font-medium text-gray-900 mb-4">
