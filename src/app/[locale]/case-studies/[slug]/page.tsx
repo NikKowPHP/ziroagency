@@ -150,16 +150,18 @@ async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale
               </div>
             </div>
 
-            <Button
-              href={caseStudy.ctaUrl}
-              variant="primary"
-              target="_blank"
-              size="lg"
-              rel="noopener noreferrer"
-            >
-              {caseStudy.ctaText}
-              <span className="ml-2">→</span>
-            </Button>
+            <div className=" mb-[50px]">
+              <Button
+                href={caseStudy.ctaUrl}
+                variant="primary"
+                target="_blank"
+                size="lg"
+                rel="noopener noreferrer"
+              >
+                {caseStudy.ctaText}
+                <span className="ml-2">→</span>
+              </Button>
+            </div>
 
 
           </div>
