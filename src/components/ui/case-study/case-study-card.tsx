@@ -86,7 +86,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
       itemScope
       itemType="https://schema.org/CreativeWork"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16  h-full p-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16  h-full p-2 sm:p-10 lg:p-2">
         <div className="flex flex-col space-y-6 sm:space-y-8 h-full">
           <div className="flex-1">
             {/* Title */}
