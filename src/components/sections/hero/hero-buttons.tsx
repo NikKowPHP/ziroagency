@@ -8,14 +8,14 @@ export function HeroButtons() {
   
   return (
     <div 
-      className="flex flex-col sm:flex-row gap-[10px] pt-6 sm:pt-8 w-3/4  sm:w-auto px-4 sm:px-0"
+      className="flex flex-col sm:flex-row gap-[10px] pt-6 sm:pt-8 w-full px-[20px]  sm:w-auto sm:px-4 md:px-0"
       role="group"
       aria-label="Hero actions"
     >
       <Button
         variant="outline"
         size="lg"
-        className="w-full sm:w-auto rounded-full px-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] border-primary text-[#0066FF] hover:bg-[#0066FF]/5"
+        className="w-full py-[30px] px-[25px] sm:w-auto rounded-full  sm:py-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] border-primary text-[#0066FF] hover:bg-[#0066FF]/5"
         onClick={() => {
           const element = document.getElementById('pricing')
           const offset = -100
@@ -33,7 +33,7 @@ export function HeroButtons() {
       </Button>
       <Button
         size="lg"
-        className="w-full sm:w-auto rounded-full px-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] bg-primary hover:bg-[#0066FF]/90"
+        className="w-full py-[30px] px-[25px] sm:w-auto rounded-full  sm:py-6 sm:px-10 h-[48px] sm:h-[56px] text-[15px] sm:text-[16px] bg-primary hover:bg-[#0066FF]/90"
         onClick={() => {
           window.location.href = 'https://calendly.com/ziro-nikhil/30min'
         }}
