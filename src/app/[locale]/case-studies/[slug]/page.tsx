@@ -75,17 +75,21 @@ export default async function Page({ params, searchParams }: PageProps) {
 async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale }) {
   try {
     const caseStudy = await getCaseStudyBySlug(slug, locale)
-
-    if (!caseStudy) {
-      notFound()
-    }
+    if (!caseStudy) notFound()
 
     const [heroImage, ...otherImages] = caseStudy.images
 
-  
+    // Helper function to determine image layout
+    const getImageLayout = (index: number) => {
+      const position = index % 4 // Creates groups of 4 images
+      return {
+        isFullWidth: position === 0 || position === 1, // First two images in each group
+        isSplitColumn: position === 2 || position === 3 // Last two images in each group
+      }
+    }
 
     return (
-      <article className="bg-white pt-28 xl:px-[10px]">
+      <article className="bg-white pt-28 mb-[50px] xl:px-[10px]">
         {/* Hero Section */}
         <header className="container mx-auto pt-32 pb-[50px] ">
           <div className="max-w-[90rem] mx-auto">
@@ -95,7 +99,7 @@ async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale
                 src={heroImage.url}
                 alt={heroImage.alt}
                 fill
-                className="object-cover rounded-lg"
+                className="object-cover rounded-primary-lg"
                 priority
               />
             </div>
@@ -167,25 +171,73 @@ async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale
           </div>
         </section>
 
-
-
-        {/* Gallery Section */}
-        {otherImages.length > 0 && (
-          <section className="container mx-auto py-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {otherImages.map((image, index) => (
-                <div key={index} className="relative aspect-[4/3]">
-                  <Image
-                    src={image.url}
-                    alt={image.alt}
-                    fill
-                    className="object-cover rounded-lg"
-                  />
-                </div>
-              ))}
+        {/*  Image Gallery */}
+        <section className="container mx-auto px-4 md:px-6 lg:px-8">
+          <div className="max-w-[90rem] mx-auto">
+            <div className="space-y-[20px]">
+              {otherImages.map((image, index) => {
+                const { isFullWidth, isSplitColumn } = getImageLayout(index)
+                
+                // If it's a split column image and it's the first of the pair (even index)
+                if (isSplitColumn && index % 2 === 0) {
+                  return (
+                    <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-[20px]">
+                      {/* Current Image */}
+                      <div className="relative aspect-[4/3]">
+                        <Image
+                          src={image.url}
+                          alt={image.alt}
+                          fill
+                          className="object-cover rounded-primary-lg"
+                        />
+                      </div>
+                      {/* Next Image (if exists) */}
+                      {otherImages[index + 1] && (
+                        <div className="relative aspect-[4/3]">
+                          <Image
+                            src={otherImages[index + 1].url}
+                            alt={otherImages[index + 1].alt}
+                            fill
+                            className="object-cover rounded-primary-lg"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )
+                }
+                // Skip the second image of split columns as it's handled above
+                else if (isSplitColumn && index % 2 !== 0) {
+                  return null
+                }
+                // Full width images
+                else if (isFullWidth) {
+                  return (
+                    <div key={index} className="relative aspect-[16/9]">
+                      <Image
+                        src={image.url}
+                        alt={image.alt}
+                        fill
+                        className="object-cover rounded-primary-lg"
+                      />
+                    </div>
+                  )
+                }
+                else {
+                  return (
+                    <div key={index} className="relative aspect-[4/3]">
+                      <Image
+                        src={image.url}
+                        alt={image.alt}
+                        fill
+                        className="object-cover rounded-primary-lg"
+                      />
+                    </div>
+                  )
+                }
+              })}
             </div>
-          </section>
-        )}
+          </div>
+        </section>
       </article>
     )
   } catch (error) {
