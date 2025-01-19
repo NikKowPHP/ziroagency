@@ -5,7 +5,16 @@
     "subtitle": "Partnerstwo dla Twojego sukcesu poprzez design"
   },
   "footer": {
-    "address": "Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland"
+    "address": "Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland",
+    "designedWith": "Projektujemy z pasją w Polsce.",
+    "description": "Ziro to dynamiczna agencja projektowa specjalizująca się w przekształcaniu pomysłów w skuteczne narracje wizualne, pomagając markom wyróżnić się na zatłoczonym rynku.",
+    "links": {
+      "company": "Firma",
+      "blog": "Blog",
+      "contact": "Kontakt",
+      "terms": "Regulamin",
+      "press": "Dla prasy"
+    }
   },
   "navigation": {
     "work": "Realizacje",
