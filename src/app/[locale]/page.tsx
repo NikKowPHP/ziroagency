@@ -154,7 +154,7 @@ export default async function HomePage({ params }: HomePageProps) {
             <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
         >
-          <Testimonials />
+          <Testimonials locale={locale} />
         </Suspense>
 
         <Suspense

@@ -1,13 +1,21 @@
 'use client'
 
-import { TestimonialItem, testimonialItems } from '@/lib/data/testimonials'
+import { TestimonialItem } from '@/domain/models/testimonial.model'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { type Locale } from '@/i18n'
+import { getTestimonials } from '@/lib/data/testimonials'
 
-export function Testimonials() {
+interface TestimonialsProps {
+  locale: Locale
+}
+
+export async function Testimonials({ locale }: TestimonialsProps) {
   const t = useTranslations('testimonials')
+
+  const testimonials = await getTestimonials(locale)
   const containerRef = useRef<HTMLDivElement>(null)
   const [hasOverflow, setHasOverflow] = useState(false)
   const [showLeftButton, setShowLeftButton] = useState(false)
@@ -86,7 +94,7 @@ export function Testimonials() {
             ref={containerRef}
             className="flex overflow-x-auto pb-8 gap-6 scrollbar-hide relative"
           >
-            {testimonialItems.map((testimonial: TestimonialItem) => (
+            {testimonials.map((testimonial: TestimonialItem) => (
               <div
                 key={testimonial.id}
                 className="flex-shrink-0 w-[300px] sm:w-[400px] bg-gray-100 rounded-[32px] p-6"
