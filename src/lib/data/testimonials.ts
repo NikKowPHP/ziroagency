@@ -19,7 +19,7 @@ export interface TestimonialItem {
       imageAlt: 'testimonials.client1.imageAlt'
     },
     {
-        id: 'client1',
+        id: 'client2',
         author: 'Client Name',
         role: 'testimonials.client1.role',
         company: 'testimonials.client1.company',
@@ -28,7 +28,7 @@ export interface TestimonialItem {
         imageAlt: 'testimonials.client1.imageAlt'
       },
       {
-        id: 'client1',
+        id: 'client3',
         author: 'Client Name',
         role: 'testimonials.client1.role',
         company: 'testimonials.client1.company',
@@ -37,7 +37,7 @@ export interface TestimonialItem {
         imageAlt: 'testimonials.client1.imageAlt'
       },
       {
-        id: 'client1',
+        id: 'client4',
         author: 'Client Name',
         role: 'testimonials.client1.role',
         company: 'testimonials.client1.company',
@@ -46,7 +46,7 @@ export interface TestimonialItem {
         imageAlt: 'testimonials.client1.imageAlt'
       },
       {
-        id: 'client1',
+        id: 'client5',
         author: 'Client Name',
         role: 'testimonials.client1.role',
         company: 'testimonials.client1.company',
