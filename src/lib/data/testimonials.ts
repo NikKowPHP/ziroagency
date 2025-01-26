@@ -1,24 +1,27 @@
-// ... existing imports from case-studies.ts, ensure you have these ...
+'use server'
+
 import { unstable_cache } from 'next/cache';
 import { supabase } from '../supabase'
 import { Locale } from '@/i18n'
+import { TestimonialItem } from '@/domain/models/testimonial.model';
+import { TestimonialDTO } from '@/infrastructure/dto/testimonial.dto';
 
-// Define your TestimonialItem interface (if not already present)
-export interface TestimonialItem {
-  id: string;
-  author: string;
-  role: string;
-  company: string;
-  quote: string;
-  image: string;
-  imageAlt: string;
-}
+
 
 // Define a DTO and Mapper if your Supabase data structure is different from TestimonialItem
 // For simplicity, let's assume they are similar for now. Adjust as needed.
-type TestimonialDTO = TestimonialItem; // Placeholder, adjust if needed
+// type TestimonialDTO = TestimonialItem; // No longer a placeholder
 const TestimonialMapper = { // Placeholder, adjust if needed
-  toDomain: (dto: TestimonialDTO): TestimonialItem => dto,
+  toDomain: (dto: TestimonialDTO): TestimonialItem => ({ // Mapper now uses TestimonialDTO
+    id: dto.id,
+    author: dto.author,
+    role: dto.role,
+    company: dto.company,
+    quote: dto.quote,
+    image: dto.image,
+    imageAlt: dto.imageAlt,
+    // created_at and updated_at are DTO specific and not needed in Domain model
+  }),
 };
 
 
@@ -35,7 +38,7 @@ export const getTestimonials = unstable_cache(
     }
     console.log('getTestimonials data:', data); // Log the fetched data for debugging
 
-    return (data as TestimonialDTO[]).map(TestimonialMapper.toDomain);
+    return (data as TestimonialDTO[]).map(TestimonialMapper.toDomain); // Data is now casted to TestimonialDTO[]
   },
   [`testimonials`], // Consider a more specific cache tag if needed, e.g., CACHE_TAGS.TESTIMONIALS if you define it
   {
@@ -58,7 +61,7 @@ export const getTestimonialById = async (id: string, locale: Locale): Promise<Te
         return null
       }
 
-      return data ? TestimonialMapper.toDomain(data as TestimonialDTO) : null
+      return data ? TestimonialMapper.toDomain(data as TestimonialDTO) : null // Data is now casted to TestimonialDTO
     },
     [`testimonial-${id}-${locale}`], // Unique cache key per testimonial and locale
     {
@@ -67,7 +70,3 @@ export const getTestimonialById = async (id: string, locale: Locale): Promise<Te
     }
   )()
 }
-
-// Remove or comment out the static data and the old getTestimonials function
-// export const testimonialItems: TestimonialItem[] = [...]
-// export async function getTestimonials(): Promise<TestimonialItem[]> { ... }
