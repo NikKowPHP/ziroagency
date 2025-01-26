@@ -105,7 +105,7 @@
     "requestedPath": "Requested path",
     "backHome": "Back to Homepage"
   },
-  "testimonials": {
+  "team": {
     "nikhil": {
       "role": "Founder",
       "company": "M.Des, B.Arch",
@@ -114,5 +114,14 @@
     },
     "alwaysOpen": "We're always open to communicate, book your 20 min consultation with Nikhil",
     "bookCall": "Book a call"
+  },
+  "testimonials": {
+    "title": "What Our Clients Say",
+    "client1": {
+      "role": "CEO",
+      "company": "Tech Corp",
+      "quote": "Amazing service and results! these dudes are fucking amazing ",
+      "imageAlt": "Client portrait"
+    }
   }
 } 
