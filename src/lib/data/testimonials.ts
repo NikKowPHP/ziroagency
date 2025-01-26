@@ -11,11 +11,11 @@ export interface TestimonialItem {
   export const testimonialItems: TestimonialItem[] = [
     {
       id: 'client1',
-      author: 'Client Name',
+      author: 'Mikita Kavaliou',
       role: 'testimonials.client1.role',
       company: 'testimonials.client1.company',
       quote: 'testimonials.client1.quote',
-      image: 'https://i.postimg.cc/T1nrzdwP/BCJ9upw-V2-ARbexiidm-P5w0okz-LE.avif',
+      image: 'https://i.postimg.cc/tTm7X37D/client2.avif',
       imageAlt: 'testimonials.client1.imageAlt'
     },
     {
@@ -24,7 +24,7 @@ export interface TestimonialItem {
         role: 'testimonials.client1.role',
         company: 'testimonials.client1.company',
         quote: 'testimonials.client1.quote',
-        image: 'https://i.postimg.cc/T1nrzdwP/BCJ9upw-V2-ARbexiidm-P5w0okz-LE.avif',
+        image: 'https://i.postimg.cc/tTm7X37D/client2.avif',
         imageAlt: 'testimonials.client1.imageAlt'
       },
       {

@@ -119,9 +119,15 @@
     "title": "What Our Clients Say",
     "description": "Discover the experiences that shape our story. Straight from those who inspire our best work",
     "client1": {
-      "role": "CEO",
-      "company": "Tech Corp",
-      "quote": "Amazing service and results! these dudes are fucking amazing ",
+      "role": "Developer",
+      "company": "BaseSystem",
+      "quote": "Amazing service and results!",
+      "imageAlt": "Client portrait"
+    },
+    "client2": {
+      "role": "Developer",
+      "company": "BaseSystem",
+      "quote": "Amazing service and results!",
       "imageAlt": "Client portrait"
     }
   }
