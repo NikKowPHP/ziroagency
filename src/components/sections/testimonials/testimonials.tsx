@@ -3,10 +3,11 @@
 import { TestimonialItem } from '@/domain/models/testimonial.model'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
-import { useEffect, useRef, useState, memo } from 'react'
+import { memo } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { type Locale } from '@/i18n'
 import { getTestimonials } from '@/lib/data/testimonials'
+import { useTestimonials } from '@/hooks/use-testimonials'
 
 interface TestimonialsProps {
   locale: Locale
@@ -66,43 +67,7 @@ export async function Testimonials({ locale }: TestimonialsProps) {
   const t = useTranslations('testimonials')
 
   const testimonials = await getTestimonials(locale)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [hasOverflow, setHasOverflow] = useState(false)
-  const [showLeftButton, setShowLeftButton] = useState(false)
-  const [showRightButton, setShowRightButton] = useState(false)
-
-  
-  useEffect(() => {
-    const checkOverflow = () => {
-      if (containerRef.current) {
-        const hasHorizontalScroll = 
-          containerRef.current.scrollWidth > containerRef.current.clientWidth
-        console.log(hasHorizontalScroll)
-        setHasOverflow(hasHorizontalScroll)
-      }
-    }
-    
-    checkOverflow()
-    window.addEventListener('resize', debounce(checkOverflow, 200))
-    return () => window.removeEventListener('resize', debounce(checkOverflow, 200))
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (containerRef.current) {
-        const { scrollLeft, clientWidth, scrollWidth } = containerRef.current;
-        setShowLeftButton(scrollLeft > 0);
-        setShowRightButton(scrollLeft + clientWidth < scrollWidth - 1); // Subtract 1px for tolerance
-      }
-    };
-
-    if (containerRef.current && hasOverflow) {
-      containerRef.current.addEventListener('scroll', handleScroll);
-      handleScroll(); // Initial check in case content is already scrolled
-      return () => containerRef.current?.removeEventListener('scroll', handleScroll);
-    }
-  }, [hasOverflow]);
-
+  const { containerRef, showLeftButton, showRightButton } = useTestimonials()
 
   const handleScrollButtonClick = (direction: 'left' | 'right') => {
     if (containerRef.current) {
@@ -110,21 +75,6 @@ export async function Testimonials({ locale }: TestimonialsProps) {
       containerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
-  
-  const handleScroll = (direction: 'left' | 'right') => {
-    if (containerRef.current) {
-      const scrollAmount = direction === 'right' ? 400 : -400
-      containerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
-    }
-  }
-
-  const debounce = (func: (...args: any[]) => void, wait: number) => {
-    let timeout: NodeJS.Timeout
-    return (...args: any[]) => {
-      clearTimeout(timeout)
-      timeout = setTimeout(() => func(...args), wait)
-    }
-  }
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 relative ">
