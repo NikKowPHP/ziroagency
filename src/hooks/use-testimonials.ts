@@ -1,6 +1,6 @@
 // use-testimonials.ts
 import { useEffect, useRef, useState } from 'react';
-import { debounce } from '@/lib/utils'; // Assuming debounce is in utils
+import { debounce } from '@/lib/utils/debounce';
 
 export function useTestimonials() {
   const containerRef = useRef<HTMLDivElement>(null);
