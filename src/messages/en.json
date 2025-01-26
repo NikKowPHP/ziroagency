@@ -117,6 +117,7 @@
   },
   "testimonials": {
     "title": "What Our Clients Say",
+    "description": "Discover the experiences that shape our story. Straight from those who inspire our best work",
     "client1": {
       "role": "CEO",
       "company": "Tech Corp",

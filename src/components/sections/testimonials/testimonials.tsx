@@ -10,8 +10,8 @@ export function Testimonials() {
   return (
     <section className="py-12 sm:py-16 lg:py-24">
       <div className="container mx-auto lg:p-10 sm:px-6 rounded-primary border border-gray-200">
-        <div className="flex flex-col items-center">
-          <span className='max-w-[50px]'>
+        <div className="flex flex-col items-center mb-10 sm:mb-12">
+          <span className='max-w-[50px] '>
             <Image
               src={'/images/favicon.ico'}
               alt="ziro logo"
@@ -20,9 +20,12 @@ export function Testimonials() {
             />
           </span>
 
-          <h2 className="text-3xl sm:text-4xl font-medium mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl font-medium mb-4 sm:mb-8">
             {t('title')}
           </h2>
+          <h3 className='text-gray-500 text-lg sm:text-xl'>
+            {t('description')}
+          </h3>
         </div>
 
         <div className="flex overflow-x-auto pb-8 gap-6 scrollbar-hide">
