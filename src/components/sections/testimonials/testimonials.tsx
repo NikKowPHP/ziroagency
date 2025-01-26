@@ -69,19 +69,11 @@ export function Testimonials() {
   }
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 relative border border-gray-200 rounded-primary">
+    <section className="py-12 sm:py-16 lg:py-24 relative ">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-col items-center mb-10 sm:mb-12">
-          <span className='max-w-[50px] '>
-            <Image
-              src={'/images/favicon.ico'}
-              alt="ziro logo"
-              width={100}
-              height={100}
-            />
-          </span>
 
-          <h2 className="text-3xl sm:text-4xl font-medium mb-8 sm:mb-12">
+          <h2 className="text-3xl font-medium sm:text-4xl font-medium mb-4 sm:mb-8">
             {t('title')}
           </h2>
           <h3 className='text-gray-500 text-lg sm:text-xl'>
@@ -113,7 +105,7 @@ export function Testimonials() {
                         alt='testimonial'
                         width={48}
                         height={48}
-                        className="object-cover"
+                        className="object-cover h-full"
                       />
                     </div>
                     <div>
@@ -133,8 +125,15 @@ export function Testimonials() {
             ))}
           </div>
           
-          {/* Scroll fade */}
-          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+         {/* Scroll fade Left */}
+         {showLeftButton && (
+            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent pointer-events-none" />
+          )}
+
+          {/* Scroll fade Right */}
+          {showRightButton && (
+            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+          )}
           
           {/* Navigation buttons */}
            {/* Navigation buttons */}
