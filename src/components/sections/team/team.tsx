@@ -11,8 +11,8 @@ export function Team() {
   const t = useTranslations('testimonials')
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 mt-10">
-      <div className="container mx-auto px-4 sm:px-6">
+    <section className="md:container py-12 sm:py-16 lg:py-24 mt-10">
+      <div className=" mx-auto px-4 ">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Column - Image */}
           <div className="rounded-[32px] overflow-hidden">

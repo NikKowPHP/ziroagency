@@ -67,7 +67,7 @@ function PricingContent({ plans }: { plans: PricingPlan[] }) {
   return (
     <section 
       id="pricing" 
-      className="relative overflow-hidden bg-primary py-[10px]  sm:py-32 sm:pb-[60px]  md:py-24 md:pb-[60px]  rounded-primary sm:rounded-primary-lg"
+      className="md:mx-8 relative overflow-hidden bg-primary py-[10px]  sm:py-32 sm:pb-[60px]  md:py-24 md:pb-[60px]  rounded-primary sm:rounded-primary-lg"
     >
       <div className="container relative mx-auto px-2 sm:px-6">
         <h2 className="text-center text-[36px] sm:text-[46px] md:text-[56px] font-medium text-white mb-8 sm:mb-12 md:mb-16">
