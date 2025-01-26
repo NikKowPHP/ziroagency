@@ -47,6 +47,14 @@ const Team = dynamic(
   }
 )
 
+const Testimonials = dynamic(
+  () => import('@/components/sections/testimonials/testimonials').then(mod => mod.Testimonials),
+  {
+    loading: () => <div className="min-h-[300px]" />,
+    ssr: true
+  }
+)
+
 interface HomePageProps {
   params: Promise<{ locale: Locale }>
 }
@@ -146,8 +154,18 @@ export default async function HomePage({ params }: HomePageProps) {
             <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
         >
+          <Testimonials />
+        </Suspense>
+
+        <Suspense
+          fallback={
+            <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
+          }
+        >
           <Faq />
         </Suspense>
+
+
 
 
       </div>
