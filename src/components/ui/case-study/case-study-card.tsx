@@ -1,6 +1,6 @@
 'use client'
 
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button/button'
 import { Tag } from '@/components/ui/tag/tag'
 import { cn } from '@/lib/utils/cn'
@@ -69,6 +69,16 @@ export const CaseStudyCard = memo(function CaseStudyCard({
   locale
 }: CaseStudyCardProps) {
   const t = useTranslations()
+  const [isIOS, setIsIOS] = useState(false)
+
+  useEffect(() => {
+
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      console.log(isIOS)
+      if (isIOS) {
+        setIsIOS(true)
+      }
+  }, []);
   
   // Use a default translation key if the custom one fails
   const ctaText = () => {
@@ -87,8 +97,8 @@ export const CaseStudyCard = memo(function CaseStudyCard({
       itemType="https://schema.org/CreativeWork"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-[50px]  h-full p-2 sm:p-10 lg:p-2">
-        <div className="flex flex-col space-y-6 sm:space-y-8 h-full">
-          <div className="flex-1">
+        <div className="flex flex-col  sm:space-y-8 h-full">
+          <div className="">
             {/* Title */}
             <h2 
               className="text-[32px] sm:text-[40px] lg:text-[48px] font-medium tracking-[-0.02em] text-gray-900 mb-6 sm:mb-8"
@@ -99,12 +109,16 @@ export const CaseStudyCard = memo(function CaseStudyCard({
             
             {/* Description */}
             <p 
-              className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed mb-8 sm:mb-[20px] line-clamp-4 overflow-hidden"
+              className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed lg:mb-8 sm:mb-[20px] line-clamp-4 overflow-hidden"
               itemProp="description"
             >
               {caseStudy.description}
             </p>
             
+          </div>
+
+          <div className='lg:flex-1'>
+
             {/* Tags */}
             <CaseStudyTags tags={caseStudy.tags as string[]} />
             
@@ -133,10 +147,8 @@ export const CaseStudyCard = memo(function CaseStudyCard({
             />
           ))}
         </div>
-      </div>
-
-      {/* Mobile CTA Button */}
-      <div className="lg:hidden lg:pt-10 sm:py-4 md:px-[20px] sm:px-[20px] sm:pb-10">
+          {/* Mobile CTA Button */}
+      <div className={cn("lg:hidden lg:pt-10 sm:py-4 md:px-[20px] sm:px-[20px] sm:pb-10", isIOS ? 'pb-[40px]' : '')}>
         <Button 
           size="xl" 
           href={`/${locale}/case-studies/${caseStudy.slug}`}
@@ -145,6 +157,9 @@ export const CaseStudyCard = memo(function CaseStudyCard({
           {ctaText()}
         </Button>
       </div>
+      </div>
+
+    
     </article>
   )
 })
