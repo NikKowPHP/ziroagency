@@ -10,14 +10,17 @@ export function Testimonials() {
   const t = useTranslations('testimonials')
   const containerRef = useRef<HTMLDivElement>(null)
   const [hasOverflow, setHasOverflow] = useState(false)
+  const [showLeftButton, setShowLeftButton] = useState(false)
+  const [showRightButton, setShowRightButton] = useState(false)
+
   
   useEffect(() => {
     const checkOverflow = () => {
       if (containerRef.current) {
         const hasHorizontalScroll = 
           containerRef.current.scrollWidth > containerRef.current.clientWidth
-        setHasOverflow(hasHorizontalScroll)
         console.log(hasHorizontalScroll)
+        setHasOverflow(hasHorizontalScroll)
       }
     }
     
@@ -25,6 +28,30 @@ export function Testimonials() {
     window.addEventListener('resize', debounce(checkOverflow, 200))
     return () => window.removeEventListener('resize', debounce(checkOverflow, 200))
   }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (containerRef.current) {
+        const { scrollLeft, clientWidth, scrollWidth } = containerRef.current;
+        setShowLeftButton(scrollLeft > 0);
+        setShowRightButton(scrollLeft + clientWidth < scrollWidth - 1); // Subtract 1px for tolerance
+      }
+    };
+
+    if (containerRef.current && hasOverflow) {
+      containerRef.current.addEventListener('scroll', handleScroll);
+      handleScroll(); // Initial check in case content is already scrolled
+      return () => containerRef.current?.removeEventListener('scroll', handleScroll);
+    }
+  }, [hasOverflow]);
+
+
+  const handleScrollButtonClick = (direction: 'left' | 'right') => {
+    if (containerRef.current) {
+      const scrollAmount = direction === 'right' ? 400 : -400;
+      containerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
   
   const handleScroll = (direction: 'left' | 'right') => {
     if (containerRef.current) {
@@ -110,21 +137,22 @@ export function Testimonials() {
           <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent pointer-events-none" />
           
           {/* Navigation buttons */}
-          {hasOverflow && (
-            <>
-              <button
-                onClick={() => handleScroll('left')}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={() => handleScroll('right')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </>
+           {/* Navigation buttons */}
+           {showLeftButton && (
+            <button
+              onClick={() => handleScrollButtonClick('left')}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+          )}
+          {showRightButton && (
+            <button
+              onClick={() => handleScrollButtonClick('right')}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
           )}
         </div>
       </div>
