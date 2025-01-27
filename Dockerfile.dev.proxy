@@ -24,7 +24,7 @@ RUN rm -rf node_modules && \
 COPY . .
 
 # Expose Vite's default port (3000)
-EXPOSE 3005
+EXPOSE 3015
 
 # Start development server with host and port configuration
 CMD ["npm", "run", "dev"] 
