@@ -1,0 +1,41 @@
+version: '3.3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev.proxy
+      args:
+        - NODE_ENV=dev
+        - HTTP_PROXY=http://172.16.2.254:3128
+        - HTTPS_PROXY=http://172.16.2.254:3128
+    ports:
+      - 3005:3005
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=dev
+      - VITE_HOST=0.0.0.0
+      - VITE_PORT=3005
+      - HTTP_PROXY=http://172.16.2.254:3128
+      - HTTPS_PROXY=http://172.16.2.254:3128
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    restart: unless-stopped
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+    networks:
+      - web-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3005"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  web-network:
+    driver: bridge 
