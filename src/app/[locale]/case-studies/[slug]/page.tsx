@@ -1,10 +1,10 @@
-import { getCaseStudyBySlug } from '@/lib/data/case-studies'
 import { notFound } from 'next/navigation'
 import { type Locale } from '@/i18n'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { Button } from '@/components/ui/button/button'
+import { caseStudyService, CaseStudyService } from '@/lib/services/caseStudy.service'
 
 interface PageProps {
   params: Promise<{
@@ -74,7 +74,7 @@ export default async function Page({ params, searchParams }: PageProps) {
 // Content component
 async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale }) {
   try {
-    const caseStudy = await getCaseStudyBySlug(slug, locale)
+    const caseStudy = await caseStudyService.getCaseStudyBySlug(slug, locale)
     if (!caseStudy) notFound()
 
     const [heroImage, ...otherImages] = caseStudy.images
