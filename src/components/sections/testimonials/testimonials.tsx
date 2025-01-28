@@ -93,10 +93,10 @@ export function Testimonials() {
             {testimonialItems.map((testimonial: TestimonialItem) => (
               <div
                 key={testimonial.id}
-                className="flex-shrink-0 w-[300px] sm:w-[400px] bg-gray-100 rounded-[32px] p-6"
+                className="flex-shrink-0 w-[300px] sm:w-[400px] sm:h-[180px] bg-gray-100 rounded-[32px] p-6"
               >
-                <div className="space-y-6">
-                  <p className="text-gray-900 text-lg leading-relaxed">
+                <div className="space-y-6 flex flex-col h-full">
+                  <p className="text-gray-900 text-lg leading-relaxed flex-1">
                     &quot;{t(`${testimonial.id}.quote`)}&quot;
                   </p>
 
