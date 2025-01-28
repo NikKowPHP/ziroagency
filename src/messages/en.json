@@ -125,9 +125,27 @@
       "imageAlt": "Client portrait"
     },
     "client2": {
-      "role": "Developer",
-      "company": "BaseSystem",
-      "quote": "Amazing service and results!",
+      "role": "Co Founder",
+      "company": "SearchMyTenders",
+      "quote": "I absolutely love Ziro's services!",
+      "imageAlt": "Client portrait"
+    },
+    "client3": {
+      "role": "Founder",
+      "company": "SearchMyTenders",
+      "quote": "The design exceeded our expectations in every way.",
+      "imageAlt": "Client portrait"
+    },
+    "client4": {
+      "role": "Co Founder",
+      "company": "SearchMyTenders",
+      "quote": "Ziro's design is not just beautiful, but also functional and user-friendly.",
+      "imageAlt": "Client portrait"
+    },
+    "client5": {
+      "role": "Founder",
+      "company": "SearchMyTenders",
+      "quote": "Our design now truly stands out in the market.",
       "imageAlt": "Client portrait"
     }
   }
