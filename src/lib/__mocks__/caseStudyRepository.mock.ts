@@ -12,7 +12,7 @@ export const mockCaseStudyDTOs: CaseStudyDTO[] = [
     title: 'Case Study One',
     description: 'Description for case study one.',
     tags: ['tag1', 'tag2'],
-    images: [{ url: '/image1.jpg', alt: 'Image 1' }],
+    images: [{ url: '/images/case-studies/gsense/gsense.avif', alt: 'Image 1' }],
     cta_text: 'View Case Study',
     cta_text_name: 'viewCaseStudy',
     cta_url: '/case-study-1',
@@ -25,7 +25,7 @@ export const mockCaseStudyDTOs: CaseStudyDTO[] = [
     title: 'Case Study Two',
     description: 'Description for case study two.',
     tags: ['tag3', 'tag4'],
-    images: [{ url: '/image2.jpg', alt: 'Image 2' }],
+    images: [{ url: '/images/case-studies/gsense/gsense.avif', alt: 'Image 2' }],
     cta_text: 'Learn More',
     cta_text_name: 'learnMore',
     cta_url: '/case-study-2',
@@ -37,9 +37,11 @@ export const mockCaseStudyDTOs: CaseStudyDTO[] = [
 // Mock Supabase client
 export const mockCaseStudyRepository: ICaseStudyRepository = {
   getCaseStudies: async (locale: Locale) => {
+    console.log(locale)
     return mockCaseStudyDTOs.map(CaseStudyMapper.toDomain);
   },
   getCaseStudyBySlug: async (slug: string, locale: Locale) => {
+    console.log(locale)
     return mockCaseStudyDTOs.find(cs => cs.slug === slug) ? CaseStudyMapper.toDomain(mockCaseStudyDTOs.find(cs => cs.slug === slug) as CaseStudyDTO) : null;
   },
 };
