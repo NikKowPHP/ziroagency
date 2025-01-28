@@ -1,6 +1,7 @@
 -- Create English case studies table
 CREATE TABLE case_studies_en (
   id text PRIMARY KEY,
+  slug text UNIQUE NOT NULL,
   title text NOT NULL,
   description text NOT NULL,
   tags text[] NOT NULL,
@@ -15,6 +16,7 @@ CREATE TABLE case_studies_en (
 -- Create Polish case studies table
 CREATE TABLE case_studies_pl (
   id text PRIMARY KEY,
+  slug text UNIQUE NOT NULL,
   title text NOT NULL,
   description text NOT NULL,
   tags text[] NOT NULL,

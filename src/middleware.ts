@@ -12,14 +12,6 @@ const intlMiddleware = createMiddleware({
 
 const PUBLIC_FILE = /\.(.*)$/;
 
-
-
-// Valid localized routes
-const validLocalizedRoutes = [
-  '',  // root path
-  '404' // 404 page
-];
-
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -33,11 +25,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-    // Check if it's an admin route
-    if (pathname.startsWith('/admin')) {
-      return NextResponse.next();
-    }
-
+  // Check if it's an admin route
+  if (pathname.startsWith('/admin')) {
+    return NextResponse.next();
+  }
 
   // Handle root path redirect
   if (pathname === '/') {
@@ -56,8 +47,10 @@ export async function middleware(request: NextRequest) {
       .slice(2)
       .join('/');
 
-    // Check if the route is valid
-    if (pathWithoutLocale && !validLocalizedRoutes.includes(pathWithoutLocale)) {
+    // Validate route pattern for case studies
+    const isCaseStudyRoute = /^case-studies(\/[a-z0-9-]+)?$/.test(pathWithoutLocale);
+    
+    if (pathWithoutLocale && !isCaseStudyRoute) {
       const locale = pathname.split('/')[1];
       return NextResponse.redirect(new URL(`/${locale}/404`, request.url));
     }

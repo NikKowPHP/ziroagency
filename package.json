@@ -1,9 +1,9 @@
 {
   "name": "ziro",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3025",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -23,6 +23,7 @@
     "clsx": "^2.1.1",
     "compression": "^1.7.4",
     "critters": "^0.0.23",
+    "lucide-react": "^0.474.0",
     "next": "15.1.3",
     "next-intl": "^3.26.3",
     "react": "^19.0.0",

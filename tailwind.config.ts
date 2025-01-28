@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const plugin = require('tailwindcss/plugin')
 
 const config: Config = {
   content: [
@@ -11,10 +12,16 @@ const config: Config = {
       colors: {
         primary: '#0066FF',
         secondary: '#F7F7F7',
+
         text: {
-          primary: '#1A1A1A',
+          primary: '#0171E3',
           secondary: '#0171E2',
           tertiary: '#999999',
+          black: '#000000'
+          
+        },
+        borderColor: {
+          primary: '#0171E3'
         }
       },
       fontFamily: {
@@ -38,10 +45,26 @@ const config: Config = {
         '32': '32px',
         '48': '48px',
         '64': '64px',
+      },
+      borderRadius: {
+        'primary': '24px',
+        'primary-lg': '32px',
       }
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function({ addUtilities }: { addUtilities: any }) {
+      addUtilities({
+        '.scrollbar-w-0': {
+          'scrollbar-width': 'none',
+          '-ms-overflow-style': 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none'
+          }
+        }
+      })
+    })
+  ],
 }
 
 export default config;

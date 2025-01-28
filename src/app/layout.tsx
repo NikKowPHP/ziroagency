@@ -8,6 +8,28 @@ export const metadata: Metadata = {
     template: '%s | ZIRO - Professional Web Solutions'
   },
   description: 'Professional web design and development agency specializing in creating modern, high-performance websites and digital solutions for businesses.',
+  icons: {
+    icon: [
+      {
+        url: '/images/favicon.ico',
+        sizes: 'any',
+      }
+    ],
+    apple: [
+      {
+        url: '/apple-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      }
+    ],
+    other: [
+      {
+        rel: 'mask-icon',
+        url: '/safari-pinned-tab.svg',
+        color: '#000000', // Replace with your brand color
+      }
+    ]
+  },
   keywords: ['web design', 'web development', 'website design', 'professional web agency', 'digital solutions', 'responsive web design', 'custom web development'],
   openGraph: {
     type: 'website',
@@ -45,7 +67,8 @@ export const metadata: Metadata = {
   verification: {
     // todo: add google verification code
     google: 'your-google-verification-code',
-  }
+  },
+  manifest: '/manifest.json',
 }
 
 const jsonLd = {

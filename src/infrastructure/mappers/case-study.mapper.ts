@@ -7,13 +7,14 @@ export class CaseStudyMapper {
       id: dto.id,
       title: dto.title,
       description: dto.description,
+      slug: dto.slug,
       tags: [...dto.tags],
       images: dto.images.map(image => ({
         url: image.url,
         alt: image.alt,
       })),
       ctaText: dto.cta_text,
-      ctaTextName: dto.cta_text_name,
+      ctaTextName: 'caseStudy.ctaText.viewCaseStudy',
       ctaUrl: dto.cta_url,
       createdAt: new Date(dto.created_at),
       updatedAt: new Date(dto.updated_at),
@@ -21,7 +22,16 @@ export class CaseStudyMapper {
   }
 
   static toPersistence(domain: Partial<CaseStudy>): Partial<CaseStudyDTO> {
+    const id = domain.id || (domain.title ? 
+      domain.title.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        + '-' + Date.now()
+      : undefined)
+
     return {
+      id,
+      slug: domain.slug,
       title: domain.title,
       description: domain.description,
       tags: domain.tags ? [...domain.tags] : undefined,
@@ -32,7 +42,6 @@ export class CaseStudyMapper {
       cta_text: domain.ctaText,
       cta_text_name: domain.ctaTextName,
       cta_url: domain.ctaUrl,
-      // Don't include id, created_at, or updated_at as they're managed by the database
-    };
+    }
   }
 } 

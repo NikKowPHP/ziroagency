@@ -1,5 +1,6 @@
 export interface CaseStudyDTO {
   id: string;
+  slug: string;
   title: string;
   description: string;
   tags: string[];

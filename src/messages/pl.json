@@ -5,7 +5,16 @@
     "subtitle": "Partnerstwo dla Twojego sukcesu poprzez design"
   },
   "footer": {
-    "address": "Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland"
+    "address": "Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland",
+    "designedWith": "Projektujemy z pasją w Polsce.",
+    "description": "Ziro to dynamiczna agencja projektowa specjalizująca się w przekształcaniu pomysłów w skuteczne narracje wizualne, pomagając markom wyróżnić się na zatłoczonym rynku.",
+    "links": {
+      "company": "Firma",
+      "blog": "Blog",
+      "contact": "Kontakt",
+      "terms": "Regulamin",
+      "press": "Dla prasy"
+    }
   },
   "navigation": {
     "work": "Realizacje",
@@ -95,5 +104,51 @@
     "description": "Strona, której szukasz nie istnieje lub została przeniesiona.",
     "requestedPath": "Żądana ścieżka",
     "backHome": "Wróć do strony głównej"
+  },
+  "team": {
+    "nikhil": {
+      "role": "Założyciel",
+      "company": "M.Des, B.Arch",
+      "quote": "W Ziro z pasją podchodzimy do tego, jak design kształtuje wartość marki. Postrzegamy design jako cichego ambasadora marki, tworzącego połączenia wykraczające poza zwykłość. Naszą misją jest tworzenie angażujących doświadczeń, które rezonują z ludźmi i budują zaufanie, zapewniając, że każda interakcja pozostawia znaczące wrażenie.",
+      "imageAlt": "Portret Nikhila Singha z tłem miasta"
+    },
+    "alwaysOpen": "Jesteśmy zawsze otwarci na komunikację, umów się na 20-minutową konsultację z Nikhilem",
+    "bookCall": "Umów rozmowę"
+  },
+ "testimonials": {
+    "title": "Co mówią nasi klienci",
+    "description": "Odkryj doświadczenia, które kształtują naszą historię. Prosto od tych, którzy inspirują naszą najlepszą pracę",
+    "client1": {
+      "role": "Developer",
+      "company": "BaseSystem",
+      "quote": "Niesamowita obsługa i wyniki!",
+      "imageAlt": "Portret klienta"
+    },
+    "client2": {
+      "role": "Współzałożyciel",
+      "company": "SearchMyTenders",
+      "quote": "Absolutnie uwielbiam usługi Ziro!",
+      "imageAlt": "Portret klienta"
+    },
+    "client3": {
+      "role": "Założyciel",
+      "company": "SearchMyTenders",
+      "quote": "Projekt przekroczył nasze oczekiwania pod każdym względem.",
+      "imageAlt": "Portret klienta"
+    },
+    "client4": {
+      "role": "Współzałożyciel",
+      "company": "SearchMyTenders",
+      "quote": "Zespół Ziro jest świetny we współpracy!",
+      "imageAlt": "Portret klienta"
+    },
+    "client5": {
+      "role": "Założyciel",
+      "company": "SearchMyTenders",
+      "quote": "Nasz projekt teraz naprawdę wyróżnia się na rynku.",
+      "imageAlt": "Portret klienta"
+    },
+    "alwaysOpen": "Jesteśmy zawsze otwarci na komunikację, umów swoją 20-minutową konsultację z Nikhilem",
+    "bookCall": "Umów rozmowę"
   }
 } 

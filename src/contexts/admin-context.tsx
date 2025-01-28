@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import { CaseStudy } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
 
@@ -14,12 +14,26 @@ interface AdminContextType {
   clearError: () => void
 }
 
+interface AdminProviderProps {
+  children: React.ReactNode
+  initialCaseStudies?: Record<Locale, CaseStudy[]>
+}
+
 const AdminContext = createContext<AdminContextType | undefined>(undefined)
 
-export function AdminProvider({ children }: { children: React.ReactNode }) {
-  const [caseStudies, setCaseStudies] = useState<Record<Locale, CaseStudy[]>>({ en: [], pl: [] })
+export function AdminProvider({ children, initialCaseStudies }: AdminProviderProps) {
+  const [caseStudies, setCaseStudies] = useState<Record<Locale, CaseStudy[]>>(
+    initialCaseStudies || { en: [], pl: [] }
+  )
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // Initialize case studies when initialCaseStudies changes
+  useEffect(() => {
+    if (initialCaseStudies) {
+      setCaseStudies(initialCaseStudies)
+    }
+  }, [initialCaseStudies])
 
   const createCaseStudy = async (data: Partial<CaseStudy>, locale: Locale) => {
     setLoading(true)
@@ -30,9 +44,12 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data, locale }),
       })
-      
-      if (!response.ok) throw new Error('Failed to create case study')
-      
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Failed to create case study' }))
+        throw new Error(errorData.error || 'Failed to create case study')
+      }
+
       const newCaseStudy = await response.json()
       setCaseStudies(prev => ({
         ...prev,
@@ -50,20 +67,23 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     setLoading(true)
     setError(null)
     try {
+      console.log('update data', data)
       const response = await fetch(`/api/admin/case-studies/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data, locale }),
       })
-      
-      if (!response.ok) throw new Error('Failed to update case study')
-      
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Failed to update case study' }))
+        throw new Error(errorData.error || 'Failed to update case study')
+      }
+
       const updatedCaseStudy = await response.json()
+      console.log('updatedCaseStudy', updatedCaseStudy)
       setCaseStudies(prev => ({
         ...prev,
-        [locale]: prev[locale].map(cs => 
-          cs.id === id ? updatedCaseStudy : cs
-        )
+        [locale]: prev[locale].map(cs => cs.id === id ? updatedCaseStudy : cs)
       }))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update case study')
@@ -83,8 +103,12 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ locale }),
       })
       
-      if (!response.ok) throw new Error('Failed to delete case study')
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to delete case study')
+      }
       
+      // Update state by removing deleted case study
       setCaseStudies(prev => ({
         ...prev,
         [locale]: prev[locale].filter(cs => cs.id !== id)

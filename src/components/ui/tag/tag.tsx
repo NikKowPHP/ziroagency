@@ -20,10 +20,11 @@ export function Tag({
         // Variants
         {
           // Primary variant (blue outline)
-          'border border-[#0066FF] text-[#0066FF]': variant === 'primary',
+          'border border-primary text-[#0066FF]': variant === 'primary',
 
           // Secondary variant (light blue bg)
-          'bg-[#0066FF]/10 text-[#0066FF]': variant === 'secondary',
+          // 'bg-[#0066FF]/10 text-[#0066FF]': variant === 'secondary',
+          'bg-primary text-primary': variant === 'secondary',
 
           // Outline variant (gray)
           'border border-gray-200 text-gray-600': variant === 'outline',

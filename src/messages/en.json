@@ -5,7 +5,16 @@
     "subtitle": "Partnering for Your Success Through Design"
   },
   "footer": {
-    "address": "Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland"
+    "address": "Ziro sp. z o.o., ul. Mogilska 43 31-545 Kraków, Poland",
+    "designedWith": "Designing with love in Poland.",
+    "description": "Ziro is a dynamic design agency that specializes in transforming ideas into impactful visual narratives, helping brands stand out in a crowded marketplace.",
+    "links": {
+      "company": "Company",
+      "blog": "Blog",
+      "contact": "Contact",
+      "terms": "Terms & Conditions",
+      "press": "Press kit"
+    }
   },
   "navigation": {
     "work": "Work",
@@ -95,5 +104,49 @@
     "description": "The page you are looking for doesn't exist or has been moved.",
     "requestedPath": "Requested path",
     "backHome": "Back to Homepage"
+  },
+  "team": {
+    "nikhil": {
+      "role": "Founder",
+      "company": "M.Des, B.Arch",
+      "quote": "At Ziro, we're passionate about how design shapes brand value. We see design as the silent ambassador of a brand, creating connections that go beyond the ordinary. Our mission is to craft engaging experiences that resonate with people and build trust, ensuring every interaction leaves a meaningful impression.",
+      "imageAlt": "Nikhil Singh portrait with city background"
+    },
+    "alwaysOpen": "We're always open to communicate, book your 20 min consultation with Nikhil",
+    "bookCall": "Book a call"
+  },
+  "testimonials": {
+    "title": "What Our Clients Say",
+    "description": "Discover the experiences that shape our story. Straight from those who inspire our best work",
+    "client1": {
+      "role": "Developer",
+      "company": "BaseSystem",
+      "quote": "Amazing service and results!",
+      "imageAlt": "Client portrait"
+    },
+    "client2": {
+      "role": "Co Founder",
+      "company": "SearchMyTenders",
+      "quote": "I absolutely love Ziro's services!",
+      "imageAlt": "Client portrait"
+    },
+    "client3": {
+      "role": "Founder",
+      "company": "SearchMyTenders",
+      "quote": "The design exceeded our expectations in every way.",
+      "imageAlt": "Client portrait"
+    },
+    "client4": {
+      "role": "Co Founder",
+      "company": "SearchMyTenders",
+      "quote": "Ziro team is great to work with!",
+      "imageAlt": "Client portrait"
+    },
+    "client5": {
+      "role": "Founder",
+      "company": "SearchMyTenders",
+      "quote": "Our design now truly stands out in the market.",
+      "imageAlt": "Client portrait"
+    }
   }
 } 

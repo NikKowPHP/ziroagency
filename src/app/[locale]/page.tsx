@@ -39,6 +39,22 @@ const Faq = dynamic(
   }
 )
 
+const Team = dynamic(
+  () => import('@/components/sections/team/team').then(mod => mod.Team),
+  {
+    loading: () => <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />,
+    ssr: true
+  }
+)
+
+const Testimonials = dynamic(
+  () => import('@/components/sections/testimonials/testimonials').then(mod => mod.Testimonials),
+  {
+    loading: () => <div className="min-h-[300px]" />,
+    ssr: true
+  }
+)
+
 interface HomePageProps {
   params: Promise<{ locale: Locale }>
 }
@@ -71,14 +87,14 @@ export default async function HomePage({ params }: HomePageProps) {
   const t = await getTranslations('hero')
 
   return (
-    <div 
+    <div
       className="relative overflow-hidden min-h-screen bg-white"
-      itemScope 
+      itemScope
       itemType="https://schema.org/WebSite"
     >
       <meta itemProp="name" content="ZIRO Agency" />
       <meta itemProp="description" content="Professional Web Design & Development Services" />
-      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container relative mx-auto md:px-4 sm:px-6 lg:px-8">
         <Suspense
           fallback={
             <div className="flex items-center justify-center min-h-[200px]">
@@ -105,7 +121,7 @@ export default async function HomePage({ params }: HomePageProps) {
           </section>
         </Suspense>
 
-        <Suspense 
+        <Suspense
           fallback={
             <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
@@ -113,11 +129,11 @@ export default async function HomePage({ params }: HomePageProps) {
           <CaseStudies locale={locale} />
         </Suspense>
 
-        <div className="py-12 sm:py-16 lg:py-20">
+        <div className="md:container py-12 sm:py-16 lg:py-20">
           <RunningTags services={services} />
         </div>
 
-        <Suspense 
+        <Suspense
           fallback={
             <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
@@ -125,13 +141,33 @@ export default async function HomePage({ params }: HomePageProps) {
           <Pricing />
         </Suspense>
 
-        <Suspense 
+        <Suspense
+          fallback={
+            <div className="md:container min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
+          }
+        >
+          <Team />
+        </Suspense>
+
+        <Suspense
+          fallback={
+            <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
+          }
+        >
+          <Testimonials />
+        </Suspense>
+
+        <Suspense
           fallback={
             <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
         >
           <Faq />
         </Suspense>
+
+
+
+
       </div>
     </div>
   )
