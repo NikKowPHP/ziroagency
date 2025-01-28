@@ -93,16 +93,15 @@ export function Testimonials() {
               >
                 <div className="space-y-6">
                   <p className="text-gray-900 text-lg leading-relaxed">
-                    {/* &quot;{t(`${testimonial.id}.quote`)}&quot; */}
-                    'these dudes are the best'
+                    &quot;{t(`${testimonial.id}.quote`)}&quot;
                   </p>
 
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full overflow-hidden">
                       <Image
                         src={testimonial.image}
-                      //   alt={t(`${testimonial.id}.imageAlt`)}
-                        alt='testimonial'
+                        alt={t(`${testimonial.id}.imageAlt`)}
+                        // alt='testimonial'
                         width={48}
                         height={48}
                         className="object-cover h-full"
@@ -113,10 +112,10 @@ export function Testimonials() {
                         {testimonial.author}
                       </p>
                       <p className="text-sm text-gray-500">
-                        {/* {t(`${testimonial.id}.role`)},{' '} */}
-                        'my role'
-                        {/* {t(`${testimonial.id}.company`)} */}
-                        'my company'
+                        {t(`${testimonial.id}.role`)},{' '}
+                        {/* 'my role' */}
+                        {t(`${testimonial.id}.company`)}
+                        {/* 'my company' */}
                       </p>
                     </div>
                   </div>
