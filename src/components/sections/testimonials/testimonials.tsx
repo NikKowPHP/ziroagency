@@ -31,17 +31,30 @@ export function Testimonials() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (containerRef.current) {
-        const { scrollLeft, clientWidth, scrollWidth } = containerRef.current;
+      if (currentContainerRef) {
+        const { scrollLeft, clientWidth, scrollWidth } = currentContainerRef;
         setShowLeftButton(scrollLeft > 0);
-        setShowRightButton(scrollLeft + clientWidth < scrollWidth - 1); // Subtract 1px for tolerance
+        setShowRightButton(scrollLeft + clientWidth < scrollWidth - 1);
       }
     };
+    const currentContainerRef = containerRef.current;
 
-    if (containerRef.current && hasOverflow) {
-      containerRef.current.addEventListener('scroll', handleScroll);
-      handleScroll(); // Initial check in case content is already scrolled
-      return () => containerRef.current?.removeEventListener('scroll', handleScroll);
+    if (currentContainerRef && hasOverflow) {
+      currentContainerRef?.addEventListener('scroll', handleScroll);
+      handleScroll();
+      return () => {
+        if(currentContainerRef) {
+          currentContainerRef.removeEventListener('scroll', handleScroll);
+        }
+      };
+    } else {
+      setShowLeftButton(false);
+      setShowRightButton(false);
+      return () => {
+        if(currentContainerRef) {
+          currentContainerRef.removeEventListener('scroll', handleScroll);
+        }
+      };
     }
   }, [hasOverflow]);
 
@@ -53,20 +66,13 @@ export function Testimonials() {
     }
   };
   
-  const handleScroll = (direction: 'left' | 'right') => {
-    if (containerRef.current) {
-      const scrollAmount = direction === 'right' ? 400 : -400
-      containerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
-    }
-  }
-
-  const debounce = (func: (...args: any[]) => void, wait: number) => {
-    let timeout: NodeJS.Timeout
-    return (...args: any[]) => {
-      clearTimeout(timeout)
-      timeout = setTimeout(() => func(...args), wait)
-    }
-  }
+  const debounce = <T extends unknown[]>(func: (...args: T) => void, wait: number) => {
+    let timeout: NodeJS.Timeout | null = null;
+    return (...args: T) => {
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  };
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 relative ">
