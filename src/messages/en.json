@@ -105,7 +105,7 @@
     "requestedPath": "Requested path",
     "backHome": "Back to Homepage"
   },
-  "testimonials": {
+  "team": {
     "nikhil": {
       "role": "Founder",
       "company": "M.Des, B.Arch",
@@ -114,5 +114,39 @@
     },
     "alwaysOpen": "We're always open to communicate, book your 20 min consultation with Nikhil",
     "bookCall": "Book a call"
+  },
+  "testimonials": {
+    "title": "What Our Clients Say",
+    "description": "Discover the experiences that shape our story. Straight from those who inspire our best work",
+    "client1": {
+      "role": "Developer",
+      "company": "BaseSystem",
+      "quote": "Amazing service and results!",
+      "imageAlt": "Client portrait"
+    },
+    "client2": {
+      "role": "Co Founder",
+      "company": "SearchMyTenders",
+      "quote": "I absolutely love Ziro's services!",
+      "imageAlt": "Client portrait"
+    },
+    "client3": {
+      "role": "Founder",
+      "company": "SearchMyTenders",
+      "quote": "The design exceeded our expectations in every way.",
+      "imageAlt": "Client portrait"
+    },
+    "client4": {
+      "role": "Co Founder",
+      "company": "SearchMyTenders",
+      "quote": "Ziro's design is not just beautiful, but also functional and user-friendly.",
+      "imageAlt": "Client portrait"
+    },
+    "client5": {
+      "role": "Founder",
+      "company": "SearchMyTenders",
+      "quote": "Our design now truly stands out in the market.",
+      "imageAlt": "Client portrait"
+    }
   }
 } 

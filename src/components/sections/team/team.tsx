@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button/button'
 
 export function Team() {
   const [currentIndex] = useState(0)
-  const t = useTranslations('testimonials')
+  const t = useTranslations('team')
 
   return (
     <section className="md:container py-12 sm:py-16 lg:py-24 mt-10">
