@@ -84,7 +84,11 @@ export function Testimonials() {
         <div className="relative group">
           <div 
             ref={containerRef}
-            className="flex overflow-x-auto pb-8 gap-6 scrollbar-hide relative"
+            className="flex overflow-x-auto pb-8 gap-6 scrollbar-hide scrollbar-w-0 relative"
+            style={{ 
+              scrollbarWidth: 'none',  // Firefox
+              msOverflowStyle: 'none'  // IE/Edge
+            }}
           >
             {testimonialItems.map((testimonial: TestimonialItem) => (
               <div
