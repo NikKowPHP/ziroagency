@@ -7,11 +7,11 @@ export function Footer() {
   
   return (
     <footer 
-      className="bg-gray-50 container rounded-primary-lg py-12 px-2 sm:py-18  sm:px-20"
+      className="bg-gray-50  md:container  rounded-primary-lg py-12 px-2 sm:py-18  sm:px-20"
       itemScope
       itemType="https://schema.org/Organization"
     >
-      <div className="container mx-auto px-6">
+      <div className="px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Left Column */}
           <div className="lg:col-span-6 space-y-6">

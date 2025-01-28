@@ -9,7 +9,9 @@ export function ClientWrapper({ children }: { children: React.ReactNode }) {
     <div className='bg-white px-[20px] pb-[40px]'>
       <Header />
       {children}
-      <Footer />
+      <div className=' md:px-14'>
+        <Footer />
+      </div>
       <LanguageSwitcher />
     </div>
   )
