@@ -13,6 +13,7 @@ export interface CaseStudy {
   readonly ctaText: string;
   readonly ctaTextName: string;
   readonly ctaUrl: string;
+  readonly orderIndex: number;
   readonly createdAt: Date;
   readonly updatedAt: Date;
 } 

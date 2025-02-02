@@ -20,6 +20,7 @@ export async function PUT(request: NextRequest) {
     }
 
     // Optionally, force a cache revalidation
+    console.log('submiting the order')
     revalidateTag(CACHE_TAGS.CASE_STUDIES);
     return NextResponse.json({ success: true });
   } catch (error) {
