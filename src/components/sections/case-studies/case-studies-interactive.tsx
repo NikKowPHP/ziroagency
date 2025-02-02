@@ -31,7 +31,7 @@ export function CaseStudiesInteractive({ caseStudies, locale }: CaseStudiesInter
     <>
       <div id="work-tags-filter" className="md:container mb-8 sm:mb-16 flex gap-4  flex-wrap">
         <button
-          className={`px-5 py-2 rounded-primary-lg border ${selectedTag === null ? "bg-gray-200" : ""}`}
+          className={`px-5 py-2 rounded-primary-lg border border-gray-200 ${selectedTag === null ? "bg-gray-200" : ""}`}
           onClick={() => setSelectedTag(null)}
         >
           All
@@ -40,7 +40,7 @@ export function CaseStudiesInteractive({ caseStudies, locale }: CaseStudiesInter
         {uniqueTags.map(tag => (
           <button
             key={tag}
-            className={`px-5 py-2 rounded-primary-lg border ${selectedTag === tag ? "bg-gray-200" : ""}`}
+            className={`px-5 py-2 rounded-primary-lg border border-gray-200 ${selectedTag === tag ? "bg-gray-200" : ""}`}
             onClick={() => toggleTag(tag)}
           >
             {tag}
