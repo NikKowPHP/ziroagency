@@ -16,6 +16,7 @@ export class CaseStudyMapper {
       ctaText: dto.cta_text,
       ctaTextName: 'caseStudy.ctaText.viewCaseStudy',
       ctaUrl: dto.cta_url,
+      orderIndex: dto.order_index,
       createdAt: new Date(dto.created_at),
       updatedAt: new Date(dto.updated_at),
     };
@@ -39,6 +40,7 @@ export class CaseStudyMapper {
         url: image.url,
         alt: image.alt,
       })),
+      order_index: domain.orderIndex,
       cta_text: domain.ctaText,
       cta_text_name: domain.ctaTextName,
       cta_url: domain.ctaUrl,

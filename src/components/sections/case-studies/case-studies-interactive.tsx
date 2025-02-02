@@ -56,8 +56,8 @@ export function CaseStudiesInteractive({
             All
           </Tag>
         </button>
-        {uniqueTags.map((tag) => (
-          <button onClick={() => toggleTag(tag)}>
+        {uniqueTags.map((tag, index) => (
+          <button key={`${tag}-${index}`} onClick={() => toggleTag(tag)}>
             <Tag
               variant="primary"
               //   className="px-5 py-2 rounded-primary-lg border border-gray-200"
