@@ -11,6 +11,7 @@ export interface CaseStudyDTO {
   cta_text: string;
   cta_text_name: string;
   cta_url: string;
+  order_index: number;
   created_at: string;
   updated_at: string;
 } 

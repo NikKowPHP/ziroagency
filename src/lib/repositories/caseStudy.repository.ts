@@ -19,8 +19,7 @@ export class CaseStudyRepository {
       const { data, error } = await this.supabaseClient
         .from(`case_studies_${locale}`)
         .select('*')
-        .order('created_at', { ascending: false })
-
+        .order('order_index', { ascending: true })
       if (error) {
         console.error('Error fetching case studies:', error)
         return []

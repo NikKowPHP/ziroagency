@@ -129,7 +129,7 @@ export default async function HomePage({ params }: HomePageProps) {
           <CaseStudies locale={locale} />
         </Suspense>
 
-        <div className="py-12 sm:py-16 lg:py-20">
+        <div className="md:container py-12 sm:py-16 lg:py-20">
           <RunningTags services={services} />
         </div>
 
@@ -143,7 +143,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
         <Suspense
           fallback={
-            <div className="min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
+            <div className="md:container min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]" />
           }
         >
           <Team />

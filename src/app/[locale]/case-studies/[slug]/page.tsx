@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { Button } from '@/components/ui/button/button'
-import { caseStudyService, CaseStudyService } from '@/lib/services/caseStudy.service'
+import { caseStudyService } from '@/lib/services/caseStudy.service'
 
 interface PageProps {
   params: Promise<{

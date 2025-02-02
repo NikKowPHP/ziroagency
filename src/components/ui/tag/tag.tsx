@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils/cn'
 
 export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: 'primary' | 'secondary' | 'outline'
+  variant?: 'primary' | 'secondary' | 'outline' 
   size?: 'sm' | 'md' | 'lg'
 }
 

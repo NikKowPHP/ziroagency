@@ -5,12 +5,18 @@ import { useAdmin } from '@/contexts/admin-context'
 import { CaseStudy } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
 import { CaseStudyForm } from './components/case-study-form'
+import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
 
 export function CaseStudyList() {
-  const { caseStudies, createCaseStudy, updateCaseStudy, deleteCaseStudy, error, loading } = useAdmin()
+  const { caseStudies, createCaseStudy, updateCaseStudy, deleteCaseStudy, updateCaseStudyOrder, error, loading } = useAdmin()
   const [activeLocale, setActiveLocale] = useState<Locale>('en')
   const [editingStudy, setEditingStudy] = useState<CaseStudy | null>(null)
   const [isCreating, setIsCreating] = useState(false)
+  const [orderedStudies, setOrderedStudies] = useState<CaseStudy[]>([])
+
+  useEffect(() => {
+    setOrderedStudies(caseStudies[activeLocale])
+  }, [activeLocale, caseStudies])
   
   const handleCreate = async (data: Partial<CaseStudy>) => {
     try {
@@ -41,6 +47,24 @@ export function CaseStudyList() {
     }
   }
 
+  const handleDragEnd = async (result: DropResult) => {
+    if (!result.destination) return
+    const items = Array.from(orderedStudies)
+    const [reorderedItem] = items.splice(result.source.index, 1)
+    items.splice(result.destination.index, 0, reorderedItem)
+    setOrderedStudies(items)
+
+    const orders = items.map((study, index) => ({
+      id: study.id,
+      order: index
+    }));
+    try {
+      await updateCaseStudyOrder(orders, activeLocale)
+    } catch (error) {
+      console.error('Failed to update order:', error)
+    }
+  }
+
   useEffect(() => { console.log(caseStudies) }, [caseStudies])
 
   return (
@@ -56,9 +80,7 @@ export function CaseStudyList() {
           <button
             onClick={() => setActiveLocale('en')}
             className={`px-6 py-3 rounded-full transition-colors ${
-              activeLocale === 'en' 
-                ? 'bg-primary text-white' 
-                : 'bg-secondary text-gray-700 hover:bg-secondary/80'
+              activeLocale === 'en' ? 'bg-primary text-white' : 'bg-secondary text-gray-700 hover:bg-secondary/80'
             }`}
           >
             English
@@ -66,9 +88,7 @@ export function CaseStudyList() {
           <button
             onClick={() => setActiveLocale('pl')}
             className={`px-6 py-3 rounded-full transition-colors ${
-              activeLocale === 'pl' 
-                ? 'bg-primary text-white' 
-                : 'bg-secondary text-gray-700 hover:bg-secondary/80'
+              activeLocale === 'pl' ? 'bg-primary text-white' : 'bg-secondary text-gray-700 hover:bg-secondary/80'
             }`}
           >
             Polish
@@ -124,48 +144,64 @@ export function CaseStudyList() {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
-            {caseStudies[activeLocale].map((study) => (
-              <tr key={study.id} className={loading ? 'opacity-50' : ''}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    {study.title}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">
-                    {study.slug}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">
-                    /case-studies/{study.slug}
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="text-sm text-gray-500 line-clamp-2">
-                    {study.description}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
-                  <button
-                    onClick={() => setEditingStudy(study)}
-                    className="text-primary hover:text-primary/90 disabled:opacity-50"
-                    disabled={loading}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(study.id)}
-                    className="text-red-600 hover:text-red-900 disabled:opacity-50"
-                    disabled={loading}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="caseStudies">
+              {(provided) => (
+                <tbody className="divide-y divide-gray-200" {...provided.droppableProps} ref={provided.innerRef}>
+                  {orderedStudies.map((study, index) => (
+                    <Draggable key={study.id} draggableId={study.id} index={index}>
+                      {(provided) => (
+                        <tr
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className={loading ? 'opacity-50' : ''}
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">
+                              {study.title}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">
+                              {study.slug}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">
+                              /case-studies/{study.slug}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="text-sm text-gray-500 line-clamp-2">
+                              {study.description}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
+                            <button
+                              onClick={() => setEditingStudy(study)}
+                              className="text-primary hover:text-primary/90 disabled:opacity-50"
+                              disabled={loading}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDelete(study.id)}
+                              className="text-red-600 hover:text-red-900 disabled:opacity-50"
+                              disabled={loading}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </tbody>
+              )}
+            </Droppable>
+          </DragDropContext>
         </table>
       </div>
     </div>
