@@ -53,8 +53,13 @@ export function CaseStudyList() {
     const [reorderedItem] = items.splice(result.source.index, 1)
     items.splice(result.destination.index, 0, reorderedItem)
     setOrderedStudies(items)
+
+    const orders = items.map((study, index) => ({
+      id: study.id,
+      order: index
+    }));
     try {
-      await updateCaseStudyOrder(items, activeLocale)
+      await updateCaseStudyOrder(orders, activeLocale)
     } catch (error) {
       console.error('Failed to update order:', error)
     }

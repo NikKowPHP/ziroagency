@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { CaseStudy } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
+import { OrderUpdate } from '@/infrastructure/dto/order-update.dto'
 
 interface AdminContextType {
   caseStudies: Record<Locale, CaseStudy[]>
@@ -11,7 +12,7 @@ interface AdminContextType {
   createCaseStudy: (data: Partial<CaseStudy>, locale: Locale) => Promise<void>
   updateCaseStudy: (id: string, data: Partial<CaseStudy>, locale: Locale) => Promise<void>
   deleteCaseStudy: (id: string, locale: Locale) => Promise<void>
-  updateCaseStudyOrder: (data: { id: string, order: number }, locale: Locale) => Promise<void>
+  updateCaseStudyOrder: (orders: OrderUpdate[], locale: Locale) => Promise<void>
   clearError: () => void
 }
 
@@ -122,15 +123,19 @@ export function AdminProvider({ children, initialCaseStudies }: AdminProviderPro
     }
   }
 
-  const updateCaseStudyOrder = async (data: { id: string, order: number }, locale: Locale) => {
+  const updateCaseStudyOrder = async (orders: OrderUpdate[], locale: Locale) => {
     setLoading(true)
     setError(null)
     try {
-      const response = await fetch(`/api/admin/case-studies/${data.id}/order`, {
+      const response = await fetch(`/api/admin/case-studies/order`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ order: data.order, locale }),
+        body: JSON.stringify({ orders, locale }),
       })
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to update case study order')
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update case study order')
       throw err
@@ -138,6 +143,7 @@ export function AdminProvider({ children, initialCaseStudies }: AdminProviderPro
       setLoading(false)
     }
   }
+
 
   const clearError = () => setError(null)
 
