@@ -1,7 +1,6 @@
-import { ITestimonialsRepository } from "@/lib/repositories/testimonials.repository.interface"
-import { TestimonialsRepositoryMock } from "@/lib/repositories/testimonials.repository.mock"
+import { ITestimonialsRepository } from "@/lib/repositories/testimoinals.repository.interface"
+import { TestimonialsRepositoryMock } from "@/lib/repositories/testimoinals.repository.mock"
 import { Testimonial } from "@/domain/models/testimonial.model"
-import { ITestimonialsRepository } from "@/lib/repositories/testimonials.repository"
 
  class TestimonialsService {
     private testimonialsRepository: ITestimonialsRepository
