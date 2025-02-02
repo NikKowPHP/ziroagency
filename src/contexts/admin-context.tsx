@@ -11,10 +11,11 @@ interface AdminContextType {
   createCaseStudy: (data: Partial<CaseStudy>, locale: Locale) => Promise<void>
   updateCaseStudy: (id: string, data: Partial<CaseStudy>, locale: Locale) => Promise<void>
   deleteCaseStudy: (id: string, locale: Locale) => Promise<void>
+  updateCaseStudyOrder: (data: { id: string, order: number }, locale: Locale) => Promise<void>
   clearError: () => void
 }
 
-interface AdminProviderProps {
+interface AdminProviderProps {  
   children: React.ReactNode
   initialCaseStudies?: Record<Locale, CaseStudy[]>
 }
@@ -121,6 +122,23 @@ export function AdminProvider({ children, initialCaseStudies }: AdminProviderPro
     }
   }
 
+  const updateCaseStudyOrder = async (data: { id: string, order: number }, locale: Locale) => {
+    setLoading(true)
+    setError(null)
+    try {
+      const response = await fetch(`/api/admin/case-studies/${data.id}/order`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: data.order, locale }),
+      })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to update case study order')
+      throw err
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const clearError = () => setError(null)
 
   return (
@@ -131,6 +149,7 @@ export function AdminProvider({ children, initialCaseStudies }: AdminProviderPro
       createCaseStudy,
       updateCaseStudy,
       deleteCaseStudy,
+      updateCaseStudyOrder,
       clearError
     }}>
       {children}
