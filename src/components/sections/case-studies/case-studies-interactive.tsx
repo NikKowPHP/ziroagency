@@ -8,6 +8,7 @@ import { Tag } from '@/components/ui/tag/tag'
 import { useTranslations } from 'next-intl'
 import { Settings2, SearchIcon, CircleX } from 'lucide-react'
 import Image from 'next/image'
+import { Transition, TransitionStatus } from 'react-transition-group'
 
 interface CaseStudiesInteractiveProps {
   caseStudies: CaseStudy[]
@@ -63,6 +64,17 @@ export function CaseStudiesInteractive({
   }
 
   const FilterComponent = () => {
+    const duration = 300 // Transition duration in milliseconds
+
+    const transitionStyles: { [key in TransitionStatus]: React.CSSProperties } =
+      {
+        entering: { opacity: 0, transform: 'translateY(-10px)' },
+        entered: { opacity: 1, transform: 'translateY(0)' },
+        exiting: { opacity: 0, transform: 'translateY(-10px)' },
+        exited: { opacity: 0 },
+        unmounted: { opacity: 0 },
+      }
+
     return (
       <div className={`border border-red-500 `}>
         <div
@@ -87,40 +99,51 @@ export function CaseStudiesInteractive({
           </div>
         </div>
 
-        <div
-          className={`w-full  flex-col justify-between items-center gap-[20px] px-[28px] py-[50px] text-black ${
-            isFilterOpen ? 'flex' : 'hidden'
-          }`}
+        <Transition
+          in={isFilterOpen}
+          timeout={duration}
+          unmountOnExit
+          mountOnEnter
         >
-          {/* close filter button */}
-          <div className="w-full flex justify-center items-center ">
-            <button
-              onClick={handleFilter}
-              className="py-[15px] px-[30px] border border-grey-200 rounded-full"
+          {(state) => (
+            <div
+              className={`w-full flex flex-col justify-between items-center gap-[20px] px-[28px] py-[50px] text-black`}
+              style={{
+                ...transitionStyles[state],
+                transition: `opacity ${duration}ms ease-in-out, transform ${duration}ms ease-in-out`,
+              }}
             >
-              <CircleX className="w-[18px] h-[18px]" />
-            </button>
-          </div>
-          <div className="w-full relative group ">
-            <div className="flex overflow-x-auto pb-8 gap-[10px] scrollbar-hide scrollbar-w-0 relative">
-              {filterCards.map((card, index) => (
+              {/* close filter button */}
+              <div className="w-full flex justify-center items-center ">
                 <button
-                  onClick={() => toggleTag(card.tag)}
-                  key={index}
-                  className="w-[235px] h-[250px]  rounded-3xl flex-shrink-0  rounded-[50px]"
+                  onClick={handleFilter}
+                  className="py-[15px] px-[30px] border border-grey-200 rounded-full"
                 >
-                  <Image
-                    src={card.imageUrl}
-                    alt={card.alt}
-                    width={235}
-                    height={250}
-                    className="object-cover h-full w-full rounded-[50px]"
-                  />
+                  <CircleX className="w-[18px] h-[18px]" />
                 </button>
-              ))}
+              </div>
+              <div className="w-full relative group ">
+                <div className="flex overflow-x-auto pb-8 gap-[10px] scrollbar-hide scrollbar-w-0 relative">
+                  {filterCards.map((card, index) => (
+                    <button
+                      onClick={() => toggleTag(card.tag)}
+                      key={index}
+                      className="w-[235px] h-[250px]  rounded-3xl flex-shrink-0  rounded-[50px]"
+                    >
+                      <Image
+                        src={card.imageUrl}
+                        alt={card.alt}
+                        width={235}
+                        height={250}
+                        className="object-cover h-full w-full rounded-[50px]"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </Transition>
       </div>
     )
   }
