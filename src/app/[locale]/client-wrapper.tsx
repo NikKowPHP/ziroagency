@@ -1,19 +1,18 @@
 'use client'
 
-import { Header } from '@/components/layout/header/navbar'
+import { Navbar } from '@/components/layout/navbar/navbar'
 import { Footer } from '@/components/layout/footer/footer'
 import { LanguageSwitcher } from '@/components/ui/language-switcher/language-switcher'
 
 export function ClientWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className='bg-white px-[20px] pb-[40px]'>
-      <Header />
-      {children}
-      <div className=' md:px-14'>
+    <div className="bg-white w-full border border-red-500">
+      <div className="bg-white  pb-[40px] container px-[20px] sm:px-[20px] relative border border-blue-500">
+        <Navbar />
+        {children}
         <Footer />
+        <LanguageSwitcher />
       </div>
-      <LanguageSwitcher />
     </div>
   )
 }
-

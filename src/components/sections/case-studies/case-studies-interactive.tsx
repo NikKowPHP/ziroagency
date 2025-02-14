@@ -87,7 +87,7 @@ export function CaseStudiesInteractive({
           </button>
         ))}
       </div>
-      <div className="md:container relative mx-auto flex flex-col gap-16">
+      <div className="relative  flex flex-col gap-16">
         {sortedStudies.map((cs) => (
           <CaseStudyCard key={cs.id} caseStudy={cs} locale={locale} />
         ))}

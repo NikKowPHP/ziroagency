@@ -76,7 +76,7 @@ export function Testimonials() {
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 relative ">
-      <div className="container mx-auto px-4 sm:px-6">
+      <div className="   ">
         <div className="flex flex-col items-center mb-10 sm:mb-12">
 
           <h2 className="text-3xl font-medium sm:text-4xl font-medium mb-4 sm:mb-8">

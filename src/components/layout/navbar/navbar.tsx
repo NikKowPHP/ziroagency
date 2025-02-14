@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils/cn'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
-export function Header() {
+export function Navbar() {
   const pathname = usePathname()
   const t = useTranslations('navigation')
 
@@ -18,7 +18,7 @@ export function Header() {
       itemScope 
       itemType="https://schema.org/WPHeader"
     >
-      <div className="container mx-auto px-[5px]">
+      <div className="mx-auto px-[5px]">
         <div className="flex h-[72px] items-center justify-between">
           <Link 
             href="/" 
