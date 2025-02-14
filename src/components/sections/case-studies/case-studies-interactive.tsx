@@ -133,13 +133,17 @@ export function CaseStudiesInteractive({
             
             </button>
           </div>
-          <div className="w-full flex overflow-x-scroll gap-[10px]">
+          <div className="w-full relative group ">
+            <div className="flex overflow-x-auto pb-8 gap-6 scrollbar-hide scrollbar-w-0 relative">
+
+          
 
             {filterCards.map((card, index) => (
-              <div key={index} className="w-[200px] h-[200px]  border border-red-500 rounded-3xl">
-                <Image src={card.imageUrl} alt={card.alt} width={200} height={200} className="object-cover h-full w-full rounded-3xl" />
+              <div key={index} className="w-[300px] h-[400px]  border border-red-500 rounded-3xl flex-shrink-0 bg-gray-100 rounded-[32px] p-6">
+                <Image src={card.imageUrl} alt={card.alt} width={400} height={400} className="object-cover h-full w-full rounded-3xl" />
               </div>
             ))}
+            </div>
           </div>
         </div>
       </div>
