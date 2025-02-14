@@ -6,7 +6,11 @@ import { Locale } from '@/i18n'
 import { CaseStudyCard } from '@/components/ui/case-study/case-study-card'
 import { Tag } from '@/components/ui/tag/tag'
 import { useTranslations } from 'next-intl'
-import { Settings2, SearchIcon } from 'lucide-react'
+import { Settings2, SearchIcon, CircleX } from 'lucide-react'
+import Image from 'next/image'
+
+
+
 interface CaseStudiesInteractiveProps {
   caseStudies: CaseStudy[]
   locale: Locale
@@ -17,7 +21,7 @@ export function CaseStudiesInteractive({
   locale,
 }: CaseStudiesInteractiveProps) {
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
-
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
   const t = useTranslations('caseStudies')
 
   const uniqueTags = useMemo(() => {
@@ -38,26 +42,113 @@ export function CaseStudiesInteractive({
     return sorted
   }, [filteredStudies])
 
+
+  const filterCards = [
+    {
+      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
+      alt: 'supernormal',
+      tag: 'supernormal',
+    },
+    {
+      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
+      alt: 'supernormal',
+      tag: 'supernormal',
+    },
+    {
+      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
+      alt: 'supernormal',
+      tag: 'supernormal',
+    },
+    {
+      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
+      alt: 'supernormal',
+      tag: 'supernormal',
+    },
+    {
+      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
+      alt: 'supernormal',
+      tag: 'supernormal',
+    },
+    {
+      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
+      alt: 'supernormal',
+      tag: 'supernormal',
+    },
+    {
+      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
+      alt: 'supernormal',
+      tag: 'supernormal',
+    },
+    {
+      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
+      alt: 'supernormal',
+      tag: 'supernormal',
+    },
+  ]
+
   const toggleTag = (tag: string) => {
     setSelectedTag(selectedTag === tag ? null : tag)
   }
 
-  return (
-    <>
-      <div className="border border-red-500 w-full flex justify-between items-center gap-[10px] px-[28px] py-[20px] text-black">
-        <button className=" flex flex-1 md:flex-none justify-center md:justify-between  items-center gap-[10px] rounded-full border border-grey-200 px-[30px] py-[13px]">
-          <Settings2 className="w-[16px] h-[16px]" />
-          <span className="text-[16px] font-bold ">{t('filter')}</span>
-        </button>
-        <div className="flex-1 hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
-          <SearchIcon className="w-[20px] h-[20px]" />
-        </div>
-        <div className=" hidden md:block">
-          <button className="  rounded-full font-bold border border-grey-200 py-[13px] px-[30px] text-[16px]">
-            {t('recommended')}
+  const handleFilter = () => {
+    console.log('filter')
+    setIsFilterOpen(!isFilterOpen)
+  }
+
+  const FilterComponent = () => {
+    return (
+      <div className={`border border-red-500 `}>
+        <div
+          className={` w-full flex justify-between items-center gap-[10px] px-[28px] py-[20px] text-black ${
+            isFilterOpen ? 'hidden' : ''
+          }`}
+        >
+          <button
+            onClick={handleFilter}
+            className=" flex flex-1 md:flex-none justify-center md:justify-between  items-center gap-[10px] rounded-full border border-grey-200 px-[30px] py-[13px]"
+          >
+            <Settings2 className="w-[16px] h-[16px]" />
+            <span className="text-[16px] font-bold ">{t('filter')}</span>
           </button>
+          <div className="flex-1 hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
+            <SearchIcon className="w-[20px] h-[20px]" />
+          </div>
+          <div className=" hidden md:block">
+            <button className="  rounded-full font-bold border border-grey-200 py-[13px] px-[30px] text-[16px]">
+              {t('recommended')}
+            </button>
+          </div>
+        </div>
+
+        <div
+          className={`w-full  flex-col justify-between items-center gap-[10px] px-[28px] py-[20px] text-black ${
+            isFilterOpen ? 'flex' : 'hidden'
+          }`}
+        >
+          {/* close filter button */}
+          <div className="w-full flex justify-center items-center ">
+            <button onClick={handleFilter} className="p-[10px] border border-grey-200 rounded-full">
+                
+                <CircleX className="w-[16px] h-[16px]" />
+            
+            </button>
+          </div>
+          <div className="w-full flex overflow-x-scroll gap-[10px]">
+
+            {filterCards.map((card, index) => (
+              <div key={index} className="w-[200px] h-[200px]  border border-red-500 rounded-3xl">
+                <Image src={card.imageUrl} alt={card.alt} width={200} height={200} className="object-cover h-full w-full rounded-3xl" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+    )
+  }
+
+  return (
+    <>
+      <FilterComponent />
       <div
         id="work-tags-filter"
         className="md:container mb-8 sm:mb-16 flex gap-4 hidden flex-wrap border border-gray-700"
