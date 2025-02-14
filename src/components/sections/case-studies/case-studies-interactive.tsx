@@ -9,8 +9,6 @@ import { useTranslations } from 'next-intl'
 import { Settings2, SearchIcon, CircleX } from 'lucide-react'
 import Image from 'next/image'
 
-
-
 interface CaseStudiesInteractiveProps {
   caseStudies: CaseStudy[]
   locale: Locale
@@ -43,19 +41,20 @@ export function CaseStudiesInteractive({
   }, [filteredStudies])
 
   const filterCards = useMemo(() => {
-    return uniqueTags.map(tag => {
-      const caseStudy = caseStudies.find(cs => cs.tags.includes(tag));
+    return uniqueTags.map((tag) => {
+      const caseStudy = caseStudies.find((cs) => cs.tags.includes(tag))
       return {
         imageUrl: caseStudy?.images?.[0]?.url || '/images/placeholder.png', // Default placeholder image
         alt: caseStudy?.images?.[0]?.alt || 'Case Study',
         tag: tag,
-      };
-    });
-  }, [uniqueTags, caseStudies]);
-
+      }
+    })
+  }, [uniqueTags, caseStudies])
+  console.log('filtered cards', filterCards)
 
   const toggleTag = (tag: string) => {
     setSelectedTag(selectedTag === tag ? null : tag)
+    setIsFilterOpen(false)
   }
 
   const handleFilter = () => {
@@ -89,28 +88,36 @@ export function CaseStudiesInteractive({
         </div>
 
         <div
-          className={`w-full  flex-col justify-between items-center gap-[10px] px-[28px] py-[20px] text-black ${
+          className={`w-full  flex-col justify-between items-center gap-[20px] px-[28px] py-[50px] text-black ${
             isFilterOpen ? 'flex' : 'hidden'
           }`}
         >
           {/* close filter button */}
           <div className="w-full flex justify-center items-center ">
-            <button onClick={handleFilter} className="p-[10px] border border-grey-200 rounded-full">
-                
-                <CircleX className="w-[16px] h-[16px]" />
-            
+            <button
+              onClick={handleFilter}
+              className="py-[15px] px-[30px] border border-grey-200 rounded-full"
+            >
+              <CircleX className="w-[18px] h-[18px]" />
             </button>
           </div>
           <div className="w-full relative group ">
-            <div className="flex overflow-x-auto pb-8 gap-6 scrollbar-hide scrollbar-w-0 relative">
-
-          
-
-            {filterCards.map((card, index) => (
-              <div key={index} className="w-[300px] h-[400px]  border border-red-500 rounded-3xl flex-shrink-0 bg-gray-100 rounded-[32px] p-6">
-                <Image src={card.imageUrl} alt={card.alt} width={400} height={400} className="object-cover h-full w-full rounded-3xl" />
-              </div>
-            ))}
+            <div className="flex overflow-x-auto pb-8 gap-[10px] scrollbar-hide scrollbar-w-0 relative">
+              {filterCards.map((card, index) => (
+                <button
+                  onClick={() => toggleTag(card.tag)}
+                  key={index}
+                  className="w-[235px] h-[250px]  rounded-3xl flex-shrink-0  rounded-[50px]"
+                >
+                  <Image
+                    src={card.imageUrl}
+                    alt={card.alt}
+                    width={235}
+                    height={250}
+                    className="object-cover h-full w-full rounded-[50px]"
+                  />
+                </button>
+              ))}
             </div>
           </div>
         </div>

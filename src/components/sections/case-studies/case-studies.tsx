@@ -24,7 +24,7 @@ export async function CaseStudies({ locale }: CaseStudiesProps) {
  
 
   return (
-    <section id="work" className="relative overflow-hidden bg-white">
+    <section id="work" className="relative overflow-hidden bg-white ">
       <Suspense fallback={<CaseStudiesLoader />}>
         <CaseStudiesInteractive caseStudies={caseStudies} locale={locale} />
       </Suspense>
