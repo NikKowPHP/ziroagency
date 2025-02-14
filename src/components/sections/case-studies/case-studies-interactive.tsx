@@ -87,8 +87,9 @@ export function CaseStudiesInteractive({
                 <Settings2 className="w-[16px] h-[16px]" />
                 <span className="text-[16px] font-bold">{t('filter')}</span>
               </motion.button>
-              <div className="flex-1 hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
-                <SearchIcon className="w-[20px] h-[20px]" />
+              <div className="flex-1 relative hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
+                <SearchIcon className="w-[20px] h-[20px] absolute left-[30px] top-1/2 -translate-y-1/2 " />
+                <input type="text" placeholder="" className="w-full pl-[40px] focus:outline-none" />
               </div>
               <div className=" hidden md:block">
                 <button className="  rounded-full font-bold border border-grey-200 py-[13px] px-[30px] text-[16px]">
