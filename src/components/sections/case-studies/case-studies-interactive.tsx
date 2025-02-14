@@ -8,7 +8,7 @@ import { Tag } from '@/components/ui/tag/tag'
 import { useTranslations } from 'next-intl'
 import { Settings2, SearchIcon, CircleX } from 'lucide-react'
 import Image from 'next/image'
-import { Transition, TransitionStatus } from 'react-transition-group'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface CaseStudiesInteractiveProps {
   caseStudies: CaseStudy[]
@@ -64,86 +64,139 @@ export function CaseStudiesInteractive({
   }
 
   const FilterComponent = () => {
-    const duration = 300 // Transition duration in milliseconds
-
-    const transitionStyles: { [key in TransitionStatus]: React.CSSProperties } =
-      {
-        entering: { opacity: 0, transform: 'translateY(-10px)' },
-        entered: { opacity: 1, transform: 'translateY(0)' },
-        exiting: { opacity: 0, transform: 'translateY(-10px)' },
-        exited: { opacity: 0 },
-        unmounted: { opacity: 0 },
-      }
-
     return (
-      <div className={`border border-red-500 `}>
-        <div
-          className={` w-full flex justify-between items-center gap-[10px] px-[28px] py-[20px] text-black ${
-            isFilterOpen ? 'hidden' : ''
-          }`}
-        >
-          <button
-            onClick={handleFilter}
-            className=" flex flex-1 md:flex-none justify-center md:justify-between  items-center gap-[10px] rounded-full border border-grey-200 px-[30px] py-[13px]"
-          >
-            <Settings2 className="w-[16px] h-[16px]" />
-            <span className="text-[16px] font-bold ">{t('filter')}</span>
-          </button>
-          <div className="flex-1 hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
-            <SearchIcon className="w-[20px] h-[20px]" />
-          </div>
-          <div className=" hidden md:block">
-            <button className="  rounded-full font-bold border border-grey-200 py-[13px] px-[30px] text-[16px]">
-              {t('recommended')}
-            </button>
-          </div>
-        </div>
-
-        <Transition
-          in={isFilterOpen}
-          timeout={duration}
-          unmountOnExit
-          mountOnEnter
-        >
-          {(state) => (
-            <div
-              className={`w-full flex flex-col justify-between items-center gap-[20px] px-[28px] py-[50px] text-black`}
-              style={{
-                ...transitionStyles[state],
-                transition: `opacity ${duration}ms ease-in-out, transform ${duration}ms ease-in-out`,
+      <div className="">
+        <AnimatePresence mode="wait">
+          {!isFilterOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ 
+                duration: 0.3,
+                ease: [0.23, 1, 0.32, 1] // Custom easing function for smooth motion
               }}
+              className="w-full flex justify-between items-center gap-[10px]  py-[20px] text-black"
             >
-              {/* close filter button */}
-              <div className="w-full flex justify-center items-center ">
-                <button
-                  onClick={handleFilter}
-                  className="py-[15px] px-[30px] border border-grey-200 rounded-full"
-                >
-                  <CircleX className="w-[18px] h-[18px]" />
+              <motion.button
+                onClick={handleFilter}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex flex-1 md:flex-none justify-center md:justify-between items-center gap-[10px] rounded-full border border-grey-200 px-[30px] py-[13px]"
+              >
+                <Settings2 className="w-[16px] h-[16px]" />
+                <span className="text-[16px] font-bold">{t('filter')}</span>
+              </motion.button>
+              <div className="flex-1 hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
+                <SearchIcon className="w-[20px] h-[20px]" />
+              </div>
+              <div className=" hidden md:block">
+                <button className="  rounded-full font-bold border border-grey-200 py-[13px] px-[30px] text-[16px]">
+                  {t('recommended')}
                 </button>
               </div>
-              <div className="w-full relative group ">
-                <div className="flex overflow-x-auto pb-8 gap-[10px] scrollbar-hide scrollbar-w-0 relative">
-                  {filterCards.map((card, index) => (
-                    <button
-                      onClick={() => toggleTag(card.tag)}
-                      key={index}
-                      className="w-[235px] h-[250px]  rounded-3xl flex-shrink-0  rounded-[50px]"
-                    >
-                      <Image
-                        src={card.imageUrl}
-                        alt={card.alt}
-                        width={235}
-                        height={250}
-                        className="object-cover h-full w-full rounded-[50px]"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
+            </motion.div>
           )}
-        </Transition>
+        </AnimatePresence>
+
+        <AnimatePresence mode="wait">
+          {isFilterOpen && (
+            <motion.div
+              initial={{ 
+                height: 0,
+                opacity: 0
+              }}
+              animate={{ 
+                height: "auto",
+                opacity: 1
+              }}
+              exit={{ 
+                height: 0,
+                opacity: 0
+              }}
+              transition={{
+                height: {
+                  duration: 0.4,
+                  ease: [0.23, 1, 0.32, 1]
+                },
+                opacity: {
+                  duration: 0.3,
+                  delay: 0.1
+                }
+              }}
+              className="w-full overflow-hidden"
+            >
+              <motion.div
+                initial={{ y: -40 }}
+                animate={{ y: 0 }}
+                exit={{ y: -40 }}
+                transition={{
+                  duration: 0.4,
+                  ease: [0.23, 1, 0.32, 1]
+                }}
+                className="flex flex-col justify-between items-center gap-[20px] px-[28px] py-[50px] text-black"
+              >
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="w-full flex justify-center items-center"
+                >
+                  <motion.button
+                    onClick={handleFilter}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="py-[15px] px-[30px] border border-grey-200 rounded-full"
+                  >
+                    <CircleX className="w-[18px] h-[18px]" />
+                  </motion.button>
+                </motion.div>
+
+                <div className="w-full relative group">
+                  <motion.div 
+                    className="flex overflow-x-auto pb-8 gap-[10px] scrollbar-hide scrollbar-w-0 relative"
+                  >
+                    {filterCards.map((card, index) => (
+                      <motion.button
+                        key={index}
+                        onClick={() => toggleTag(card.tag)}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.2 + index * 0.1,
+                          ease: [0.23, 1, 0.32, 1]
+                        }}
+                        whileHover={{ 
+                          scale: 1.03,
+                          transition: { duration: 0.3 }
+                        }}
+                        whileTap={{ scale: 0.97 }}
+                        className="w-[235px] h-[250px] rounded-[50px] overflow-hidden"
+                      >
+                        <motion.div
+                          whileHover={{ 
+                            scale: 1.1,
+                            transition: { duration: 0.6 }
+                          }}
+                          className="h-full w-full"
+                        >
+                          <Image
+                            src={card.imageUrl}
+                            alt={card.alt}
+                            width={235}
+                            height={250}
+                            className="object-cover h-full w-full"
+                          />
+                        </motion.div>
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     )
   }
