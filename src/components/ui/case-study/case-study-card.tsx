@@ -92,7 +92,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
 
   return (
     <article 
-      className="flex flex-col rounded-[24px] sm:rounded-[32px] border border-gray-200 p-6 sm:p-8 lg:p-10 shadow-sm h-full"
+      className="case-study-card flex flex-col rounded-[24px] sm:rounded-[32px] border border-gray-200 p-6 sm:p-8 lg:p-10 shadow-sm h-full"
       itemScope
       itemType="https://schema.org/CreativeWork"
     >

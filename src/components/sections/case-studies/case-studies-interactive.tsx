@@ -63,6 +63,11 @@ export function CaseStudiesInteractive({
     setIsFilterOpen(!isFilterOpen)
   }
 
+  const handleRecommended = () => {
+    console.log('recommended')
+
+  }
+
   const FilterComponent = () => {
     return (
       <div className="">
@@ -92,7 +97,7 @@ export function CaseStudiesInteractive({
                 <input type="text" placeholder="" className="w-full pl-[40px] focus:outline-none" />
               </div>
               <div className=" hidden md:block">
-                <button className="  rounded-full font-bold border border-grey-200 py-[13px] px-[30px] text-[16px]">
+                <button onClick={handleRecommended} className="  rounded-full font-bold border border-grey-200 py-[13px] px-[30px] text-[16px]">
                   {t('recommended')}
                 </button>
               </div>
@@ -173,7 +178,7 @@ export function CaseStudiesInteractive({
                           transition: { duration: 0.3 }
                         }}
                         whileTap={{ scale: 0.97 }}
-                        className="w-[235px] h-[250px] rounded-[50px] overflow-hidden"
+                        className="w-[235px] h-[250px] rounded-[50px] overflow-hidden flex-shrink-0"
                       >
                         <motion.div
                           whileHover={{ 
