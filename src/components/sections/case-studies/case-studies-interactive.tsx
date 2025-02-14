@@ -5,7 +5,8 @@ import { CaseStudy } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
 import { CaseStudyCard } from '@/components/ui/case-study/case-study-card'
 import { Tag } from '@/components/ui/tag/tag'
-
+import { useTranslations } from 'next-intl'
+import { Settings2, SearchIcon } from 'lucide-react'
 interface CaseStudiesInteractiveProps {
   caseStudies: CaseStudy[]
   locale: Locale
@@ -16,6 +17,8 @@ export function CaseStudiesInteractive({
   locale,
 }: CaseStudiesInteractiveProps) {
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
+
+  const t = useTranslations('caseStudies')
 
   const uniqueTags = useMemo(() => {
     const tags = caseStudies.flatMap((cs) => cs.tags)
@@ -28,7 +31,7 @@ export function CaseStudiesInteractive({
   }, [caseStudies, selectedTag])
 
   const sortedStudies = useMemo(() => {
-    const sorted =  [...filteredStudies].sort(
+    const sorted = [...filteredStudies].sort(
       (a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0)
     )
     console.log(filteredStudies)
@@ -41,9 +44,23 @@ export function CaseStudiesInteractive({
 
   return (
     <>
+      <div className="border border-red-500 w-full flex justify-between items-center gap-[10px] px-[28px] py-[20px]">
+        <div className="flex justify-between items-center gap-[10px] rounded-full border border-red-500 px-[30px] py-[13px]">
+          <Settings2 className="w-[16px] h-[16px]" />
+          <button className="text-[16px] ">{t('filter')}</button>
+        </div>
+        <div className="flex-1 border border-blue-500 rounded-full px-[30px] py-[15px] text-[16px]">
+          <SearchIcon className="w-[20px] h-[20px]" />
+        </div>
+        <div className="">
+          <button className="  rounded-full border border-red-500 py-[13px] px-[30px] text-[16px]">
+            {t('recommended')}
+          </button>
+        </div>
+      </div>
       <div
         id="work-tags-filter"
-        className="md:container mb-8 sm:mb-16 flex gap-4  flex-wrap"
+        className="md:container mb-8 sm:mb-16 flex gap-4 hidden flex-wrap border border-gray-700"
       >
         <button onClick={() => setSelectedTag(null)}>
           <Tag

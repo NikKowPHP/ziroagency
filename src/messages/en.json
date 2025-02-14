@@ -29,6 +29,10 @@
     },
     "viewCaseStudy": "View Case Study"
   },
+  "caseStudies": {
+    "filter": "Filter",
+    "recommended": "Recommended"
+  },
   "pricing": {
     "title": "Pricing",
     "onePagePlan": {
