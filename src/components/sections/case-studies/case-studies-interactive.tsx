@@ -44,16 +44,16 @@ export function CaseStudiesInteractive({
 
   return (
     <>
-      <div className="border border-red-500 w-full flex justify-between items-center gap-[10px] px-[28px] py-[20px]">
-        <div className="flex justify-between items-center gap-[10px] rounded-full border border-red-500 px-[30px] py-[13px]">
+      <div className="border border-red-500 w-full flex justify-between items-center gap-[10px] px-[28px] py-[20px] text-black">
+        <button className=" flex flex-1 md:flex-none justify-center md:justify-between  items-center gap-[10px] rounded-full border border-grey-200 px-[30px] py-[13px]">
           <Settings2 className="w-[16px] h-[16px]" />
-          <button className="text-[16px] ">{t('filter')}</button>
-        </div>
-        <div className="flex-1 border border-blue-500 rounded-full px-[30px] py-[15px] text-[16px]">
+          <span className="text-[16px] font-bold ">{t('filter')}</span>
+        </button>
+        <div className="flex-1 hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
           <SearchIcon className="w-[20px] h-[20px]" />
         </div>
-        <div className="">
-          <button className="  rounded-full border border-red-500 py-[13px] px-[30px] text-[16px]">
+        <div className=" hidden md:block">
+          <button className="  rounded-full font-bold border border-grey-200 py-[13px] px-[30px] text-[16px]">
             {t('recommended')}
           </button>
         </div>
