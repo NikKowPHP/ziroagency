@@ -42,49 +42,17 @@ export function CaseStudiesInteractive({
     return sorted
   }, [filteredStudies])
 
+  const filterCards = useMemo(() => {
+    return uniqueTags.map(tag => {
+      const caseStudy = caseStudies.find(cs => cs.tags.includes(tag));
+      return {
+        imageUrl: caseStudy?.images?.[0]?.url || '/images/placeholder.png', // Default placeholder image
+        alt: caseStudy?.images?.[0]?.alt || 'Case Study',
+        tag: tag,
+      };
+    });
+  }, [uniqueTags, caseStudies]);
 
-  const filterCards = [
-    {
-      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
-      alt: 'supernormal',
-      tag: 'supernormal',
-    },
-    {
-      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
-      alt: 'supernormal',
-      tag: 'supernormal',
-    },
-    {
-      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
-      alt: 'supernormal',
-      tag: 'supernormal',
-    },
-    {
-      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
-      alt: 'supernormal',
-      tag: 'supernormal',
-    },
-    {
-      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
-      alt: 'supernormal',
-      tag: 'supernormal',
-    },
-    {
-      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
-      alt: 'supernormal',
-      tag: 'supernormal',
-    },
-    {
-      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
-      alt: 'supernormal',
-      tag: 'supernormal',
-    },
-    {
-      imageUrl: '/images/case-studies/supernormal/supernormal.avif',
-      alt: 'supernormal',
-      tag: 'supernormal',
-    },
-  ]
 
   const toggleTag = (tag: string) => {
     setSelectedTag(selectedTag === tag ? null : tag)
