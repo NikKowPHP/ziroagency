@@ -160,7 +160,7 @@ export function CaseStudiesInteractive({
 
                 <div className="w-full relative group">
                   <motion.div 
-                    className="flex overflow-x-auto pb-8 gap-[10px] scrollbar-hide scrollbar-w-0 relative"
+                    className="flex flex-col md:flex-row overflow-y-auto md:overflow-x-auto pb-8 gap-[10px] scrollbar-hide scrollbar-w-0 relative"
                   >
                     {filterCards.map((card, index) => (
                       <motion.button
@@ -178,7 +178,7 @@ export function CaseStudiesInteractive({
                           transition: { duration: 0.3 }
                         }}
                         whileTap={{ scale: 0.97 }}
-                        className="w-[235px] h-[250px] rounded-[50px] overflow-hidden flex-shrink-0"
+                        className="w-full md:w-[235px] h-[250px] rounded-[50px] overflow-hidden flex-shrink-0"
                       >
                         <motion.div
                           whileHover={{ 
