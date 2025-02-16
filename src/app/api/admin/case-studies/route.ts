@@ -12,6 +12,9 @@ export async function POST(request: NextRequest) {
       locale,
       mappedData: CaseStudyMapper.toPersistence(data)
     })
+    // generate id 
+    const id = crypto.randomUUID()
+    data.id = id;
 
     const { data: newCaseStudy, error } = await supabaseAdmin!
       .from(`case_studies_${locale}`)
