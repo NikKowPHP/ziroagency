@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import '@/styles/globals.css'
 import { locales, type Locale } from '@/i18n'
 import { ClientWrapper } from './client-wrapper'
+import Script from 'next/script'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -51,6 +52,34 @@ export async function generateMetadata({
   }
 }
 
+const renderGoogleAnalytics = () => {
+  const gaKey = process.env.NEXT_PUBLIC_GA_ID;
+  return gaKey && (
+    
+      <>
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaKey}`}
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${gaKey}', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
+      </>
+    )
+  
+}
+
 export default async function LocaleLayout({
   children,
   params,
@@ -72,6 +101,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.variable}>
+       {renderGoogleAnalytics()}
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ClientWrapper>
             <main>{children}</main>
