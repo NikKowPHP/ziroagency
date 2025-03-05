@@ -1,6 +1,6 @@
 'use client'
 
-import { Header } from '@/components/layout/header/header'
+import { Header} from '@/components/layout/header/navbar'
 import { Footer } from '@/components/layout/footer/footer'
 import { LanguageSwitcher } from '@/components/ui/language-switcher/language-switcher'
 
