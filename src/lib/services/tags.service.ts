@@ -1,32 +1,69 @@
-import { Locale } from "@/i18n"
-import { CaseStudyRepository } from "../repositories/caseStudy.repository"
-import { CaseStudy } from "@/domain/models/case-study.model"
-import { mockCaseStudyRepository } from "../__mocks__/caseStudyRepository.mock"
-import { ICaseStudyRepository } from "../interfaces/caseStudyRepository.interface"
+import { Tag } from "@/domain/models/models";
+// Import your repositories – adjust the selection logic as needed.
+import { tagsRepository } from "../repositories/tags.repository";
+import { tagsLocalRepository } from "../repositories/tags.local.repository";
+export interface ITagRepository {
+  getTags: () => Promise<Tag[]>;
+  getTagById: (id: string) => Promise<Tag | null>;
+  createTag: (tag: Omit<Tag, "id">) => Promise<Tag>;
+  updateTag: (id: string, update: Partial<Tag>) => Promise<Tag | null>;
+  deleteTag: (id: string) => Promise<boolean>;
+};
 
-const caseStudyRepository = new CaseStudyRepository()
 
+export class TagsService {
+  private repository: ITagRepository;
 
-
-export class CaseStudyService {
-  private caseStudyRepository: ICaseStudyRepository
 
   constructor() {
-    if(process.env.MOCK_REPOSITORIES === 'true') {
-      this.caseStudyRepository = mockCaseStudyRepository
+    // Replace this logic if you have a proper mock repository.
+    if (process.env.MOCK_REPOSITORIES === "true") {
+      this.repository = tagsLocalRepository;
     } else {
-      this.caseStudyRepository = caseStudyRepository
+      this.repository = tagsRepository;
     }
   }
 
-  getCaseStudies = async (locale: Locale): Promise<CaseStudy[]> => {
-    return this.caseStudyRepository.getCaseStudies(locale)
-  }
+  /**
+   * Retrieve all tags.
+   */
+  getTags = async (): Promise<Tag[]> => {
+    return this.repository.getTags();
+  };
 
-  getCaseStudyBySlug = async (slug: string, locale: Locale): Promise<CaseStudy | null> => {
-    return this.caseStudyRepository.getCaseStudyBySlug(slug, locale)
-  }
+  /**
+   * Retrieve a tag by its ID.
+   * @param id The tag's ID.
+   */
+  getTagById = async (id: string): Promise<Tag | null> => {
+    return this.repository.getTagById(id);
+  };
+
+  /**
+   * Create a new tag.
+   * @param tag The tag data (without the ID) to create.
+   */
+  createTag = async (tag: Omit<Tag, "id">): Promise<Tag> => {
+    return this.repository.createTag(tag);
+  };
+
+  /**
+   * Update an existing tag.
+   * @param id The tag's ID.
+   * @param update The fields to update.
+   */
+  updateTag = async (id: string, update: Partial<Tag>): Promise<Tag | null> => {
+    return this.repository.updateTag(id, update);
+  };
+
+  /**
+   * Delete a tag by its ID.
+   * @param id The tag's ID.
+   */
+  deleteTag = async (id: string): Promise<boolean> => {
+    return this.repository.deleteTag(id);
+  };
 }
 
-// export singleton
-export const caseStudyService = new CaseStudyService()
+// Export a singleton instance if desired.
+export const tagsService = new TagsService();

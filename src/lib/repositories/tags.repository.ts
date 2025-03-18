@@ -2,7 +2,10 @@ import { SupabaseClient } from '@supabase/supabase-js'
 import { supabase } from '../supabase'
 import { Tag } from '@/domain/models/models'
 
-export class TagsRepository {
+import { ITagRepository } from '@/lib/services/tags.service';
+import logger from '../utils/logger';
+
+export class TagsRepository implements ITagRepository {
   private supabaseClient: SupabaseClient
   private tableName: string
 
@@ -17,7 +20,7 @@ export class TagsRepository {
         .select('*')
         .order('order_index', { ascending: true })
       if (error) {
-        console.error('Error fetching case studies:', error)
+        logger.error('Error fetching case studies:', error)
         return []
       }
 
@@ -32,14 +35,14 @@ export class TagsRepository {
           .single()
 
         if (error) {
-          console.error('Error fetching case study:', error)
+          logger.error('Error fetching case study:', error)
           return null
         }
 
     return data;
   }
 
-  createTag = async (tagData: Omit<Tag, 'id' | 'created_at' | 'updated_at'>): Promise<Tag | null> => {
+  createTag = async (tagData: Omit<Tag, 'id' | 'created_at' | 'updated_at'>): Promise<Tag> => {
     const { data, error } = await this.supabaseClient
       .from(this.tableName)
       .insert(tagData)
@@ -47,8 +50,8 @@ export class TagsRepository {
       .single();
 
     if (error) {
-      console.error('Error creating tag:', error);
-      return null;
+      logger.error('Error creating tag:', error);
+      throw error;
     }
     return data;
   };
@@ -62,7 +65,7 @@ export class TagsRepository {
       .single();
 
     if (error) {
-      console.error('Error updating tag:', error);
+      logger.error('Error updating tag:', error);
       return null;
     }
     return data;
@@ -75,7 +78,7 @@ export class TagsRepository {
       .eq('id', id);
 
     if (error) {
-      console.error('Error deleting tag:', error);
+      logger.error('Error deleting tag:', error);
       return false;
     }
     return true;

@@ -3,8 +3,9 @@ import { Database } from 'sqlite3';
 import { getDatabaseFilePath } from '@/lib/config/database.config';
 import logger from '@/lib/utils/logger'
 import { Tag } from '@/domain/models/models';
+import { ITagRepository } from '@/lib/services/tags.service';
 
-export class TagsLocalRepository extends SqlLiteAdapter<Tag, string> {
+export class TagsLocalRepository extends SqlLiteAdapter<Tag, string> implements ITagRepository {
   constructor(db: Database) {
     super("ziroagency_tags", db);
   }
