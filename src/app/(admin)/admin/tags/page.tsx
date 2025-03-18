@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { getTagsAction } from '@/components/server-actions/tags-actions'
-import { TagList } from '@/components/tags/tag-list'
+import { TagList } from './tag-list'
 
 export default async function CaseStudiesAdminPage() {
 
