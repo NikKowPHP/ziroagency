@@ -158,7 +158,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
       // Stringify tags and images before update
       const dbData = {
         ...data,
-        tags: JSON.stringify(data.tags || []),
+        tags: JSON.stringify(data.tags?.map((tag: Tag) => tag.id) || []),
         images: JSON.stringify(data.images || [])
       };
 
