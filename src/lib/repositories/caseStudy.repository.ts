@@ -1,8 +1,6 @@
-import { unstable_cache } from 'next/cache'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { Locale } from '@/i18n'
 import { CaseStudy, CaseStudyWithTags, Image, Tag } from '@/domain/models/models'
-import { CACHE_TAGS, CACHE_TIMES } from '@/lib/utils/cache'
 import { supabase } from '../supabase'
 
 export class CaseStudyRepository {
@@ -13,10 +11,9 @@ export class CaseStudyRepository {
   }
 
   // READ: Retrieve case studies ordered by order_index
-  getCaseStudies = unstable_cache(
-    async (locale: Locale): Promise<CaseStudyWithTags[]> => {
-      const { data, error } = await this.supabaseClient
-        .from(`case_studies_${locale}`)
+  getCaseStudies = async (locale: Locale): Promise<CaseStudyWithTags[]> => {
+    const { data, error } = await this.supabaseClient
+      .from(`case_studies_${locale}`)
         .select('*')
         .order('order_index', { ascending: true })
 
@@ -28,23 +25,15 @@ export class CaseStudyRepository {
       // Fetch tags for each case study
   
       return await this.enrichWithTags(data as CaseStudy[])
-    },
-    [CACHE_TAGS.CASE_STUDIES],
-    {
-      revalidate: CACHE_TIMES.HOUR,
-      tags: [CACHE_TAGS.CASE_STUDIES],
-    }
-  )
+  }
 
   // READ: Retrieve a case study by its slug
   getCaseStudyBySlug = async (slug: string, locale: Locale): Promise<CaseStudyWithTags | null> => {
-    return unstable_cache(
-      async () => {
-        const { data, error } = await this.supabaseClient
-          .from(`case_studies_${locale}`)
-          .select('*')
-          .eq('slug', slug)
-          .single()
+    const { data, error } = await this.supabaseClient
+      .from(`case_studies_${locale}`)
+      .select('*')
+      .eq('slug', slug)
+      .single()
 
         if (error) {
           console.error('Error fetching case study:', error)
@@ -52,13 +41,6 @@ export class CaseStudyRepository {
         }
 
         return data ? await this.enrichWithTags([data as CaseStudy]).then(studies => studies[0] || null) : null
-      },
-      [`case-study-${slug}-${locale}`],
-      {
-        revalidate: CACHE_TIMES.DAY,
-        tags: [CACHE_TAGS.CASE_STUDIES],
-      }
-    )()
   }
 
   // CREATE: Insert a new case study record and return the newly created domain object.
@@ -66,9 +48,13 @@ export class CaseStudyRepository {
     data: Partial<CaseStudyWithTags>,
     locale: Locale
   ): Promise<CaseStudyWithTags> => {
+    const createData: Partial<CaseStudy> = {
+      ...data,
+      tags: data.tags ? data.tags.map(tag => tag.id) : undefined
+    }
     const { data: inserted, error } = await this.supabaseClient
       .from(`case_studies_${locale}`)
-      .insert(data)
+      .insert(createData)
       .select()
       .single()
 

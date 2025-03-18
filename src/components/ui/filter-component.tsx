@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Settings2, CircleX, SearchIcon } from 'lucide-react'
 import Image from 'next/image'

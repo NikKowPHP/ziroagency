@@ -1,10 +1,9 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect } from 'react'
-import { CaseStudy } from '@/domain/models/case-study.model'
 import { Locale } from '@/i18n'
 import { OrderUpdate } from '@/infrastructure/dto/order-update.dto'
-
+import { CaseStudy } from '@/domain/models/models'
 interface AdminContextType {
   caseStudies: Record<Locale, CaseStudy[]>
   loading: boolean

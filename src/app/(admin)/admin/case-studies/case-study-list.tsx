@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { CaseStudy, CaseStudyWithTags } from '@/domain/models/models'
+import { CaseStudyWithTags } from '@/domain/models/models'
 import { Locale } from '@/i18n'
 import { CaseStudyForm } from './components/case-study-form'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
