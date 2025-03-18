@@ -4,7 +4,6 @@ import { useState, useMemo } from 'react'
 import { CaseStudyWithTags } from '@/domain/models/models'
 import { Locale } from '@/i18n'
 import { CaseStudyCard } from '@/components/ui/case-study/case-study-card'
-import { useTranslations } from 'next-intl'
 import { FilterComponent } from '@/components/ui/filter-component'
 
 interface CaseStudiesInteractiveProps {
@@ -19,7 +18,6 @@ export function CaseStudiesInteractive({
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState<string>('')
-  const t = useTranslations('caseStudies')
 
   // Extract unique tags from all case studies
   const uniqueTags = useMemo(() => {
