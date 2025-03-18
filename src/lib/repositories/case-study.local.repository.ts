@@ -36,6 +36,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
     const tableName = this.getTableName(locale);
     return new Promise((resolve, reject) => {
       const query = `SELECT * FROM "${tableName}" ORDER BY order_index ASC;`;
+      logger.log(`Querying case studies from table "${tableName}":`, query);
       this.db.all(query, [], async (err, rows: any[]) => {
         if (err) {
           logger.log(`Error listing case studies from table "${tableName}":`, err);

@@ -70,6 +70,7 @@ export function TagList({ tags: initialTags }: { tags: Tag[] }) {
   }
 
   const handleDelete = async (id: string) => {
+    if(!id) throw new Error('Tag id is required')
     if (confirm('Are you sure you want to delete this tag?')) {
       try {
         setLoading(true)
