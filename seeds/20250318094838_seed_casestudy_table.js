@@ -2,7 +2,7 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function(knex) {
+exports.seed = async function(knex) {
   const mockCaseStudies = [
     {
       id: '1',
@@ -34,21 +34,17 @@ exports.up = function(knex) {
     },
   ];
 
+  const tablesExist = await Promise.all([
+    knex.schema.hasTable('case_studies_en'),
+    knex.schema.hasTable('case_studies_pl'),
+  ]);
+
+  if (tablesExist[0]) await knex('case_studies_en').del();
+  if (tablesExist[1]) await knex('case_studies_pl').del();
+
   // Insert mock data into both English and Polish tables
   return Promise.all([
     knex('case_studies_en').insert(mockCaseStudies),
     knex('case_studies_pl').insert(mockCaseStudies),
-  ]);
-};
-
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-exports.down = function(knex) {
-  // Delete mock data from both English and Polish tables
-  return Promise.all([
-    knex('case_studies_en').whereIn('id', ['1', '2']).delete(),
-    knex('case_studies_pl').whereIn('id', ['1', '2']).delete(),
   ]);
 };

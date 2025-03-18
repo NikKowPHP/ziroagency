@@ -14,7 +14,8 @@
     "analyze": "cross-env ANALYZE=true next build",
     "build:prod": "next build && next-bundle-analyzer",
     "migrate:latest": "npx knex migrate:latest --knexfile knexfile.js",
-    "migrate:fresh": "npx knex migrate:fresh --knexfile knexfile.js"
+    "migrate:fresh": "npx knex migrate:fresh --knexfile knexfile.js",
+    "seed:run": "npx knex seed:run --knexfile knexfile.js"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^17.0.0",

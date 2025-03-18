@@ -24,7 +24,7 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  return knex.schema.dropTable('case_studies');
+  return knex.schema.dropTable('case_studies_en');
 };
 
 exports.up = function(knex) {
