@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
   return knex.schema.createTable('ziroagency_tags', function(table) {
-    table.text('id').primary();
+    table.text('id').primary().defaultTo(knex.raw(`id_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`));
     table.text('name').notNullable().unique();
     table.text('image_url');
     // SQLite doesn't support time zones, so we use knex.fn.now()

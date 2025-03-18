@@ -1,7 +1,7 @@
 
 exports.up = function (knex) {
   return knex.schema.createTable('case_studies_pl', (table) => {
-    table.string('id').primary() // Unique ID for the case study
+    table.text('id').primary().defaultTo(knex.raw(`id_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`));
     table.string('slug').notNullable().unique() // Unique slug for the case study
     table.string('title').notNullable() // Title of the case study
     table.text('description').notNullable() // Description of the case study
