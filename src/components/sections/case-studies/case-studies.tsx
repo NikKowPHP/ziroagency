@@ -1,9 +1,9 @@
 import { Suspense } from 'react';
 import { type Locale } from '@/i18n'
 import { CaseStudiesLoader } from '@/components/sections/case-studies/case-studies-loader'
-import { caseStudyService } from '@/lib/services/caseStudy.service';
 
 import dynamic from "next/dynamic";
+import { getCaseStudiesAction } from '@/components/server-actions/case_study-actions';
 
 interface CaseStudiesProps {
   locale: Locale
@@ -20,7 +20,7 @@ interface CaseStudiesProps {
 }
 
 export async function CaseStudies({ locale }: CaseStudiesProps) {
-  const caseStudies = await caseStudyService.getCaseStudies(locale)
+  const caseStudies = await getCaseStudiesAction(locale)
  
 
   return (
