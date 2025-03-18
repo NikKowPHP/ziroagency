@@ -26,8 +26,8 @@ export function TagList({ tags: initialTags }: { tags: Tag[] }) {
         const allTags = await getTagsAction()
         setTagList(allTags)
         setLoading(false)
-      } catch (err: any) {
-        setError(err.message || 'Failed to load tags')
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : 'Failed to load tags')
         setLoading(false)
       }
     }

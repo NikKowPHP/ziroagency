@@ -37,26 +37,21 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
     return new Promise((resolve, reject) => {
       const query = `SELECT * FROM "${tableName}" ORDER BY order_index ASC;`;
       logger.log(`Querying case studies from table "${tableName}":`, query);
-      this.db.all(query, [], async (err, rows: any[]) => {
+      this.db.all(query, [], async (err, rows: CaseStudy[]) => {
         if (err) {
           logger.log(`Error listing case studies from table "${tableName}":`, err);
           return reject(new Error(`Database error listing entities from table "${tableName}": ${err.message || 'Unknown error'}`));
         }
         try {
-          // Fetch all tags from the local tags repository once
           const allTags = await tagsLocalRepository.getTags();
           const studies: CaseStudyWithTags[] = rows.map(row => {
-            // Parse images from JSON string to Image[]
             const images: Image[] = typeof row.images === 'string' ? JSON.parse(row.images) : row.images;
-
-            // Assume the 'tags' column is stored as a JSON string array of tag IDs
             let tagIds: string[] = [];
             try {
               tagIds = typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags || [];
             } catch (e) {
               logger.log(`Error parsing tags for case study with id "${row.id}":`, e);
             }
-            // Replace tag IDs with full tag objects from allTags
             const tagObjects = allTags.filter((tag: Tag) => tagIds.includes(tag.id));
             return { ...row, tags: tagObjects, images };
           });
@@ -75,7 +70,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
     const tableName = this.getTableName(locale);
     return new Promise((resolve, reject) => {
       const query = `SELECT * FROM "${tableName}" WHERE slug = ? LIMIT 1;`;
-      this.db.get(query, [slug], async (err, row: any) => {
+      this.db.get(query, [slug], async (err, row: CaseStudy) => {
         if (err) {
           logger.log(`Error retrieving case study with slug "${slug}" from table "${tableName}":`, err);
           return reject(new Error(`Database error: ${err.message || 'Unknown error'}`));
@@ -108,7 +103,6 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
   async createCaseStudy(data: Partial<CaseStudyWithTags>, locale: string): Promise<CaseStudyWithTags> {
     const tableName = this.getTableName(locale);
     return new Promise((resolve, reject) => {
-      // Stringify tags and images before insertion
       const dbData = {
         ...data,
         tags: JSON.stringify(data.tags?.map((tag: Tag) => tag.id) || []),
@@ -125,14 +119,14 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
           logger.log(`Error creating case study in table "${tableName}":`, err);
           return reject(new Error(`Error creating case study: ${err.message}`));
         }
-        const insertedId = (data as any).id;
+        const insertedId = (data as unknown as CaseStudy).id;
         if (!insertedId) {
           return reject(new Error("Case study creation failed: no ID provided."));
         }
         try {
           const allTags = await tagsLocalRepository.getTags();
           const selectQuery = `SELECT * FROM "${tableName}" WHERE id = ?;`;
-          db.get(selectQuery, [insertedId], (err2, row: any) => {
+          db.get(selectQuery, [insertedId], (err2, row: CaseStudy) => {
             if (err2) {
               logger.log(`Error retrieving new case study from table "${tableName}":`, err2);
               return reject(new Error(`Error retrieving inserted case study: ${err2.message}`));
@@ -155,7 +149,6 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
   async updateCaseStudy(id: string, data: Partial<CaseStudyWithTags>, locale: string): Promise<CaseStudyWithTags | null> {
     const tableName = this.getTableName(locale);
     return new Promise(async (resolve, reject) => {
-      // Stringify tags and images before update
       const dbData = {
         ...data,
         tags: JSON.stringify(data.tags?.map((tag: Tag) => tag.id) || []),
@@ -175,7 +168,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
         try {
           const allTags = await tagsLocalRepository.getTags();
           const selectQuery = `SELECT * FROM "${tableName}" WHERE id = ? LIMIT 1;`;
-          this.db.get(selectQuery, [id], (err2, row: any) => {
+          this.db.get(selectQuery, [id], (err2, row: CaseStudy) => {
             if (err2) {
               logger.log(`Error retrieving updated case study with id "${id}" in table "${tableName}":`, err2);
               return reject(new Error(`Error retrieving updated case study: ${err2.message}`));

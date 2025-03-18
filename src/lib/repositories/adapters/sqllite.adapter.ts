@@ -132,7 +132,7 @@ export class SqlLiteAdapter<T extends BaseEntity<ID>, ID> {
    * @returns {Promise<T[]>} - An array of all entities in the table.
    * @throws {Error} - If there's a database error during listing.
    */
-  async list(...args: any[]): Promise<T[]> {
+  async list(...args: unknown[]): Promise<T[]> {
     return new Promise((resolve, reject) => {
       const query = `
         SELECT * FROM "${this.tableName}";
