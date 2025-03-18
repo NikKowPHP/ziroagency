@@ -4,15 +4,16 @@ class Logger {
     process.env.NODE_ENV === 'production';
 
    log(...args: unknown[]): void {
-    if (!Logger.isProduction) {
+    // if (!Logger.isProduction) {
+    console.log('Logger.isProduction', Logger.isProduction)
       console.log(...args);
-    }
+    // }
   }
 
   error(...args: unknown[]): void {
-    if (!Logger.isProduction) {
+    // if (!Logger.isProduction) {
       console.error(...args);
-    }
+    // }
   }
 
 }
