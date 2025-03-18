@@ -18,6 +18,7 @@ export const mockCaseStudyDTOs: CaseStudyDTO[] = [
     cta_url: '/case-study-1',
     created_at: '2024-01-01T10:00:00.000Z',
     updated_at: '2024-01-02T10:00:00.000Z',
+    order_index: 1,
   },
   {
     id: '2',
@@ -31,6 +32,7 @@ export const mockCaseStudyDTOs: CaseStudyDTO[] = [
     cta_url: '/case-study-2',
     created_at: '2024-01-05T10:00:00.000Z',
     updated_at: '2024-01-06T10:00:00.000Z',
+    order_index: 2,
   },
 ];
 
