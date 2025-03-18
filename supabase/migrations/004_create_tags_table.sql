@@ -8,9 +8,9 @@ CREATE TABLE ziroagency_tags (
 );
 
 
-INSERT INTO tags (id, name, image_url) VALUES ('branding', 'Branding', '/images/tags/branding.png');
-INSERT INTO tags (id, name, image_url) VALUES ('saas', 'Saas', '/images/tags/saas.png');
-INSERT INTO tags (id, name, image_url) VALUES ('health-tech', 'Health Tech', '/images/tags/health-tech.png');
-INSERT INTO tags (id, name, image_url) VALUES ('mobile-app', 'Mobile App', '/images/tags/mobile-app.png');
-INSERT INTO tags (id, name, image_url) VALUES ('visual-identity', 'Visual Identity', '/images/tags/visual-identity.png');
-INSERT INTO tags (id, name, image_url) VALUES ('sustainability', 'Sustainability', '/images/tags/sustainability.png');
+INSERT INTO ziroagency_tags (id, name, image_url) VALUES ('branding', 'Branding', '/images/tags/branding.png');
+INSERT INTO ziroagency_tags (id, name, image_url) VALUES ('saas', 'Saas', '/images/tags/saas.png');
+INSERT INTO ziroagency_tags (id, name, image_url) VALUES ('health-tech', 'Health Tech', '/images/tags/health-tech.png');
+INSERT INTO ziroagency_tags (id, name, image_url) VALUES ('mobile-app', 'Mobile App', '/images/tags/mobile-app.png');
+INSERT INTO ziroagency_tags (id, name, image_url) VALUES ('visual-identity', 'Visual Identity', '/images/tags/visual-identity.png');
+INSERT INTO ziroagency_tags (id, name, image_url) VALUES ('sustainability', 'Sustainability', '/images/tags/sustainability.png');
