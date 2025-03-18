@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Analytics } from "@vercel/analytics/react"
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ziro.agency'),
@@ -87,6 +88,50 @@ const jsonLd = {
   }
 }
 
+
+const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+const renderGoogleTagManager = () => {
+  if (!gtmId) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('GTM ID is missing - tracking disabled');
+    }
+    return null;
+  }
+  
+  return (
+    <>
+      <Script
+        id="gtm-script"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${gtmId}');
+          `,
+        }}
+      />
+    </>
+  );
+};
+
+
+const renderNoscriptGA = () => {
+  if (!gtmId) return null;
+  return (
+     <noscript>
+     <iframe 
+       src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+       height="0" 
+       width="0" 
+       style={{display: 'none', visibility: 'hidden'}}
+     ></iframe>
+   </noscript>
+  );
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -95,6 +140,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {renderGoogleTagManager()}
+     
         <link rel="canonical" href="https://ziro.agency" />
         <script
           type="application/ld+json"
@@ -102,7 +149,8 @@ export default function RootLayout({
         />
       </head>
       <body>
-          {children}
+        {renderNoscriptGA()}
+        {children}
         <Analytics mode="production" debug={false} />
       </body>
     </html>
