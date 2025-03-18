@@ -18,7 +18,6 @@ export class TagsRepository implements ITagRepository {
       const { data, error } = await this.supabaseClient
         .from(this.tableName)
         .select('*')
-        .order('order_index', { ascending: true })
       if (error) {
         logger.error('Error fetching case studies:', error)
         return []
