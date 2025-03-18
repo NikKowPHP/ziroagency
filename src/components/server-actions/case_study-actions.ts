@@ -1,13 +1,13 @@
 'use server'
 import { caseStudyService } from '@/lib/services/caseStudy.service'
-import { CaseStudy } from '@/domain/models/models'
+import { CaseStudy, CaseStudyWithTags } from '@/domain/models/models'
 import { Locale } from '@/i18n'
 
-export async function getCaseStudiesAction(locale: Locale): Promise<CaseStudy[]> {
+export async function getCaseStudiesAction(locale: Locale): Promise<CaseStudyWithTags[]> {
   return await caseStudyService.getCaseStudies(locale)
 }
 
-export async function getCaseStudyBySlugAction(slug: string, locale: Locale): Promise<CaseStudy | null> {
+export async function getCaseStudyBySlugAction(slug: string, locale: Locale): Promise<CaseStudyWithTags | null> {
   if (!slug) {
     throw new Error('Case study slug is required')
   }

@@ -2,15 +2,21 @@ import { SqlLiteAdapter } from '@/lib/repositories/adapters/sqllite.adapter';
 import { Database } from 'sqlite3';
 import { getDatabaseFilePath } from '@/lib/config/database.config';
 import logger from '@/lib/utils/logger';
-import { CaseStudy } from '@/domain/models/models';
+import { CaseStudy, Tag } from '@/domain/models/models';
 import { ICaseStudyRepository } from '@/lib/services/caseStudy.service';
+import { tagsLocalRepository } from '@/lib/repositories/tags.local.repository';
+
+// Extended type to return case studies with full tag details
+export interface CaseStudyWithTags extends Omit<CaseStudy, 'tags'> {
+  tags: Tag[];
+}
 
 const dbPath = getDatabaseFilePath();
 const db = new Database(dbPath);
 
 export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> implements ICaseStudyRepository {
   constructor() {
-    // Default table name; for locale-specific queries we’ll override this via getTableName()
+    // Default table name; for locale-specific queries we'll override this via getTableName()
     super("case_studies", db);
   }
 
@@ -24,35 +30,69 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
   }
 
   /**
-   * Retrieves all case studies for a given locale.
+   * Retrieves all case studies for a given locale and enriches each with full tag details.
    */
-  async getCaseStudies(locale: string): Promise<CaseStudy[]> {
+  async getCaseStudies(locale: string): Promise<CaseStudyWithTags[]> {
     const tableName = this.getTableName(locale);
     return new Promise((resolve, reject) => {
       const query = `SELECT * FROM "${tableName}" ORDER BY order_index ASC;`;
-      this.db.all(query, [], (err, rows: CaseStudy[]) => {
+      this.db.all(query, [], async (err, rows: any[]) => {
         if (err) {
           logger.log(`Error listing case studies from table "${tableName}":`, err);
           return reject(new Error(`Database error listing entities from table "${tableName}": ${err.message || 'Unknown error'}`));
         }
-        resolve(rows || []);
+        try {
+          // Fetch all tags from the local tags repository once
+          const allTags = await tagsLocalRepository.getTags();
+          const studies: CaseStudyWithTags[] = rows.map(row => {
+            // Assume the 'tags' column is stored as a JSON string array of tag IDs
+            let tagIds: string[] = [];
+            try {
+              tagIds = typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags || [];
+            } catch (e) {
+              logger.log(`Error parsing tags for case study with id "${row.id}":`, e);
+            }
+            // Replace tag IDs with full tag objects from allTags
+            const tagObjects = allTags.filter((tag: Tag) => tagIds.includes(tag.id));
+            return { ...row, tags: tagObjects };
+          });
+          resolve(studies);
+        } catch (e) {
+          reject(e);
+        }
       });
     });
   }
 
   /**
-   * Retrieves a case study by its slug for a given locale.
+   * Retrieves a case study by its slug for a given locale and enriches it with full tag details.
    */
-  async getCaseStudyBySlug(slug: string, locale: string): Promise<CaseStudy | null> {
+  async getCaseStudyBySlug(slug: string, locale: string): Promise<CaseStudyWithTags | null> {
     const tableName = this.getTableName(locale);
     return new Promise((resolve, reject) => {
       const query = `SELECT * FROM "${tableName}" WHERE slug = ? LIMIT 1;`;
-      this.db.get(query, [slug], (err, row: CaseStudy) => {
+      this.db.get(query, [slug], async (err, row: any) => {
         if (err) {
           logger.log(`Error retrieving case study with slug "${slug}" from table "${tableName}":`, err);
           return reject(new Error(`Database error: ${err.message || 'Unknown error'}`));
         }
-        resolve(row || null);
+        if (!row) {
+          return resolve(null);
+        }
+        try {
+          const allTags = await tagsLocalRepository.getTags();
+          let tagIds: string[] = [];
+          try {
+            tagIds = typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags || [];
+          } catch (e) {
+            logger.log(`Error parsing tags for case study with id "${row.id}":`, e);
+          }
+          const tagObjects = allTags.filter((tag: Tag) => tagIds.includes(tag.id));
+          const studyWithTags: CaseStudyWithTags = { ...row, tags: tagObjects };
+          resolve(studyWithTags);
+        } catch (e) {
+          reject(e);
+        }
       });
     });
   }

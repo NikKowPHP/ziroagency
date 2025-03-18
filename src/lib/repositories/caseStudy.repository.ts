@@ -1,7 +1,7 @@
 import { unstable_cache } from 'next/cache'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { Locale } from '@/i18n'
-import { CaseStudy } from '@/domain/models/models'
+import { CaseStudy, CaseStudyWithTags, Tag } from '@/domain/models/models'
 import { CaseStudyDTO } from '@/infrastructure/dto/case-study.dto'
 import { CaseStudyMapper } from '@/infrastructure/mappers/case-study.mapper'
 import { CACHE_TAGS, CACHE_TIMES } from '@/lib/utils/cache'
@@ -16,16 +16,20 @@ export class CaseStudyRepository {
 
   // READ: Retrieve case studies ordered by order_index
   getCaseStudies = unstable_cache(
-    async (locale: Locale): Promise<CaseStudy[]> => {
+    async (locale: Locale): Promise<CaseStudyWithTags[]> => {
       const { data, error } = await this.supabaseClient
         .from(`case_studies_${locale}`)
         .select('*')
         .order('order_index', { ascending: true })
+
       if (error) {
         console.error('Error fetching case studies:', error)
         return []
       }
-      return (data as CaseStudyDTO[]).map(CaseStudyMapper.toDomain)
+
+      // Fetch tags for each case study
+      const caseStudies = (data as CaseStudyDTO[]).map(CaseStudyMapper.toDomain)
+      return await this.enrichWithTags(caseStudies )
     },
     [CACHE_TAGS.CASE_STUDIES],
     {
@@ -35,7 +39,7 @@ export class CaseStudyRepository {
   )
 
   // READ: Retrieve a case study by its slug
-  getCaseStudyBySlug = async (slug: string, locale: Locale): Promise<CaseStudy | null> => {
+  getCaseStudyBySlug = async (slug: string, locale: Locale): Promise<CaseStudyWithTags | null> => {
     return unstable_cache(
       async () => {
         const { data, error } = await this.supabaseClient
@@ -48,7 +52,9 @@ export class CaseStudyRepository {
           console.error('Error fetching case study:', error)
           return null
         }
-        return data ? CaseStudyMapper.toDomain(data as CaseStudyDTO) : null
+
+        const caseStudy = data ? CaseStudyMapper.toDomain(data as CaseStudyDTO) : null
+        return caseStudy ? await this.enrichWithTags([caseStudy] ).then(studies => studies[0] || null) : null
       },
       [`case-study-${slug}-${locale}`],
       {
@@ -124,6 +130,28 @@ export class CaseStudyRepository {
         throw new Error(`Error updating case study order: ${result.error.message}`)
       }
     }
+  }
+
+  private async enrichWithTags(caseStudies: CaseStudy[] ): Promise<CaseStudyWithTags[]> {
+    // Fetch all tags
+    const { data: tags, error: tagsError } = await this.supabaseClient
+      .from('ziroagency_tags')
+      .select('*');
+
+    if (tagsError) {
+      console.error('Error fetching tags:', tagsError);
+      return caseStudies.map(cs => ({ ...cs, tags: [] })); // Return case studies without tags in case of error
+    }
+
+    const allTags: Tag[] = tags || [];
+
+    // Enrich each case study with its tags
+    return caseStudies.map(caseStudy => {
+      // Assuming caseStudy.tags contains an array of tag IDs
+      const tagIds = caseStudy.tags as string[];
+      const caseStudyTags = allTags.filter(tag => tagIds.includes(tag.id));
+      return { ...caseStudy, tags: caseStudyTags };
+    });
   }
 }
 

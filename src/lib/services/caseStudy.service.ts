@@ -1,15 +1,15 @@
 import { Locale } from "@/i18n"
 import { CaseStudyRepository } from "../repositories/caseStudy.repository"
 import { CaseStudy } from "@/domain/models/models"
-import { caseStudyRepositoryLocal } from "../repositories/case-study.local.repository"
+import { caseStudyRepositoryLocal, CaseStudyWithTags } from "../repositories/case-study.local.repository"
 
 const caseStudyRepository = new CaseStudyRepository()
 
 
 
 export interface ICaseStudyRepository {
-  getCaseStudies: (locale: Locale) => Promise<CaseStudy[]>
-  getCaseStudyBySlug: (slug: string, locale: Locale) => Promise<CaseStudy | null>
+  getCaseStudies: (locale: Locale) => Promise<CaseStudyWithTags[]>
+  getCaseStudyBySlug: (slug: string, locale: Locale) => Promise<CaseStudyWithTags | null>
   createCaseStudy: (data: Partial<CaseStudy>, locale: Locale) => Promise<CaseStudy>
   updateCaseStudy: (id: string, data: Partial<CaseStudy>, locale: Locale) => Promise<CaseStudy | null>
   deleteCaseStudy: (id: string, locale: Locale) => Promise<boolean>
@@ -27,11 +27,11 @@ export class CaseStudyService {
     }
   }
 
-  getCaseStudies = async (locale: Locale): Promise<CaseStudy[]> => {
+  getCaseStudies = async (locale: Locale): Promise<CaseStudyWithTags[]> => {
     return this.caseStudyRepository.getCaseStudies(locale)
   }
 
-  getCaseStudyBySlug = async (slug: string, locale: Locale): Promise<CaseStudy | null> => {
+  getCaseStudyBySlug = async (slug: string, locale: Locale): Promise<CaseStudyWithTags | null> => {
     return this.caseStudyRepository.getCaseStudyBySlug(slug, locale)
   }
 

@@ -1,4 +1,3 @@
-
 export interface Tag {
   id: string;
   name: string;
@@ -26,4 +25,8 @@ export interface CaseStudy {
   readonly orderIndex: number;
   readonly createdAt: Date;
   readonly updatedAt: Date;
+}
+
+export interface CaseStudyWithTags extends Omit<CaseStudy, 'tags'> {
+  tags: Tag[];
 } 
