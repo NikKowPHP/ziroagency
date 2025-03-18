@@ -213,7 +213,7 @@ export function CaseStudiesInteractive({
       <FilterComponent />
       <div
         id="work-tags-filter"
-        className="md:container mb-8 sm:mb-16 flex gap-4 hidden flex-wrap border border-gray-700"
+        className="md:container mb-8 sm:mb-16 flex gap-4  flex-wrap border border-gray-700"
       >
         <button onClick={() => setSelectedTag(null)}>
           <Tag

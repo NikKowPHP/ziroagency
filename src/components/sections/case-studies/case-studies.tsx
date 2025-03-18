@@ -21,6 +21,7 @@ interface CaseStudiesProps {
 
 export async function CaseStudies({ locale }: CaseStudiesProps) {
   const caseStudies = await getCaseStudiesAction(locale)
+  console.log('caseStudies', caseStudies)
  
 
   return (

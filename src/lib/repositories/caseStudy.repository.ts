@@ -1,7 +1,7 @@
 import { unstable_cache } from 'next/cache'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { Locale } from '@/i18n'
-import { CaseStudy, CaseStudyWithTags, Tag } from '@/domain/models/models'
+import { CaseStudy, CaseStudyWithTags, Image, Tag } from '@/domain/models/models'
 import { CaseStudyDTO } from '@/infrastructure/dto/case-study.dto'
 import { CaseStudyMapper } from '@/infrastructure/mappers/case-study.mapper'
 import { CACHE_TAGS, CACHE_TIMES } from '@/lib/utils/cache'
@@ -132,7 +132,7 @@ export class CaseStudyRepository {
     }
   }
 
-  private async enrichWithTags(caseStudies: CaseStudy[] ): Promise<CaseStudyWithTags[]> {
+  private async enrichWithTags(caseStudies: CaseStudy[]): Promise<CaseStudyWithTags[]> {
     // Fetch all tags
     const { data: tags, error: tagsError } = await this.supabaseClient
       .from('ziroagency_tags')
@@ -145,12 +145,15 @@ export class CaseStudyRepository {
 
     const allTags: Tag[] = tags || [];
 
-    // Enrich each case study with its tags
+    // Enrich each case study with its tags and parse images
     return caseStudies.map(caseStudy => {
+      // Parse images from JSON string to Image[]
+      const images: Image[] = typeof caseStudy.images === 'string' ? JSON.parse(caseStudy.images) : caseStudy.images;
+
       // Assuming caseStudy.tags contains an array of tag IDs
       const tagIds = caseStudy.tags as string[];
       const caseStudyTags = allTags.filter(tag => tagIds.includes(tag.id));
-      return { ...caseStudy, tags: caseStudyTags };
+      return { ...caseStudy, tags: caseStudyTags, images };
     });
   }
 }

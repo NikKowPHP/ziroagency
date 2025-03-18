@@ -6,12 +6,11 @@ import { Tag } from '@/components/ui/tag/tag'
 import { cn } from '@/lib/utils/cn'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { type Image as ImageType } from '@/domain/models/case-study.model'
-import { type CaseStudy } from '@/domain/models/case-study.model'
+import { CaseStudyWithTags, type Image as ImageType } from '@/domain/models/models'
 import { Locale } from '@/i18n'
 
 interface CaseStudyCardProps {
-  caseStudy: CaseStudy
+  caseStudy: CaseStudyWithTags
   locale: Locale
 }
 
@@ -68,6 +67,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
   caseStudy,
   locale
 }: CaseStudyCardProps) {
+  debugger
   const t = useTranslations()
   const [isIOS, setIsIOS] = useState(false)
 
@@ -83,7 +83,8 @@ export const CaseStudyCard = memo(function CaseStudyCard({
   // Use a default translation key if the custom one fails
   const ctaText = () => {
     try {
-      return t(caseStudy.ctaTextName)
+       return t('caseStudy.ctaText.viewCaseStudy')
+      // return t(caseStudy.ctaTextName)
     } catch (error) {
       console.error(error)
       return t('caseStudy.ctaText.viewCaseStudy')
@@ -120,7 +121,7 @@ export const CaseStudyCard = memo(function CaseStudyCard({
           <div className='lg:flex-1'>
 
             {/* Tags */}
-            <CaseStudyTags tags={caseStudy.tags as string[]} />
+            <CaseStudyTags tags={caseStudy.tags.map(tag => tag.name)} />
             
             <meta itemProp="keywords" content={caseStudy.tags.join(', ')} />
           </div>

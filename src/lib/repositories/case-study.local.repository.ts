@@ -2,7 +2,7 @@ import { SqlLiteAdapter } from '@/lib/repositories/adapters/sqllite.adapter';
 import { Database } from 'sqlite3';
 import { getDatabaseFilePath } from '@/lib/config/database.config';
 import logger from '@/lib/utils/logger';
-import { CaseStudy, Tag } from '@/domain/models/models';
+import { CaseStudy, Image, Tag } from '@/domain/models/models';
 import { ICaseStudyRepository } from '@/lib/services/caseStudy.service';
 import { tagsLocalRepository } from '@/lib/repositories/tags.local.repository';
 
@@ -45,6 +45,9 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
           // Fetch all tags from the local tags repository once
           const allTags = await tagsLocalRepository.getTags();
           const studies: CaseStudyWithTags[] = rows.map(row => {
+            // Parse images from JSON string to Image[]
+            const images: Image[] = typeof row.images === 'string' ? JSON.parse(row.images) : row.images;
+
             // Assume the 'tags' column is stored as a JSON string array of tag IDs
             let tagIds: string[] = [];
             try {
@@ -54,7 +57,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
             }
             // Replace tag IDs with full tag objects from allTags
             const tagObjects = allTags.filter((tag: Tag) => tagIds.includes(tag.id));
-            return { ...row, tags: tagObjects };
+            return { ...row, tags: tagObjects, images };
           });
           resolve(studies);
         } catch (e) {
