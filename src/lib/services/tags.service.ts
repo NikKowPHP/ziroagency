@@ -1,6 +1,6 @@
 import { Tag } from "@/domain/models/models";
 import { tagsRepository } from "../repositories/tags.repository";
-import { tagsLocalRepository } from "../repositories/tags.local.repository";
+import { getTagsLocalRepository  } from "../repositories/tags.local.repository";
 export interface ITagRepository {
   getTags: () => Promise<Tag[]>;
   getTagById: (id: string) => Promise<Tag | null>;
@@ -17,7 +17,7 @@ export class TagsService {
   constructor() {
     // Replace this logic if you have a proper mock repository.
     if (process.env.MOCK_REPOSITORIES === "true") {
-      this.repository = tagsLocalRepository;
+      this.repository = getTagsLocalRepository();
     } else {
       this.repository = tagsRepository;
     }

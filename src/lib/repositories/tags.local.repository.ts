@@ -4,11 +4,9 @@ import { getDatabaseFilePath } from '@/lib/config/database.config';
 import logger from '@/lib/utils/logger'
 import { Tag } from '@/domain/models/models';
 import { ITagRepository } from '@/lib/services/tags.service';
-const dbPath = getDatabaseFilePath();
-const db = new Database(dbPath);
 
 export class TagsLocalRepository extends SqlLiteAdapter<Tag, string> implements ITagRepository {
-  constructor() {
+  constructor(db: Database) {
     super("ziroagency_tags", db);
   }
 
@@ -79,6 +77,14 @@ export class TagsLocalRepository extends SqlLiteAdapter<Tag, string> implements 
   }
 }
 
-// Export a singleton instance if desired
+// Only initialize SQLite if we're using mock repositories
+let tagsLocalRepository: TagsLocalRepository;
 
-export const tagsLocalRepository = new TagsLocalRepository();
+export function getTagsLocalRepository(): TagsLocalRepository {
+  if (!tagsLocalRepository) {
+    const dbPath = getDatabaseFilePath();
+    const db = new Database(dbPath);
+    tagsLocalRepository = new TagsLocalRepository(db);
+  }
+  return tagsLocalRepository;
+}

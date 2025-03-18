@@ -4,7 +4,7 @@ import { getDatabaseFilePath } from '@/lib/config/database.config';
 import logger from '@/lib/utils/logger';
 import { CaseStudy, Image, Tag } from '@/domain/models/models';
 import { ICaseStudyRepository } from '@/lib/services/caseStudy.service';
-import { tagsLocalRepository } from '@/lib/repositories/tags.local.repository';
+import { getTagsLocalRepository, TagsLocalRepository } from '@/lib/repositories/tags.local.repository';
 
 // Extended type to return case studies with full tag details
 export interface CaseStudyWithTags extends Omit<CaseStudy, 'tags'> {
@@ -15,9 +15,11 @@ const dbPath = getDatabaseFilePath();
 const db = new Database(dbPath);
 
 export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> implements ICaseStudyRepository {
+  private tagsLocalRepository: TagsLocalRepository;
   constructor() {
     // Default table name; for locale-specific queries we'll override this via getTableName()
     super("case_studies", db);
+    this.tagsLocalRepository = getTagsLocalRepository();
   }
 
   /**
@@ -43,7 +45,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
           return reject(new Error(`Database error listing entities from table "${tableName}": ${err.message || 'Unknown error'}`));
         }
         try {
-          const allTags = await tagsLocalRepository.getTags();
+          const allTags = await this.tagsLocalRepository.getTags();
           const studies: CaseStudyWithTags[] = rows.map(row => {
             const images: Image[] = typeof row.images === 'string' ? JSON.parse(row.images) : row.images;
             let tagIds: string[] = [];
@@ -79,7 +81,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
           return resolve(null);
         }
         try {
-          const allTags = await tagsLocalRepository.getTags();
+          const allTags = await this.tagsLocalRepository.getTags();
           let tagIds: string[] = [];
           try {
             tagIds = typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags || [];
@@ -124,7 +126,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
           return reject(new Error("Case study creation failed: no ID provided."));
         }
         try {
-          const allTags = await tagsLocalRepository.getTags();
+          const allTags = await getTagsLocalRepository().getTags();
           const selectQuery = `SELECT * FROM "${tableName}" WHERE id = ?;`;
           db.get(selectQuery, [insertedId], (err2, row: CaseStudy) => {
             if (err2) {
@@ -166,7 +168,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
           return reject(new Error(`Error updating case study: ${err.message}`));
         }
         try {
-          const allTags = await tagsLocalRepository.getTags();
+          const allTags = await this.tagsLocalRepository.getTags();
           const selectQuery = `SELECT * FROM "${tableName}" WHERE id = ? LIMIT 1;`;
           this.db.get(selectQuery, [id], (err2, row: CaseStudy) => {
             if (err2) {
