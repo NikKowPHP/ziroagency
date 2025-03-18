@@ -1,6 +1,6 @@
 import { Locale } from "@/i18n"
 import { CaseStudyRepository } from "../repositories/caseStudy.repository"
-import { CaseStudy } from "@/domain/models/case-study.model"
+import { CaseStudy } from "@/domain/models/models"
 import { caseStudyRepositoryLocal } from "../repositories/case-study.local.repository"
 
 const caseStudyRepository = new CaseStudyRepository()

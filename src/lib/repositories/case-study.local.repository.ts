@@ -2,7 +2,7 @@ import { SqlLiteAdapter } from '@/lib/repositories/adapters/sqllite.adapter';
 import { Database } from 'sqlite3';
 import { getDatabaseFilePath } from '@/lib/config/database.config';
 import logger from '@/lib/utils/logger';
-import { CaseStudy } from '@/domain/models/case-study.model';
+import { CaseStudy } from '@/domain/models/models';
 import { ICaseStudyRepository } from '@/lib/services/caseStudy.service';
 
 const dbPath = getDatabaseFilePath();
