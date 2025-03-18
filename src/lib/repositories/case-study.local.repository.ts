@@ -11,12 +11,10 @@ export interface CaseStudyWithTags extends Omit<CaseStudy, 'tags'> {
   tags: Tag[];
 }
 
-const dbPath = getDatabaseFilePath();
-const db = new Database(dbPath);
 
 export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> implements ICaseStudyRepository {
   private tagsLocalRepository: TagsLocalRepository;
-  constructor() {
+  constructor(db: Database) {
     // Default table name; for locale-specific queries we'll override this via getTableName()
     super("case_studies", db);
     this.tagsLocalRepository = getTagsLocalRepository();
@@ -116,7 +114,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
       const values = Object.values(dbData);
       const query = `INSERT INTO "${tableName}" (${columns}) VALUES (${placeholders});`;
       
-      this.db.run(query, values, async function (err) {
+      this.db.run(query, values, async (err) => {
         if (err) {
           logger.log(`Error creating case study in table "${tableName}":`, err);
           return reject(new Error(`Error creating case study: ${err.message}`));
@@ -128,7 +126,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
         try {
           const allTags = await getTagsLocalRepository().getTags();
           const selectQuery = `SELECT * FROM "${tableName}" WHERE id = ?;`;
-          db.get(selectQuery, [insertedId], (err2, row: CaseStudy) => {
+          this.db.get(selectQuery, [insertedId], (err2, row: CaseStudy) => {
             if (err2) {
               logger.log(`Error retrieving new case study from table "${tableName}":`, err2);
               return reject(new Error(`Error retrieving inserted case study: ${err2.message}`));
@@ -233,5 +231,12 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
   }
 }
 
-// Export a singleton instance if desired
-export const caseStudyRepositoryLocal = new CaseStudyRepositoryLocal();
+let caseStudyLocalRepository: CaseStudyRepositoryLocal;
+export function getCaseStudyLocalRepository(): CaseStudyRepositoryLocal {
+  if (!caseStudyLocalRepository) {
+    const dbPath = getDatabaseFilePath();
+    const db = new Database(dbPath);
+    caseStudyLocalRepository = new CaseStudyRepositoryLocal(db);
+  }
+  return caseStudyLocalRepository;
+}

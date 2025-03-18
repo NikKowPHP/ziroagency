@@ -1,10 +1,10 @@
 import { Locale } from "@/i18n"
 import { CaseStudyRepository } from "../repositories/caseStudy.repository"
 import { CaseStudyWithTags } from "@/domain/models/models"
-import { caseStudyRepositoryLocal } from "../repositories/case-study.local.repository"
+import { getCaseStudyLocalRepository } from "../repositories/case-study.local.repository"
+import logger from "../utils/logger"
 
 const caseStudyRepository = new CaseStudyRepository()
-
 
 
 export interface ICaseStudyRepository {
@@ -21,7 +21,8 @@ export class CaseStudyService {
 
   constructor() {
     if (process.env.MOCK_REPOSITORIES === 'true') {
-      this.caseStudyRepository = caseStudyRepositoryLocal
+      logger.log('Using local case study repository')
+      this.caseStudyRepository = getCaseStudyLocalRepository()
     } else {
       this.caseStudyRepository = caseStudyRepository
     }
