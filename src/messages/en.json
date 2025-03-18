@@ -31,7 +31,8 @@
   },
   "caseStudies": {
     "filter": "Filter",
-    "recommended": "Recommended"
+    "recommended": "Recommended",
+    "searchPlaceholder": "Search by tag"
   },
   "pricing": {
     "title": "Pricing",

@@ -29,6 +29,11 @@
     },
     "viewCaseStudy": "Zobacz realizację"
   },
+  "caseStudies": {
+    "filter": "Filtruj",
+    "recommended": "Zalecane",
+    "searchPlaceholder": "Szukaj po tagu"
+  },
   "pricing": {
     "title": "Cennik",
     "onePagePlan": {
