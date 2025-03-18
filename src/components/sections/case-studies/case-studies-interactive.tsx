@@ -4,7 +4,6 @@ import { useState, useMemo } from 'react'
 import { CaseStudyWithTags } from '@/domain/models/models'
 import { Locale } from '@/i18n'
 import { CaseStudyCard } from '@/components/ui/case-study/case-study-card'
-import { Tag } from '@/components/ui/tag/tag'
 import { useTranslations } from 'next-intl'
 import { Settings2, SearchIcon, CircleX } from 'lucide-react'
 import Image from 'next/image'
@@ -107,7 +106,8 @@ export function CaseStudiesInteractive({
                 <Settings2 className="w-[16px] h-[16px]" />
                 <span className="text-[16px] font-bold">{t('filter')}</span>
               </motion.button>
-              <div className="flex-1 relative hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
+              <SearchInput onSearch={setSearchTerm} />
+              {/* <div className="flex-1 relative hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
                 <SearchIcon className="w-[20px] h-[20px] absolute left-[30px] top-1/2 -translate-y-1/2 " />
                 <input
                   type="text"
@@ -115,7 +115,7 @@ export function CaseStudiesInteractive({
                   className="w-full pl-[40px] focus:outline-none"
                   onKeyUp={(e) => setSearchTerm((e.target as HTMLInputElement).value)}
                 />
-              </div>
+              </div> */}
               <div className=" hidden md:block">
                 <button onClick={handleRecommended} className="  rounded-full font-bold border border-grey-200 py-[13px] px-[30px] text-[16px]">
                   {t('recommended')}
@@ -237,5 +237,24 @@ export function CaseStudiesInteractive({
         ))}
       </div>
     </>
+  )
+}
+
+interface SearchInputProps {
+  onSearch: (term: string) => void
+}
+export function SearchInput({ onSearch }: SearchInputProps) {
+  const t = useTranslations('caseStudies')
+
+  return (
+    <div className="flex-1 relative hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
+      <SearchIcon className="w-[20px] h-[20px] absolute left-[30px] top-1/2 -translate-y-1/2" />
+      <input
+        type="text"
+        placeholder={t('searchPlaceholder')}
+        className="w-full pl-[40px] focus:outline-none"
+        onKeyUp={(e) => onSearch((e.target as HTMLInputElement).value)}
+      />
+    </div>
   )
 }
