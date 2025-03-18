@@ -21,6 +21,7 @@ export function CaseStudiesInteractive({
 }: CaseStudiesInteractiveProps) {
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState<string>('')
   const t = useTranslations('caseStudies')
 
   // Extract unique tags from all case studies
@@ -29,11 +30,24 @@ export function CaseStudiesInteractive({
     return Array.from(new Set(tags.map(tag => tag.id))) // Use tag IDs for filtering
   }, [caseStudies])
 
-  // Filter case studies based on the selected tag
+  // Filter case studies based on the selected tag and search term
   const filteredStudies = useMemo(() => {
-    if (!selectedTag) return caseStudies
-    return caseStudies.filter((cs) => cs.tags.some(tag => tag.id === selectedTag))
-  }, [caseStudies, selectedTag])
+    let filtered = caseStudies;
+
+    // Filter by selected tag
+    if (selectedTag) {
+      filtered = filtered.filter((cs) => cs.tags.some(tag => tag.id === selectedTag));
+    }
+
+    // Filter by search term
+    if (searchTerm) {
+      filtered = filtered.filter((cs) =>
+        cs.tags.some(tag => tag.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    }
+
+    return filtered;
+  }, [caseStudies, selectedTag, searchTerm])
 
   // Sort case studies by orderIndex
   const sortedStudies = useMemo(() => {
@@ -95,7 +109,12 @@ export function CaseStudiesInteractive({
               </motion.button>
               <div className="flex-1 relative hidden md:block border border-grey-200 rounded-full px-[30px] py-[15px] text-[16px]">
                 <SearchIcon className="w-[20px] h-[20px] absolute left-[30px] top-1/2 -translate-y-1/2 " />
-                <input type="text" placeholder="" className="w-full pl-[40px] focus:outline-none" />
+                <input
+                  type="text"
+                  placeholder={t('searchPlaceholder')}
+                  className="w-full pl-[40px] focus:outline-none"
+                  onKeyUp={(e) => setSearchTerm((e.target as HTMLInputElement).value)}
+                />
               </div>
               <div className=" hidden md:block">
                 <button onClick={handleRecommended} className="  rounded-full font-bold border border-grey-200 py-[13px] px-[30px] text-[16px]">
@@ -211,35 +230,7 @@ export function CaseStudiesInteractive({
   return (
     <>
       <FilterComponent />
-      <div
-        id="work-tags-filter"
-        className="md:container mb-8 sm:mb-16 flex gap-4  flex-wrap border border-gray-700"
-      >
-        <button onClick={() => setSelectedTag(null)}>
-          <Tag
-            variant="primary"
-            //   className="px-5 py-2 rounded-primary-lg border border-gray-200"
-            className={` px-5 py-2  ${
-              selectedTag === null ? 'bg-gray-200' : ''
-            }`}
-          >
-            All
-          </Tag>
-        </button>
-        {uniqueTags.map((tag, index) => (
-          <button key={`${tag}-${index}`} onClick={() => toggleTag(tag)}>
-            <Tag
-              variant="primary"
-              //   className="px-5 py-2 rounded-primary-lg border border-gray-200"
-              className={` px-5 py-2  ${
-                selectedTag === tag ? 'bg-gray-200' : ''
-              }`}
-            >
-              {tag}
-            </Tag>
-          </button>
-        ))}
-      </div>
+  
       <div className="relative  flex flex-col gap-16">
         {sortedStudies.map((cs) => (
           <CaseStudyCard key={cs.id} caseStudy={cs} locale={locale} />

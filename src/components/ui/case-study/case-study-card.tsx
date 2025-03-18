@@ -67,7 +67,6 @@ export const CaseStudyCard = memo(function CaseStudyCard({
   caseStudy,
   locale
 }: CaseStudyCardProps) {
-  debugger
   const t = useTranslations()
   const [isIOS, setIsIOS] = useState(false)
 
