@@ -104,9 +104,9 @@ export function CaseStudyForm({
       description: formData.get('description') as string,
       tags: tags,
       images: images.filter((img) => img.url && img.alt),
-      ctaText: formData.get('ctaText') as string,
-      ctaTextName: 'caseStudy.ctaText.viewCaseStudy',
-      ctaUrl: formData.get('ctaUrl') as string,
+      cta_text: formData.get('ctaText') as string,
+      cta_text_name: 'caseStudy.ctaText.viewCaseStudy',
+      cta_url: formData.get('ctaUrl') as string,
     })
   }
 
@@ -197,7 +197,7 @@ export function CaseStudyForm({
             <div key={index} className="flex gap-4 mb-4">
               <div className="flex-1">
                 <input
-                  type="url"
+                  type="text"
                   value={image.url}
                   onChange={(e) =>
                     handleImageChange(index, 'url', e.target.value)
@@ -314,7 +314,7 @@ export function CaseStudyForm({
             type="text"
             name="ctaText"
             id="ctaText"
-            defaultValue={study?.ctaText}
+            defaultValue={study?.cta_text}
             required
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
           />
@@ -342,10 +342,10 @@ export function CaseStudyForm({
             CTA URL
           </label>
           <input
-            type="url"
+            type="text"
             name="ctaUrl"
             id="ctaUrl"
-            defaultValue={study?.ctaUrl}
+            defaultValue={study?.cta_url}
             required
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
           />

@@ -2,8 +2,6 @@ import { unstable_cache } from 'next/cache'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { Locale } from '@/i18n'
 import { CaseStudy, CaseStudyWithTags, Image, Tag } from '@/domain/models/models'
-import { CaseStudyDTO } from '@/infrastructure/dto/case-study.dto'
-import { CaseStudyMapper } from '@/infrastructure/mappers/case-study.mapper'
 import { CACHE_TAGS, CACHE_TIMES } from '@/lib/utils/cache'
 import { supabase } from '../supabase'
 
@@ -28,8 +26,8 @@ export class CaseStudyRepository {
       }
 
       // Fetch tags for each case study
-      const caseStudies = (data as CaseStudyDTO[]).map(CaseStudyMapper.toDomain)
-      return await this.enrichWithTags(caseStudies )
+  
+      return await this.enrichWithTags(data as CaseStudy[])
     },
     [CACHE_TAGS.CASE_STUDIES],
     {
@@ -53,8 +51,7 @@ export class CaseStudyRepository {
           return null
         }
 
-        const caseStudy = data ? CaseStudyMapper.toDomain(data as CaseStudyDTO) : null
-        return caseStudy ? await this.enrichWithTags([caseStudy] ).then(studies => studies[0] || null) : null
+        return data ? await this.enrichWithTags([data as CaseStudy]).then(studies => studies[0] || null) : null
       },
       [`case-study-${slug}-${locale}`],
       {
@@ -78,8 +75,7 @@ export class CaseStudyRepository {
     if (error) {
       throw new Error(`Error creating case study: ${error.message}`)
     }
-    const caseStudy = CaseStudyMapper.toDomain(inserted as CaseStudyDTO)
-    const [caseStudyWithTags] = await this.enrichWithTags([caseStudy])
+    const [caseStudyWithTags] = await this.enrichWithTags([inserted as CaseStudy])
     return caseStudyWithTags
   }
 
@@ -108,8 +104,7 @@ export class CaseStudyRepository {
     if (!updated) {
       return null
     }
-    const caseStudy = CaseStudyMapper.toDomain(updated as CaseStudyDTO)
-    const [caseStudyWithTags] = await this.enrichWithTags([caseStudy])
+    const [caseStudyWithTags] = await this.enrichWithTags([updated as CaseStudy])
     return caseStudyWithTags
   }
 

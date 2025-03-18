@@ -46,7 +46,7 @@ export function CaseStudiesInteractive({
 
   // Sort case studies by orderIndex
   const sortedStudies = useMemo(() => {
-    return [...filteredStudies].sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0))
+    return [...filteredStudies].sort((a, b) => (a.order_index ?? 0) - (b.order_index ?? 0))
   }, [filteredStudies])
 
   // Prepare filter cards for the UI

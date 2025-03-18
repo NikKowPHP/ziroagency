@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Suspense } from 'react'
 import { Button } from '@/components/ui/button/button'
 import { caseStudyService } from '@/lib/services/caseStudy.service'
+import { Tag } from '@/domain/models/models'
 
 interface PageProps {
   params: Promise<{
@@ -129,15 +130,15 @@ async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale
               <div>
                 <h2 className="text-lg font-medium mb-4">Year</h2>
                 <p className="text-gray-700">
-                  {new Date(caseStudy.createdAt as unknown as string).getFullYear()}
+                  {new Date(caseStudy.created_at as unknown as string).getFullYear()}
                 </p>
               </div>
               <div>
                 <h2 className="text-lg font-medium mb-4">Industry</h2>
                 <div className="flex flex-wrap gap-2">
-                  {caseStudy.tags.map((tag) => (
-                    <span key={tag} className="text-gray-700">
-                      {tag}
+                  {caseStudy.tags.map((tag: Tag) => (
+                    <span key={tag.id} className="text-gray-700">
+                      {tag.name}
                     </span>
                   ))}
                 </div>
@@ -145,9 +146,9 @@ async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale
               <div>
                 <h2 className="text-lg font-medium mb-4">Project Direction</h2>
                 <div className="space-y-1">
-                  {caseStudy.tags.map((tag) => (
-                    <p key={tag} className="text-gray-700">
-                      {tag}
+                  {caseStudy.tags.map((tag: Tag) => (
+                    <p key={tag.id} className="text-gray-700">
+                      {tag.name}
                     </p>
                   ))}
                 </div>
@@ -156,13 +157,13 @@ async function CaseStudyContent({ slug, locale }: { slug: string; locale: Locale
 
             <div className=" mb-[50px]">
               <Button
-                href={caseStudy.ctaUrl}
+                href={caseStudy.cta_url}
                 variant="primary"
                 target="_blank"
                 size="lg"
                 rel="noopener noreferrer"
               >
-                {caseStudy.ctaText}
+                {caseStudy.cta_text}
                 <span className="ml-2">→</span>
               </Button>
             </div>

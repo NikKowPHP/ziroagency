@@ -19,12 +19,12 @@ export interface CaseStudy {
   readonly description: string;
   readonly tags: readonly string[];
   readonly images: readonly Image[];
-  readonly ctaText: string;
-  readonly ctaTextName: string;
-  readonly ctaUrl: string;
-  readonly orderIndex: number;
-  readonly createdAt: Date;
-  readonly updatedAt: Date;
+  readonly cta_text: string;
+  readonly cta_text_name: string;
+  readonly cta_url: string;
+  readonly order_index: number;
+  readonly created_at: Date;
+  readonly updated_at: Date;
 }
 
 export interface CaseStudyWithTags extends Omit<CaseStudy, 'tags'> {

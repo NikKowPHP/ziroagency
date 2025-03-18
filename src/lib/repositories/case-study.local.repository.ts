@@ -108,9 +108,16 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
   async createCaseStudy(data: Partial<CaseStudyWithTags>, locale: string): Promise<CaseStudyWithTags> {
     const tableName = this.getTableName(locale);
     return new Promise((resolve, reject) => {
-      const columns = Object.keys(data).join(', ');
-      const placeholders = Object.keys(data).map(() => '?').join(', ');
-      const values = Object.values(data);
+      // Stringify tags and images before insertion
+      const dbData = {
+        ...data,
+        tags: JSON.stringify(data.tags?.map((tag: Tag) => tag.id) || []),
+        images: JSON.stringify(data.images || [])
+      };
+
+      const columns = Object.keys(dbData).join(', ');
+      const placeholders = Object.keys(dbData).map(() => '?').join(', ');
+      const values = Object.values(dbData);
       const query = `INSERT INTO "${tableName}" (${columns}) VALUES (${placeholders});`;
       
       this.db.run(query, values, async function (err) {
@@ -132,7 +139,8 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
             }
             const tagIds = typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags || [];
             const tagObjects = allTags.filter((tag: Tag) => tagIds.includes(tag.id));
-            resolve({ ...row, tags: tagObjects });
+            const images = typeof row.images === 'string' ? JSON.parse(row.images) : row.images || [];
+            resolve({ ...row, tags: tagObjects, images });
           });
         } catch (e) {
           reject(e);
@@ -147,8 +155,15 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
   async updateCaseStudy(id: string, data: Partial<CaseStudyWithTags>, locale: string): Promise<CaseStudyWithTags | null> {
     const tableName = this.getTableName(locale);
     return new Promise(async (resolve, reject) => {
-      const setClause = Object.keys(data).map(key => `${key} = ?`).join(', ');
-      const values = Object.values(data);
+      // Stringify tags and images before update
+      const dbData = {
+        ...data,
+        tags: JSON.stringify(data.tags || []),
+        images: JSON.stringify(data.images || [])
+      };
+
+      const setClause = Object.keys(dbData).map(key => `${key} = ?`).join(', ');
+      const values = Object.values(dbData);
       values.push(id);
       const query = `UPDATE "${tableName}" SET ${setClause} WHERE id = ?;`;
       
@@ -170,7 +185,8 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
             }
             const tagIds = typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags || [];
             const tagObjects = allTags.filter((tag: Tag) => tagIds.includes(tag.id));
-            resolve({ ...row, tags: tagObjects });
+            const images = typeof row.images === 'string' ? JSON.parse(row.images) : row.images || [];
+            resolve({ ...row, tags: tagObjects, images });
           });
         } catch (e) {
           reject(e);
