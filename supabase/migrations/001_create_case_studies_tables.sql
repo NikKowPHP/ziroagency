@@ -9,6 +9,7 @@ CREATE TABLE case_studies_en (
   cta_text text NOT NULL,
   cta_text_name text NOT NULL,
   cta_url text NOT NULL,
+  order_index integer NOT NULL,
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
   updated_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );
@@ -24,6 +25,7 @@ CREATE TABLE case_studies_pl (
   cta_text text NOT NULL,
   cta_text_name text NOT NULL,
   cta_url text NOT NULL,
+  order_index integer NOT NULL,
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
   updated_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );
