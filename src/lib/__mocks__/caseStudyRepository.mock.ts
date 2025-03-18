@@ -1,7 +1,6 @@
 // src/lib/__mocks__/supabase.ts
 import { Locale } from '@/i18n';
 import { CaseStudyDTO } from '@/infrastructure/dto/case-study.dto';
-import { ICaseStudyRepository } from '../interfaces/caseStudyRepository.interface';
 import { CaseStudyMapper } from '@/infrastructure/mappers/case-study.mapper';
 
 // Define mock case studies data for different locales
@@ -37,7 +36,7 @@ export const mockCaseStudyDTOs: CaseStudyDTO[] = [
 ];
 
 // Mock Supabase client
-export const mockCaseStudyRepository: ICaseStudyRepository = {
+export const mockCaseStudyRepository  = {
   getCaseStudies: async (locale: Locale) => {
     console.log(locale)
     return mockCaseStudyDTOs.map(CaseStudyMapper.toDomain);

@@ -1,19 +1,27 @@
 import { Locale } from "@/i18n"
 import { CaseStudyRepository } from "../repositories/caseStudy.repository"
 import { CaseStudy } from "@/domain/models/case-study.model"
-import { mockCaseStudyRepository } from "../__mocks__/caseStudyRepository.mock"
-import { ICaseStudyRepository } from "../interfaces/caseStudyRepository.interface"
+import { caseStudyRepositoryLocal } from "../repositories/case-study.local.repository"
 
 const caseStudyRepository = new CaseStudyRepository()
 
 
 
+export interface ICaseStudyRepository {
+  getCaseStudies: (locale: Locale) => Promise<CaseStudy[]>
+  getCaseStudyBySlug: (slug: string, locale: Locale) => Promise<CaseStudy | null>
+  createCaseStudy: (data: Partial<CaseStudy>, locale: Locale) => Promise<CaseStudy>
+  updateCaseStudy: (id: string, data: Partial<CaseStudy>, locale: Locale) => Promise<CaseStudy | null>
+  deleteCaseStudy: (id: string, locale: Locale) => Promise<boolean>
+  updateCaseStudyOrder: (orders: { id: string; order: number }[], locale: Locale) => Promise<void>
+}
+
 export class CaseStudyService {
   private caseStudyRepository: ICaseStudyRepository
 
   constructor() {
-    if(process.env.MOCK_REPOSITORIES === 'true') {
-      this.caseStudyRepository = mockCaseStudyRepository
+    if (process.env.MOCK_REPOSITORIES === 'true') {
+      this.caseStudyRepository = caseStudyRepositoryLocal
     } else {
       this.caseStudyRepository = caseStudyRepository
     }
@@ -26,7 +34,36 @@ export class CaseStudyService {
   getCaseStudyBySlug = async (slug: string, locale: Locale): Promise<CaseStudy | null> => {
     return this.caseStudyRepository.getCaseStudyBySlug(slug, locale)
   }
+
+  createCaseStudy = async (data: Partial<CaseStudy>, locale: Locale): Promise<CaseStudy> => {
+    if (!data.title) {
+      throw new Error("Case study title is required")
+    }
+    if (!data.slug) {
+      throw new Error("Case study slug is required")
+    }
+    // Additional validations may be added here
+    return this.caseStudyRepository.createCaseStudy(data, locale)
+  }
+
+  updateCaseStudy = async (id: string, data: Partial<CaseStudy>, locale: Locale): Promise<CaseStudy | null> => {
+    if (!id) {
+      throw new Error("Case study id is required for update")
+    }
+    return this.caseStudyRepository.updateCaseStudy(id, data, locale)
+  }
+
+  deleteCaseStudy = async (id: string, locale: Locale): Promise<boolean> => {
+    if (!id) {
+      throw new Error("Case study id is required for deletion")
+    }
+    return this.caseStudyRepository.deleteCaseStudy(id, locale)
+  }
+
+  updateCaseStudyOrder = async (orders: { id: string; order: number }[], locale: Locale): Promise<void> => {
+    return this.caseStudyRepository.updateCaseStudyOrder(orders, locale)
+  }
 }
 
-// export singleton
+// Export a singleton instance
 export const caseStudyService = new CaseStudyService()
