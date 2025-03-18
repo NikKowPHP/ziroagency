@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { CaseStudy } from '@/domain/models/case-study.model'
+import { CaseStudyWithTags } from '@/domain/models/models'
 import { Locale } from '@/i18n'
 import { CaseStudyCard } from '@/components/ui/case-study/case-study-card'
 import { Tag } from '@/components/ui/tag/tag'
@@ -11,7 +11,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface CaseStudiesInteractiveProps {
-  caseStudies: CaseStudy[]
+  caseStudies: CaseStudyWithTags[]
   locale: Locale
 }
 
@@ -23,51 +23,52 @@ export function CaseStudiesInteractive({
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const t = useTranslations('caseStudies')
 
+  // Extract unique tags from all case studies
   const uniqueTags = useMemo(() => {
     const tags = caseStudies.flatMap((cs) => cs.tags)
-    return Array.from(new Set(tags))
+    return Array.from(new Set(tags.map(tag => tag.id))) // Use tag IDs for filtering
   }, [caseStudies])
 
+  // Filter case studies based on the selected tag
   const filteredStudies = useMemo(() => {
     if (!selectedTag) return caseStudies
-    return caseStudies.filter((cs) => cs.tags.includes(selectedTag))
+    return caseStudies.filter((cs) => cs.tags.some(tag => tag.id === selectedTag))
   }, [caseStudies, selectedTag])
 
+  // Sort case studies by orderIndex
   const sortedStudies = useMemo(() => {
-    const sorted = [...filteredStudies].sort(
-      (a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0)
-    )
-    console.log(filteredStudies)
-    return sorted
+    return [...filteredStudies].sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0))
   }, [filteredStudies])
 
+  // Prepare filter cards for the UI
   const filterCards = useMemo(() => {
-    return uniqueTags.map((tag) => {
-      const caseStudy = caseStudies.find((cs) => cs.tags.includes(tag))
+    return uniqueTags.map((tagId) => {
+      const caseStudy = caseStudies.find((cs) => cs.tags.some(tag => tag.id === tagId))
       return {
-        imageUrl: caseStudy?.images?.[0]?.url || '/images/placeholder.png', // Default placeholder image
-        alt: caseStudy?.images?.[0]?.alt || 'Case Study',
-        tag: tag,
+        imageUrl: caseStudy?.tags.find(tag => tag.id === tagId)?.image_url || '/images/placeholder.png', // Default placeholder image
+        alt: caseStudy?.tags.find(tag => tag.id === tagId)?.name || 'Case Study',
+        tag: tagId, // Use tag ID for filtering
       }
     })
   }, [uniqueTags, caseStudies])
-  console.log('filtered cards', filterCards)
 
-  const toggleTag = (tag: string) => {
-    setSelectedTag(selectedTag === tag ? null : tag)
+  // Toggle the selected tag
+  const toggleTag = (tagId: string) => {
+    setSelectedTag(selectedTag === tagId ? null : tagId)
     setIsFilterOpen(false)
   }
 
+  // Toggle the filter menu
   const handleFilter = () => {
-    console.log('filter')
     setIsFilterOpen(!isFilterOpen)
   }
 
+  // Handle the "Recommended" button click
   const handleRecommended = () => {
     console.log('recommended')
-
   }
 
+  // Filter component UI
   const FilterComponent = () => {
     return (
       <div className="">
