@@ -9,6 +9,7 @@ import {
   deleteTagAction,
   getTagsAction
 } from '@/components/server-actions/tags-actions'
+import { toast } from 'react-hot-toast'
 
 export function TagList({ tags: initialTags }: { tags: Tag[] }) {
   const [tagList, setTagList] = useState<Tag[]>(initialTags)
@@ -40,9 +41,11 @@ export function TagList({ tags: initialTags }: { tags: Tag[] }) {
       setTagList((prev) => [...prev, newTag])
       setIsCreating(false)
       setLoading(false)
+      toast.success('Tag created successfully')
     } catch (error) {
       console.error('Failed to create tag:', error)
       setError('Failed to create tag')
+      toast.error('Failed to create tag')
       setLoading(false)
     }
   }
@@ -54,12 +57,14 @@ export function TagList({ tags: initialTags }: { tags: Tag[] }) {
       const updatedTag = await updateTagAction({ ...editingTag, ...data })
       if (updatedTag) {
         setTagList((prev) => prev.map((tag) => (tag.id === editingTag.id ? updatedTag : tag)))
+        toast.success('Tag updated successfully')
       }
       setEditingTag(null)
       setLoading(false)
     } catch (error) {
       console.error('Failed to update tag:', error)
       setError('Failed to update tag')
+      toast.error('Failed to update tag')
       setLoading(false)
     }
   }
@@ -71,11 +76,13 @@ export function TagList({ tags: initialTags }: { tags: Tag[] }) {
         const success = await deleteTagAction(id)
         if (success) {
           setTagList((prev) => prev.filter((tag) => tag.id !== id))
+          toast.success('Tag deleted successfully')
         }
         setLoading(false)
       } catch (error) {
         console.error('Failed to delete tag:', error)
         setError('Failed to delete tag')
+        toast.error('Failed to delete tag')
         setLoading(false)
       }
     }
