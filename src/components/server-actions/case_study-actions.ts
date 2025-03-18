@@ -1,6 +1,6 @@
 'use server'
 import { caseStudyService } from '@/lib/services/caseStudy.service'
-import { CaseStudy, CaseStudyWithTags } from '@/domain/models/models'
+import { CaseStudyWithTags } from '@/domain/models/models'
 import { Locale } from '@/i18n'
 
 export async function getCaseStudiesAction(locale: Locale): Promise<CaseStudyWithTags[]> {
@@ -14,7 +14,7 @@ export async function getCaseStudyBySlugAction(slug: string, locale: Locale): Pr
   return await caseStudyService.getCaseStudyBySlug(slug, locale)
 }
 
-export async function createCaseStudyAction(data: Partial<CaseStudy>, locale: Locale): Promise<CaseStudy> {
+export async function createCaseStudyAction(data: Partial<CaseStudyWithTags>, locale: Locale): Promise<CaseStudyWithTags> {
   if (!data.title) {
     throw new Error('Case study title is required')
   }
@@ -24,7 +24,7 @@ export async function createCaseStudyAction(data: Partial<CaseStudy>, locale: Lo
   return await caseStudyService.createCaseStudy(data, locale)
 }
 
-export async function updateCaseStudyAction(id: string, data: Partial<CaseStudy>, locale: Locale): Promise<CaseStudy | null> {
+export async function updateCaseStudyAction(id: string, data: Partial<CaseStudyWithTags>, locale: Locale): Promise<CaseStudyWithTags | null> {
   if (!id) {
     throw new Error('Case study id is required for update')
   }

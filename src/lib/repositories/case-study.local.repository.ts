@@ -104,7 +104,7 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
    * Creates a new case study.
    * Note: This implementation assumes the case study data includes an 'id' if not using auto-generated IDs.
    */
-  async createCaseStudy(data: Partial<CaseStudy>, locale: string): Promise<CaseStudy> {
+  async createCaseStudy(data: Partial<CaseStudyWithTags>, locale: string): Promise<CaseStudyWithTags> {
     const tableName = this.getTableName(locale);
     return new Promise((resolve, reject) => {
       const columns = Object.keys(data).join(', ');
@@ -112,25 +112,30 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
       const values = Object.values(data);
       const query = `INSERT INTO "${tableName}" (${columns}) VALUES (${placeholders});`;
       
-      this.db.run(query, values, function (err) {
+      this.db.run(query, values, async function (err) {
         if (err) {
           logger.log(`Error creating case study in table "${tableName}":`, err);
           return reject(new Error(`Error creating case study: ${err.message}`));
         }
-        // Retrieve the newly inserted row.
-        // Here we assume that the 'id' field is provided in 'data'.
         const insertedId = (data as any).id;
         if (!insertedId) {
           return reject(new Error("Case study creation failed: no ID provided."));
         }
-        const selectQuery = `SELECT * FROM "${tableName}" WHERE id = ?;`;
-        db.get(selectQuery, [insertedId], (err2, row: CaseStudy) => {
-          if (err2) {
-            logger.log(`Error retrieving new case study from table "${tableName}":`, err2);
-            return reject(new Error(`Error retrieving inserted case study: ${err2.message}`));
-          }
-          resolve(row);
-        });
+        try {
+          const allTags = await tagsLocalRepository.getTags();
+          const selectQuery = `SELECT * FROM "${tableName}" WHERE id = ?;`;
+          db.get(selectQuery, [insertedId], (err2, row: any) => {
+            if (err2) {
+              logger.log(`Error retrieving new case study from table "${tableName}":`, err2);
+              return reject(new Error(`Error retrieving inserted case study: ${err2.message}`));
+            }
+            const tagIds = typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags || [];
+            const tagObjects = allTags.filter((tag: Tag) => tagIds.includes(tag.id));
+            resolve({ ...row, tags: tagObjects });
+          });
+        } catch (e) {
+          reject(e);
+        }
       });
     });
   }
@@ -138,26 +143,37 @@ export class CaseStudyRepositoryLocal extends SqlLiteAdapter<CaseStudy, string> 
   /**
    * Updates an existing case study by its ID.
    */
-  async updateCaseStudy(id: string, data: Partial<CaseStudy>, locale: string): Promise<CaseStudy | null> {
+  async updateCaseStudy(id: string, data: Partial<CaseStudyWithTags>, locale: string): Promise<CaseStudyWithTags | null> {
     const tableName = this.getTableName(locale);
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const setClause = Object.keys(data).map(key => `${key} = ?`).join(', ');
       const values = Object.values(data);
       values.push(id);
       const query = `UPDATE "${tableName}" SET ${setClause} WHERE id = ?;`;
-      this.db.run(query, values, (err) => {
+      
+      this.db.run(query, values, async (err) => {
         if (err) {
           logger.log(`Error updating case study with id "${id}" in table "${tableName}":`, err);
           return reject(new Error(`Error updating case study: ${err.message}`));
         }
-        const selectQuery = `SELECT * FROM "${tableName}" WHERE id = ? LIMIT 1;`;
-        this.db.get(selectQuery, [id], (err2, row: CaseStudy) => {
-          if (err2) {
-            logger.log(`Error retrieving updated case study with id "${id}" in table "${tableName}":`, err2);
-            return reject(new Error(`Error retrieving updated case study: ${err2.message}`));
-          }
-          resolve(row || null);
-        });
+        try {
+          const allTags = await tagsLocalRepository.getTags();
+          const selectQuery = `SELECT * FROM "${tableName}" WHERE id = ? LIMIT 1;`;
+          this.db.get(selectQuery, [id], (err2, row: any) => {
+            if (err2) {
+              logger.log(`Error retrieving updated case study with id "${id}" in table "${tableName}":`, err2);
+              return reject(new Error(`Error retrieving updated case study: ${err2.message}`));
+            }
+            if (!row) {
+              return resolve(null);
+            }
+            const tagIds = typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags || [];
+            const tagObjects = allTags.filter((tag: Tag) => tagIds.includes(tag.id));
+            resolve({ ...row, tags: tagObjects });
+          });
+        } catch (e) {
+          reject(e);
+        }
       });
     });
   }

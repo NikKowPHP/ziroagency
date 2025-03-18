@@ -1,13 +1,14 @@
 'use client'
 
-import { CaseStudy } from '@/domain/models/case-study.model'
+import { CaseStudyWithTags, Tag } from '@/domain/models/models'
 import { Locale } from '@/i18n'
 import { useState, useEffect } from 'react'
+import { getTagsAction } from '@/components/server-actions/tags-actions'
 
 interface CaseStudyFormProps {
-  study?: CaseStudy
+  study?: CaseStudyWithTags
   locale: Locale
-  onSubmit: (data: Partial<CaseStudy>) => Promise<void>
+  onSubmit: (data: Partial<CaseStudyWithTags>) => Promise<void>
   onCancel: () => void
   loading: boolean
 }
@@ -15,64 +16,6 @@ interface CaseStudyFormProps {
 interface ImageInput {
   url: string
   alt: string
-}
-
-const isGoogleDriveLink = (url: string): boolean => {
-  return url.includes('drive.google.com') || url.includes('googleusercontent.com')
-}
-
-const getGoogleDriveDirectLink = (url: string): string | null => {
-  try {
-    const fileId = url.match(/\/d\/(.+?)\/|id=(.+?)&/)?.[1] || url.match(/id=(.+?)&/)?.[1]
-    if (fileId) {
-      return `https://drive.google.com/uc?export=view&id=${fileId}`
-    }
-    return null
-  } catch {
-    return null
-  }
-}
-
-interface ImagePreviewProps {
-  url: string
-  alt: string
-  onError: () => void
-}
-
-const ImagePreview = ({ url, alt, onError }: ImagePreviewProps) => {
-  const [showImage, setShowImage] = useState(false)
-
-  useEffect(() => {
-    const img = document.createElement('img')
-    img.onload = () => setShowImage(true)
-    img.onerror = onError
-    img.src = url
-    
-    return () => {
-      img.onload = null
-      img.onerror = null
-    }
-  }, [url, onError])
-
-  if (!showImage) {
-    return (
-      <div className="relative mt-2 h-20 w-20 bg-gray-100 rounded-md flex items-center justify-center">
-        <span className="text-sm text-gray-500">Loading...</span>
-      </div>
-    )
-  }
-
-  return (
-    <div className="relative mt-2 h-20 w-20">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={url}
-        alt={alt || 'Preview'}
-        className="object-cover rounded-md h-full w-full"
-        onError={onError}
-      />
-    </div>
-  )
 }
 
 export function CaseStudyForm({
@@ -83,22 +26,31 @@ export function CaseStudyForm({
   loading,
 }: CaseStudyFormProps) {
   const [images, setImages] = useState<ImageInput[]>(
-    study?.images.map((img) => ({ url: img.url, alt: img.alt })) || [
-      { url: '', alt: '' },
-    ]
+    study?.images.map((img: { url: string; alt: string }) => ({
+      url: img.url,
+      alt: img.alt,
+    })) || [{ url: '', alt: '' }]
   )
-  const [tags, setTags] = useState<readonly string[]>(study?.tags || [])
+  const [tags, setTags] = useState<Tag[]>(study?.tags || [])
+  const [availableTags, setAvailableTags] = useState<Tag[]>([])
   const [tagInput, setTagInput] = useState('')
   const [title, setTitle] = useState(study?.title || '')
   const [slug, setSlug] = useState(study?.slug || '')
-  const [imageErrors, setImageErrors] = useState<Record<number, string | null>>({})
+  const [imageErrors, setImageErrors] = useState<Record<number, string | null>>(
+    {}
+  )
 
-
+  useEffect(() => {
+    const fetchTags = async () => {
+      const tags = await getTagsAction()
+      setAvailableTags(tags)
+    }
+    fetchTags()
+  }, [])
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value
     setTitle(newTitle)
-   
   }
 
   const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +63,7 @@ export function CaseStudyForm({
 
   const handleRemoveImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index))
-    setImageErrors(prev => ({ ...prev, [index]: null }))
+    setImageErrors((prev) => ({ ...prev, [index]: null }))
   }
 
   const handleImageChange = (
@@ -120,48 +72,31 @@ export function CaseStudyForm({
     value: string
   ) => {
     if (field === 'url') {
-      setImageErrors(prev => ({ ...prev, [index]: null }))
-      
-      if (isGoogleDriveLink(value)) {
-        const directLink = getGoogleDriveDirectLink(value)
-        if (!directLink) {
-          setImageErrors(prev => ({
-            ...prev,
-            [index]: 'Invalid Google Drive link format. Please use a direct image link.'
-          }))
-        }
-        // Always update the URL, even if invalid
-        setImages(images.map((img, i) => 
-          i === index ? { ...img, url: value } : img
-        ))
-      } else {
-        setImages(images.map((img, i) => 
-          i === index ? { ...img, url: value } : img
-        ))
-      }
+      setImageErrors((prev) => ({ ...prev, [index]: null }))
+
+      setImages(
+        images.map((img, i) => (i === index ? { ...img, url: value } : img))
+      )
     } else {
-      setImages(images.map((img, i) => 
-        i === index ? { ...img, [field]: value } : img
-      ))
+      setImages(
+        images.map((img, i) => (i === index ? { ...img, [field]: value } : img))
+      )
     }
   }
 
-  const handleAddTag = () => {
-    if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-      setTags([...tags, tagInput.trim()])
-      setTagInput('')
+  const handleAddTag = (tag: Tag) => {
+    if (!tags.some((t) => t.id === tag.id)) {
+      setTags([...tags, tag])
     }
   }
 
-  const handleRemoveTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove))
+  const handleRemoveTag = (tagToRemove: Tag) => {
+    setTags(tags.filter((tag) => tag.id !== tagToRemove.id))
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-
-    console.log(formData.get('slug'))
 
     await onSubmit({
       title: formData.get('title') as string,
@@ -176,9 +111,10 @@ export function CaseStudyForm({
   }
 
   const handleImageError = (index: number) => {
-    setImageErrors(prev => ({
+    setImageErrors((prev) => ({
       ...prev,
-      [index]: 'Failed to load image. Please check the URL or try a different link format.'
+      [index]:
+        'Failed to load image. Please check the URL or try a different link format.',
     }))
   }
 
@@ -226,11 +162,16 @@ export function CaseStudyForm({
           />
         </div>
         <p className="mt-1 text-sm text-gray-500">
-          This will be the URL of your case study. Use only lowercase letters, numbers, and hyphens.
+          This will be the URL of your case study. Use only lowercase letters,
+          numbers, and hyphens.
         </p>
       </div>
 
-      <div className={`space-y-8 ${!title.trim() ? 'opacity-50 pointer-events-none' : ''}`}>
+      <div
+        className={`space-y-8 ${
+          !title.trim() ? 'opacity-50 pointer-events-none' : ''
+        }`}
+      >
         <div>
           <label
             htmlFor="description"
@@ -258,7 +199,9 @@ export function CaseStudyForm({
                 <input
                   type="url"
                   value={image.url}
-                  onChange={(e) => handleImageChange(index, 'url', e.target.value)}
+                  onChange={(e) =>
+                    handleImageChange(index, 'url', e.target.value)
+                  }
                   placeholder="Image URL (direct link recommended)"
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                 />
@@ -272,16 +215,6 @@ export function CaseStudyForm({
                 {imageErrors[index] && (
                   <div className="mt-2 text-sm text-red-600">
                     <p>{imageErrors[index]}</p>
-                    {isGoogleDriveLink(image.url) && (
-                      <p className="mt-1">
-                        For Google Drive images: 
-                        <ol className="list-decimal ml-4 mt-1">
-                          <li>Open the image in Google Drive</li>
-                          <li>Click &ldquo;Share&rdquo; and make it accessible to anyone with the link</li>
-                          <li>Try using a direct image hosting service instead</li>
-                        </ol>
-                      </p>
-                    )}
                   </div>
                 )}
               </div>
@@ -289,7 +222,9 @@ export function CaseStudyForm({
                 <input
                   type="text"
                   value={image.alt}
-                  onChange={(e) => handleImageChange(index, 'alt', e.target.value)}
+                  onChange={(e) =>
+                    handleImageChange(index, 'alt', e.target.value)
+                  }
                   placeholder="Alt text"
                   required={!!image.url}
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
@@ -321,10 +256,10 @@ export function CaseStudyForm({
           <div className="flex flex-wrap gap-2 mb-2">
             {tags.map((tag) => (
               <span
-                key={tag}
+                key={tag.id}
                 className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary"
               >
-                {tag}
+                {tag.name}
                 <button
                   type="button"
                   onClick={() => handleRemoveTag(tag)}
@@ -335,24 +270,36 @@ export function CaseStudyForm({
               </span>
             ))}
           </div>
-          <div className="flex gap-2">
+          <div className="relative">
             <input
               type="text"
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
-              onKeyPress={(e) =>
-                e.key === 'Enter' && (e.preventDefault(), handleAddTag())
-              }
-              placeholder="Add a tag"
-              className="flex-1 rounded-full border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+              placeholder="Search and add tags"
+              className="w-full rounded-full border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
             />
-            <button
-              type="button"
-              onClick={handleAddTag}
-              className="px-6 py-2 text-sm font-medium text-primary bg-white border border-primary rounded-full hover:bg-primary/10 transition-colors"
-            >
-              Add Tag
-            </button>
+            {tagInput && (
+              <div className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto">
+                {availableTags
+                  .filter(
+                    (tag) =>
+                      tag.name.toLowerCase().includes(tagInput.toLowerCase()) &&
+                      !tags.some((t) => t.id === tag.id)
+                  )
+                  .map((tag) => (
+                    <div
+                      key={tag.id}
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        handleAddTag(tag)
+                        setTagInput('')
+                      }}
+                    >
+                      {tag.name}
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -423,5 +370,47 @@ export function CaseStudyForm({
         </button>
       </div>
     </form>
+  )
+}
+
+interface ImagePreviewProps {
+  url: string
+  alt: string
+  onError: () => void
+}
+
+const ImagePreview = ({ url, alt, onError }: ImagePreviewProps) => {
+  const [showImage, setShowImage] = useState(false)
+
+  useEffect(() => {
+    const img = document.createElement('img')
+    img.onload = () => setShowImage(true)
+    img.onerror = onError
+    img.src = url
+
+    return () => {
+      img.onload = null
+      img.onerror = null
+    }
+  }, [url, onError])
+
+  if (!showImage) {
+    return (
+      <div className="relative mt-2 h-20 w-20 bg-gray-100 rounded-md flex items-center justify-center">
+        <span className="text-sm text-gray-500">Loading...</span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative mt-2 h-20 w-20">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={url}
+        alt={alt || 'Preview'}
+        className="object-cover rounded-md h-full w-full"
+        onError={onError}
+      />
+    </div>
   )
 }

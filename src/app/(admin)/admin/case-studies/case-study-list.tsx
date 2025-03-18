@@ -1,48 +1,72 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAdmin } from '@/contexts/admin-context'
-import { CaseStudy } from '@/domain/models/models'
+import { CaseStudy, CaseStudyWithTags } from '@/domain/models/models'
 import { Locale } from '@/i18n'
 import { CaseStudyForm } from './components/case-study-form'
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
+import { createCaseStudyAction, deleteCaseStudyAction, updateCaseStudyAction, updateCaseStudyOrderAction } from '@/components/server-actions/case_study-actions'
+import logger from '@/lib/utils/logger'
+import toast from 'react-hot-toast'
 
-export function CaseStudyList() {
-  const { caseStudies, createCaseStudy, updateCaseStudy, deleteCaseStudy, updateCaseStudyOrder, error, loading } = useAdmin()
+export function CaseStudyList({ caseStudies }: { caseStudies: Record<Locale, CaseStudyWithTags[]> }) {
   const [activeLocale, setActiveLocale] = useState<Locale>('en')
-  const [editingStudy, setEditingStudy] = useState<CaseStudy | null>(null)
+  const [editingStudy, setEditingStudy] = useState<CaseStudyWithTags | null>(null)
   const [isCreating, setIsCreating] = useState(false)
-  const [orderedStudies, setOrderedStudies] = useState<CaseStudy[]>([])
+  const [orderedStudies, setOrderedStudies] = useState<CaseStudyWithTags[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     setOrderedStudies(caseStudies[activeLocale])
   }, [activeLocale, caseStudies])
   
-  const handleCreate = async (data: Partial<CaseStudy>) => {
-    try {
-      await createCaseStudy(data, activeLocale)
+    const handleCreate = async (data: Partial<CaseStudyWithTags>) => {
+      try {
+      setLoading(true)
+      setError(null)
+      await createCaseStudyAction(data, activeLocale)
+      toast.success('Case study created successfully')
       setIsCreating(false)
     } catch (error) {
-      console.error('Failed to create case study:', error)
+      logger.error('Failed to create case study:', error)
+      toast.error('Failed to create case study')
+      setError(error instanceof Error ? error.message : 'Failed to create case study')
+    } finally {
+      setLoading(false)
     }
   }
 
-  const handleUpdate = async (data: Partial<CaseStudy>) => {
+  const handleUpdate = async (data: Partial<CaseStudyWithTags>) => {
     if (!editingStudy) return
     try {
-      await updateCaseStudy(editingStudy.id, data, activeLocale)
+      setLoading(true)
+      setError(null)
+      await updateCaseStudyAction(editingStudy.id, data, activeLocale)
+      toast.success('Case study updated successfully')
       setEditingStudy(null)
     } catch (error) {
-      console.error('Failed to update case study:', error)
+      logger.error('Failed to update case study:', error)
+      toast.error('Failed to update case study')
+      setError(error instanceof Error ? error.message : 'Failed to update case study')
+    } finally {
+      setLoading(false)
     }
   }
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this case study?')) {
       try {
-        await deleteCaseStudy(id, activeLocale)
+        setLoading(true)
+        setError(null)
+        await deleteCaseStudyAction(id, activeLocale)
+        toast.success('Case study deleted successfully')
       } catch (error) {
-        console.error('Failed to delete case study:', error)
+        logger.error('Failed to delete case study:', error)
+        toast.error('Failed to delete case study')
+        setError(error instanceof Error ? error.message : 'Failed to delete case study')
+      } finally {
+        setLoading(false)
       }
     }
   }
@@ -59,9 +83,16 @@ export function CaseStudyList() {
       order: index
     }));
     try {
-      await updateCaseStudyOrder(orders, activeLocale)
+      setLoading(true)
+      setError(null)
+      await updateCaseStudyOrderAction(orders, activeLocale)
+      toast.success('Case study order updated successfully')
     } catch (error) {
-      console.error('Failed to update order:', error)
+      logger.error('Failed to update order:', error)
+      toast.error('Failed to update order')
+      setError(error instanceof Error ? error.message : 'Failed to update order')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -72,6 +103,11 @@ export function CaseStudyList() {
       {error && (
         <div className="p-4 bg-red-50 text-red-600 rounded-primary">
           {error}
+        </div>
+      )}
+      {loading && (
+        <div className="p-4 bg-gray-50 text-gray-600 rounded-primary">
+          Loading...
         </div>
       )}
 

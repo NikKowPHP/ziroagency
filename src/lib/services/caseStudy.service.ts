@@ -1,7 +1,7 @@
 import { Locale } from "@/i18n"
 import { CaseStudyRepository } from "../repositories/caseStudy.repository"
-import { CaseStudy } from "@/domain/models/models"
-import { caseStudyRepositoryLocal, CaseStudyWithTags } from "../repositories/case-study.local.repository"
+import { CaseStudyWithTags } from "@/domain/models/models"
+import { caseStudyRepositoryLocal } from "../repositories/case-study.local.repository"
 
 const caseStudyRepository = new CaseStudyRepository()
 
@@ -10,8 +10,8 @@ const caseStudyRepository = new CaseStudyRepository()
 export interface ICaseStudyRepository {
   getCaseStudies: (locale: Locale) => Promise<CaseStudyWithTags[]>
   getCaseStudyBySlug: (slug: string, locale: Locale) => Promise<CaseStudyWithTags | null>
-  createCaseStudy: (data: Partial<CaseStudy>, locale: Locale) => Promise<CaseStudy>
-  updateCaseStudy: (id: string, data: Partial<CaseStudy>, locale: Locale) => Promise<CaseStudy | null>
+  createCaseStudy: (data: Partial<CaseStudyWithTags>, locale: Locale) => Promise<CaseStudyWithTags>
+  updateCaseStudy: (id: string, data: Partial<CaseStudyWithTags>, locale: Locale) => Promise<CaseStudyWithTags | null>
   deleteCaseStudy: (id: string, locale: Locale) => Promise<boolean>
   updateCaseStudyOrder: (orders: { id: string; order: number }[], locale: Locale) => Promise<void>
 }
@@ -35,7 +35,7 @@ export class CaseStudyService {
     return this.caseStudyRepository.getCaseStudyBySlug(slug, locale)
   }
 
-  createCaseStudy = async (data: Partial<CaseStudy>, locale: Locale): Promise<CaseStudy> => {
+  createCaseStudy = async (data: Partial<CaseStudyWithTags>, locale: Locale): Promise<CaseStudyWithTags> => {
     if (!data.title) {
       throw new Error("Case study title is required")
     }
@@ -46,7 +46,7 @@ export class CaseStudyService {
     return this.caseStudyRepository.createCaseStudy(data, locale)
   }
 
-  updateCaseStudy = async (id: string, data: Partial<CaseStudy>, locale: Locale): Promise<CaseStudy | null> => {
+  updateCaseStudy = async (id: string, data: Partial<CaseStudyWithTags>, locale: Locale): Promise<CaseStudyWithTags | null> => {
     if (!id) {
       throw new Error("Case study id is required for update")
     }

@@ -66,9 +66,9 @@ export class CaseStudyRepository {
 
   // CREATE: Insert a new case study record and return the newly created domain object.
   createCaseStudy = async (
-    data: Partial<CaseStudy>,
+    data: Partial<CaseStudyWithTags>,
     locale: Locale
-  ): Promise<CaseStudy> => {
+  ): Promise<CaseStudyWithTags> => {
     const { data: inserted, error } = await this.supabaseClient
       .from(`case_studies_${locale}`)
       .insert(data)
@@ -78,18 +78,26 @@ export class CaseStudyRepository {
     if (error) {
       throw new Error(`Error creating case study: ${error.message}`)
     }
-    return CaseStudyMapper.toDomain(inserted as CaseStudyDTO)
+    const caseStudy = CaseStudyMapper.toDomain(inserted as CaseStudyDTO)
+    const [caseStudyWithTags] = await this.enrichWithTags([caseStudy])
+    return caseStudyWithTags
   }
 
   // UPDATE: Update an existing case study identified by its ID.
   updateCaseStudy = async (
     id: string,
-    data: Partial<CaseStudy>,
+    data: Partial<CaseStudyWithTags>,
     locale: Locale
-  ): Promise<CaseStudy | null> => {
+  ): Promise<CaseStudyWithTags | null> => {
+    // Convert CaseStudyWithTags to CaseStudy by mapping tags to tag IDs
+    const updateData: Partial<CaseStudy> = {
+      ...data,
+      tags: data.tags ? data.tags.map(tag => tag.id) : undefined
+    }
+
     const { data: updated, error } = await this.supabaseClient
       .from(`case_studies_${locale}`)
-      .update(data)
+      .update(updateData)
       .eq('id', id)
       .select()
       .single()
@@ -97,7 +105,12 @@ export class CaseStudyRepository {
     if (error) {
       throw new Error(`Error updating case study: ${error.message}`)
     }
-    return updated ? CaseStudyMapper.toDomain(updated as CaseStudyDTO) : null
+    if (!updated) {
+      return null
+    }
+    const caseStudy = CaseStudyMapper.toDomain(updated as CaseStudyDTO)
+    const [caseStudyWithTags] = await this.enrichWithTags([caseStudy])
+    return caseStudyWithTags
   }
 
   // DELETE: Remove a case study by its ID.
