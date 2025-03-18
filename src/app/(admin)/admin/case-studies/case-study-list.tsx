@@ -18,6 +18,7 @@ export function CaseStudyList({ caseStudies }: { caseStudies: Record<Locale, Cas
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    debugger
     setOrderedStudies(caseStudies[activeLocale])
   }, [activeLocale, caseStudies])
   
