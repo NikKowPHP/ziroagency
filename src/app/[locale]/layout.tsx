@@ -4,6 +4,8 @@ import { Inter } from 'next/font/google'
 import '@/styles/globals.css'
 import { locales, type Locale } from '@/i18n'
 import { ClientWrapper } from './client-wrapper'
+import { PostHogProvider } from '@/contexts/posthog-context'
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -74,9 +76,11 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.variable}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ClientWrapper>
-            <main>{children}</main>
-          </ClientWrapper>
+          <PostHogProvider>
+            <ClientWrapper>
+              <main>{children}</main>
+            </ClientWrapper>
+          </PostHogProvider>
         </NextIntlClientProvider>
       </body>
     </html>
